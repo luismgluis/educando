@@ -10,39 +10,41 @@ import Home from "./components/Home/Home";
 import Login from "./components/Login/Login";
 
 const inputGlobalStyles = <GlobalStyles styles={{}} />;
-function AppContainer(props: React.HTMLAttributes<HTMLDivElement>) {
+
+type AppContainerType = {
+  children?: React.ReactChild | React.ReactChild[];
+};
+const AppContainer: React.FC<AppContainerType> = ({ children }) => {
+  return <div className="App">{children}</div>;
+};
+
+function App() {
   return (
     <ThemeProvider theme={ThemeConfig}>
       <CssBaseline />
       {inputGlobalStyles}
-      <div className="App">{props.children}</div>
+      <BrowserRouter>
+        <Routes>
+          <Route
+            path="/login"
+            element={
+              <AppContainer>
+                <Login />
+              </AppContainer>
+            }
+          />
+          <Route
+            path="/"
+            element={
+              <AppContainer>
+                <Home />
+              </AppContainer>
+            }
+          />
+          <Route path="*" element={<Navigate to="/" />} />
+        </Routes>
+      </BrowserRouter>
     </ThemeProvider>
-  );
-}
-
-function App() {
-  return (
-    <BrowserRouter>
-      <Routes>
-        <Route
-          path="/login"
-          element={
-            <AppContainer>
-              <Login />
-            </AppContainer>
-          }
-        />
-        <Route
-          path="/"
-          element={
-            <AppContainer>
-              <Home />
-            </AppContainer>
-          }
-        />
-        <Route path="*" element={<Navigate to="/" />} />
-      </Routes>
-    </BrowserRouter>
   );
 }
 
