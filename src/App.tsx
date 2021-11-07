@@ -1,15 +1,48 @@
 import React from "react";
-// import logo from "./logo.svg";
+
 import "./App.scss";
-import { Button } from "@mui/material";
+import { CssBaseline, GlobalStyles, ThemeProvider } from "@mui/material";
+
+import ThemeConfig from "./components/Themes/ThemeConfig";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+
+import Home from "./components/Home/Home";
+import Login from "./components/Login/Login";
+
+const inputGlobalStyles = <GlobalStyles styles={{}} />;
+function AppContainer(props: React.HTMLAttributes<HTMLDivElement>) {
+  return (
+    <ThemeProvider theme={ThemeConfig}>
+      <CssBaseline />
+      {inputGlobalStyles}
+      <div className="App">{props.children}</div>
+    </ThemeProvider>
+  );
+}
 
 function App() {
   return (
-    <div className="App">
-      <Button variant="contained" color="primary">
-        Hola Mundo!
-      </Button>
-    </div>
+    <BrowserRouter>
+      <Routes>
+        <Route
+          path="/login"
+          element={
+            <AppContainer>
+              <Login />
+            </AppContainer>
+          }
+        />
+        <Route
+          path="/"
+          element={
+            <AppContainer>
+              <Home />
+            </AppContainer>
+          }
+        />
+        <Route path="*" element={<Navigate to="/" />} />
+      </Routes>
+    </BrowserRouter>
   );
 }
 
