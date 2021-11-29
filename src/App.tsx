@@ -8,6 +8,7 @@ import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 
 import Home from "./components/Home/Home";
 import Login from "./components/Login/Login";
+import Ejemplo from "./components/Ejemplo/Ejemplo";
 
 const inputGlobalStyles = <GlobalStyles styles={{}} />;
 
@@ -26,6 +27,14 @@ function App() {
       {inputGlobalStyles}
       <BrowserRouter>
         <Routes>
+        <Route
+            path="/ejemplo"
+            element={
+              <AppContainer>
+                <Ejemplo />
+              </AppContainer>
+            }
+          />
           <Route
             path="/login"
             element={
