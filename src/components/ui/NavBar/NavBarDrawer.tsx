@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { SwipeableDrawer } from "@mui/material";
 import NavBarList from "./NavBarList";
-import useMobile from "../../hooks/useMobile";
+import useMobile from "../../../hooks/useMobile";
 const TAG = "NAVBAR DRAWER";
 type NavBarDrawerProps = {
   open?: boolean;
@@ -39,16 +39,25 @@ const NavBarDrawer: React.FC<NavBarDrawerProps> = ({ open, onClose }) => {
   }, [isDesktop, setVisible]);
 
   console.log(TAG, "isMobile", isMobile, "isdesktop", isDesktop);
-
+  const drawerWidth = "20%";
   return (
     <SwipeableDrawer
       anchor={isDesktop || isTablet ? "left" : "bottom"}
       variant={isDesktop ? "persistent" : "temporary"}
+      sx={{
+        width: isDesktop ? drawerWidth : undefined,
+        flexShrink: 0,
+        [`& .MuiDrawer-paper`]: {
+          width: isDesktop ? drawerWidth : undefined,
+          boxSizing: "border-box",
+        },
+      }}
       open={visible}
       onClose={() => toggleDrawer(false)}
       onOpen={() => toggleDrawer(true)}
+      swipeAreaWidth={20}
     >
-      <NavBarList />
+      <NavBarList onSelect={() => toggleDrawer(false)} />
     </SwipeableDrawer>
   );
 };
