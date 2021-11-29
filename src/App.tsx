@@ -19,6 +19,7 @@ const AppContainer: React.FC<AppContainerType> = ({ children }) => {
 };
 
 function App() {
+  console.log("Render app");
   return (
     <ThemeProvider theme={ThemeConfig}>
       <CssBaseline />
