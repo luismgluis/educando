@@ -9,6 +9,9 @@ import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import Home from "./components/Home/Home";
 import Login from "./components/Login/Login";
 import Ejemplo from "./components/Ejemplo/Ejemplo";
+import EjemploL from "./components/EjemploL/EjemploL";
+import StudentProfile from "./components/StudentProfile/StudentProfile";
+import Blackboard from "./components/Blackboard/Blackboard";
 
 const inputGlobalStyles = <GlobalStyles styles={{}} />;
 
@@ -27,6 +30,30 @@ function App() {
       {inputGlobalStyles}
       <BrowserRouter>
         <Routes>
+        <Route
+            path="/Blackboard"
+            element={
+              <AppContainer>
+                <Blackboard />
+              </AppContainer>
+            }
+            />
+        <Route
+            path="/StudentProfile"
+            element={
+              <AppContainer>
+                <StudentProfile />
+              </AppContainer>
+            }
+            />
+        <Route
+            path="/ejemploL"
+            element={
+              <AppContainer>
+                <EjemploL />
+              </AppContainer>
+            }
+            />
         <Route
             path="/ejemplo"
             element={
