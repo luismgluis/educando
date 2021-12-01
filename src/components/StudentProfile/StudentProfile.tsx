@@ -1,5 +1,5 @@
 import { Box, Button, TextField, Typography } from "@mui/material";
-import Ejemplo from "../Ejemplo/Ejemplo"
+//import Ejemplo from "../Ejemplo/Ejemplo"
 import useMobile from "../../hooks/useMobile";
 function StudentProfile () {
   //const studentProfile = () => {

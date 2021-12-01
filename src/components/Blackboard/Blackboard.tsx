@@ -1,7 +1,7 @@
 import { Badge, Box, Button, TextField, Typography } from "@mui/material";
-import Ejemplo from "../Ejemplo/Ejemplo"
+//import Ejemplo from "../Ejemplo/Ejemplo"
 import useMobile from "../../hooks/useMobile";
-import AccessibilityNewIcon from '@mui/icons-material/AccessibilityNew';
+//import AccessibilityNewIcon from '@mui/icons-material/AccessibilityNew';
 import { AccessibilityNew } from "@mui/icons-material";
 function Blackboard () {
   //const studentProfile = () => {
@@ -24,7 +24,6 @@ function Blackboard () {
         <Button variant="outlined" color="primary">Mis datos<AccessibilityNew color="primary"/></Button>
       </Box>
       
-        {/* {AccessibilityNew} */}
 
       
         <Typography variant="h3" textAlign="center">
