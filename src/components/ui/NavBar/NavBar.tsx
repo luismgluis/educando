@@ -1,12 +1,11 @@
 import "./NavBar.scss";
-import React, { useCallback, useMemo } from "react";
+import React, { useMemo } from "react";
 import {
   AppBar,
   BottomNavigation,
   BottomNavigationAction,
   Box,
   Button,
-  Hidden,
   IconButton,
   styled,
   Toolbar,
@@ -14,10 +13,10 @@ import {
   useTheme,
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
-import RestoreIcon from "@mui/icons-material/Restore";
-import FavoriteIcon from "@mui/icons-material/Favorite";
-import LocationOnIcon from "@mui/icons-material/LocationOn";
-import useMobile from "../../hooks/useMobile";
+
+import useMobile from "../../../hooks/useMobile";
+import { useHomeGoTo } from "../../../hooks/useHomeGoTo";
+import CustomAvatar from "./CustomAvatar";
 
 const TAG = "NAV BAR";
 type NavBarProps = {
@@ -41,17 +40,38 @@ const NavBar: React.FC<NavBarProps> = ({ onOpenMenu, menuOpened }) => {
     return theme.palette.getContrastText(theme.palette.primary.main);
   }, [theme]);
 
+  const homeGoTo = useHomeGoTo();
+
+  const nameScreen = useMemo(() => {
+    switch (homeGoTo.screen) {
+      case "UsersScreen":
+        return "Editar Usuario";
+
+      case "RoutersScreen":
+        return "Informacion del Usuario";
+
+      case "BusinessScreen":
+        return "Busqueda de usuarios";
+      default:
+        break;
+    }
+  }, [homeGoTo]);
+
   return (
     <React.Fragment>
-      <Box sx={{ flexGrow: 1, position: "fixed", width: "100%", bottom: 0 }}>
+      <Box
+        sx={{
+          flexGrow: 1,
+          position: "fixed",
+          width: "100%",
+          bottom: 0,
+          zIndex: 99,
+        }}
+      >
         {isMobile && (
           <BottomNavigation
             showLabels
-            // value={value}
-            // onChange={(event, newValue) => {
-            //   setValue(newValue);
-            // }}
-            sx={{ bgcolor: "primary.main" }}
+            sx={{ bgcolor: theme.palette.grey[200] }}
           >
             <BottomNavigationAction
               onClick={onOpenMenu}
@@ -59,26 +79,28 @@ const NavBar: React.FC<NavBarProps> = ({ onOpenMenu, menuOpened }) => {
                 <MenuIcon fontSize="large" htmlColor={contrastColorPrimary} />
               }
             />
-            <Button fullWidth variant="contained" disableElevation>
-              Hola
+            <Button
+              fullWidth
+              variant="contained"
+              disableElevation
+              color="inherit"
+            >
+              {nameScreen}
             </Button>
-            <BottomNavigationAction
-              label={
-                <Typography variant="caption" color="HighlightText">
-                  Hola
-                </Typography>
-              }
-              icon={<LocationOnIcon htmlColor={contrastColorPrimary} />}
-            />
+            <BottomNavigationAction icon={<CustomAvatar />} />
           </BottomNavigation>
         )}
         {!isMobile && (
           <AppBar
             className="CustomAppBar"
             position="fixed"
+            color="inherit"
             sx={{
-              width: `calc(100% - ${menuOpened || isDesktop ? 200 : 0}px)`,
+              width: `calc(100% - ${menuOpened || isDesktop ? 20 : 0}%)`,
+              minWidth: menuOpened ? "200px" : undefined,
+              bgcolor: theme.palette.grey[100],
             }}
+            elevation={2}
           >
             <Toolbar>
               <IconButton
@@ -94,9 +116,11 @@ const NavBar: React.FC<NavBarProps> = ({ onOpenMenu, menuOpened }) => {
                 <MenuIcon />
               </IconButton>
               <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-                News
+                {nameScreen}
               </Typography>
-              <Button color="inherit">Login</Button>
+
+              {/* <Avatar alt="Cindy Baker" src="/static/images/avatar/3.jpg" /> */}
+              <CustomAvatar />
             </Toolbar>
           </AppBar>
         )}
