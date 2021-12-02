@@ -8,42 +8,42 @@ import {
   Typography,
   Divider,
 } from "@mui/material";
-import { blue, green, red } from "@mui/material/colors";
+import { blue, green } from "@mui/material/colors";
 import CloseIcon from "@mui/icons-material/Close";
 import utils from "../../../libs/utils/utils";
-import CustomerForm from "./CustomerForm";
-import Customer from "../../../classes/Customer";
+import TeacherForm from "./TeacherForm";
+import Teacher from "../../../classes/Teacher";
 import EditIcon from "@mui/icons-material/Edit";
 
-const TAG = "CUSTOMENR CARD";
-type CustomerAddProps = {
+
+type TeacherAddProps = {
   onSave?: (res: boolean) => void;
   onClose?: () => void;
-  originalCustomer?: Customer | null;
+  originalTeacher?: Teacher | null;
 };
-const CustomerAdd: React.FC<CustomerAddProps> = ({
+const TeacherAdd: React.FC<TeacherAddProps> = ({
   onSave = () => null,
   onClose = () => null,
-  originalCustomer = null,
+  originalTeacher = null,
 }) => {
-  const [currentCustomer, setCurrentCustomer] = useState(new Customer(null));
+  const [currentTeacher, setCurrentTeacher] = useState(new Teacher(null));
 
   useEffect(() => {
-    if (originalCustomer) setCurrentCustomer(originalCustomer);
-  }, [originalCustomer]);
+    if (originalTeacher) setCurrentTeacher(originalTeacher);
+  }, [originalTeacher]);
 
   return (
-    <div className="CustomerAdd">
+    <div className="TeacherAdd">
       <Card>
         <CardHeader
           avatar={
             <Avatar
               sx={{
-                bgcolor: !currentCustomer.isEmpty ? blue[400] : green[500],
+                bgcolor: !currentTeacher.isEmpty ? blue[400] : green[500],
               }}
               aria-label="recipe"
             >
-              {!currentCustomer.isEmpty ? <EditIcon /> : "+"}
+              {!currentTeacher.isEmpty ? <EditIcon /> : "+"}
             </Avatar>
           }
           action={
@@ -53,12 +53,12 @@ const CustomerAdd: React.FC<CustomerAddProps> = ({
           }
           title={
             <Typography variant="h6">
-              {!currentCustomer.isEmpty ? "Editar cliente" : "Nuevo cliente"}
+              {!currentTeacher.isEmpty ? "Editar docente" : "Nuevo docente"}
             </Typography>
           }
           subheader={
-            !currentCustomer.isEmpty
-              ? `(${currentCustomer.id}) ${currentCustomer.name}`
+            !currentTeacher.isEmpty
+              ? `(${currentTeacher.id}) ${currentTeacher.name}`
               : `Fecha: ${utils.dates.dateNowString()}`
           }
         />
@@ -67,7 +67,7 @@ const CustomerAdd: React.FC<CustomerAddProps> = ({
             Llena los datos acontinuación.
           </Typography>
           <Divider sx={{ mb: 2, mt: 1 }}></Divider>
-          <CustomerForm onChange={(e) => setCurrentCustomer(e)} />
+          <TeacherForm onChange={(e) => setCurrentTeacher(e)} />
         </CardContent>
         {/* <CardActions disableSpacing>
           <Button
@@ -76,7 +76,7 @@ const CustomerAdd: React.FC<CustomerAddProps> = ({
             sx={{
               mr: 3,
             }}
-            disabled={currentCustomer.isEmpty}
+            disabled={currentTeacher.isEmpty}
             onClick={(e) => onSave(true)}
           >
             Guardar
@@ -89,4 +89,4 @@ const CustomerAdd: React.FC<CustomerAddProps> = ({
     </div>
   );
 };
-export default CustomerAdd;
+export default TeacherAdd;

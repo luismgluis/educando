@@ -4,7 +4,6 @@ import {
   CardHeader,
   Avatar,
   IconButton,
-  CardMedia,
   CardContent,
   Typography,
   CardActions,
@@ -14,14 +13,14 @@ import { red } from "@mui/material/colors";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import utils from "../../../libs/utils/utils";
 
-const TAG = "CUSTOMENR CARD";
-type CustomerRemoveProps = {
+const TAG = "TEACHER CARD";
+type TeacherRemoveProps = {
   onSave?: any;
 };
-const CustomerRemove: React.FC<CustomerRemoveProps> = ({ onSave }) => {
+const TeacherRemove: React.FC<TeacherRemoveProps> = ({ onSave }) => {
   console.log(TAG, "render");
   return (
-    <div className="CustomerRemove">
+    <div className="TeacherRemove">
       <Card>
         <CardHeader
           avatar={
@@ -56,4 +55,4 @@ const CustomerRemove: React.FC<CustomerRemoveProps> = ({ onSave }) => {
     </div>
   );
 };
-export default CustomerRemove;
+export default TeacherRemove;

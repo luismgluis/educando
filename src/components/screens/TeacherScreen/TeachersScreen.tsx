@@ -1,18 +1,12 @@
-import "./StudentsScreen.scss";
+import "./TeachersScreen.scss";
 import React, { useCallback, useEffect, useState } from "react";
 import {
-  Avatar,
   Button,
-  Card,
-  CardHeader,
   Divider,
-  IconButton,
-  Modal,
   TextField,
-  Typography,
 } from "@mui/material";
 
-import Student from "../../../classes/Student";
+import Teacher from "../../../classes/Teacher";
 import {
   DataGrid,
   GridColDef,
@@ -21,29 +15,30 @@ import {
 } from "@mui/x-data-grid";
 import { Box } from "@mui/system";
 import Business from "../../../classes/Business";
-import StudentAdd from "./StudentAdd";
+import TeacherAdd from "./TeacherAdd";
 import CModal from "../../ui/CModal/CModal";
-import StudentSelected from "./StudentSelected";
+import CustomerSelected from "./TeacherSelected";
 
-const TAG = "STUDENTS SCREENS";
-type StudentsScreenProps = {};
-const StudentEmpty = () => new Student(null);
-const StudentsScreen: React.FC<StudentsScreenProps> = () => {
+const TAG = "TEACEHRS SCREENS";
+type TeachersScreenProps = {};
+const TeacherEmpty = () => new Teacher(null);
+const TeachersScreen: React.FC<TeachersScreenProps> = () => {
   console.log(TAG, "rendererizamos este componente");
 
   const [rows, setRows] = useState<Business[]>([]);
   const [search, setSearch] = useState("");
-  const [currentStudent, setCurrentStudent] = useState(StudentEmpty());
+  const [currentTeacher, setCurrentTeacher] = useState(TeacherEmpty());
   const [addUserEnable, setAddUserEnable] = useState(false);
-  const [modifyUser, setModifyUser] = useState(StudentEmpty());
+  const [modifyUser, setModifyUser] = useState(TeacherEmpty());
 
   const columns: GridColDef[] = [
-    { field: "id", headerName: "ID", width: 70 },
+    { field: "id", headerName: "ID", width: 100 },
     { field: "name", headerName: "Nombre", width: 130 },
-    { field: "lastName", headerName: "Apellidos", width: 130 },
+    { field: "lastName", headerName: "Apellido", width: 130 },
+    { field: "subject", headerName: "Asignatura", width: 130 },
     {
       field: "fullName",
-      headerName: "Nombre Completo",
+      headerName: "Full name",
       description: "This column has a value getter and is not sortable.",
       sortable: false,
       width: 160,
@@ -52,33 +47,19 @@ const StudentsScreen: React.FC<StudentsScreenProps> = () => {
           params.getValue(params.id, "lastName") || ""
         }`,
     },
-    { field: "grade", headerName: "Grado", width: 130 },
-    { field: "group", headerName: "Grupo", width: 130 },
-
-    // {
-    //   field: "ip",
-    //   headerName: "IP",
-    //   width: 110,
-    // },
   ];
 
   useEffect(() => {
     const searchValue = search.toLowerCase();
     const rows = [0, 0, 0, 0].map(
       (item, index) =>
-        new Student({
-          name: "Paula", //+ index,
-          lastName: "Vergara Solis",
+        new Teacher({
+          name: "Andrés" + index,
+          lastName: "Murillo",
+          subject: "Matemáticas",
           id: Number(index + 1) + "",
-          idCard: "200192839",
-          email: "paula.vs@gmail.com",
-          code: "23",
-          grade: "4",
-          group: "C",
-          activeClasses: "Español-Inglés-Cocina",
-          //ip: "192.168.3.3",
-          //router: "nohaynada",
-          //email: "grajales805@gmail.com",
+          idCard: "1234566",
+          email: "afmurillor@gmail.com",
           creationDate: 0,
         })
     );
@@ -88,7 +69,6 @@ const StudentsScreen: React.FC<StudentsScreenProps> = () => {
         ? rows.filter((item) => {
             const nn = (item.name + " " + item.lastName).toLowerCase();
             if (nn.includes(searchValue)) return true;
-            if (item.code.includes(searchValue)) return true;
             return false;
           })
         : rows
@@ -97,15 +77,15 @@ const StudentsScreen: React.FC<StudentsScreenProps> = () => {
 
   const onRowClick = useCallback((e: GridRowParams) => {
     console.log(TAG, e.row);
-    const Student: any = e.row;
-    setCurrentStudent(Student);
+    const teacher: any = e.row;
+    setCurrentTeacher(teacher);
   }, []);
 
   return (
-    <div className="StudentsScreen">
+    <div className="TeachersScreen">
       {/* agregar usuarios */}
       <CModal open={addUserEnable} onClose={() => setAddUserEnable(false)}>
-        <StudentAdd
+        <TeacherAdd
           onClose={() => setAddUserEnable(false)}
           onSave={() => setAddUserEnable(false)}
         />
@@ -113,12 +93,12 @@ const StudentsScreen: React.FC<StudentsScreenProps> = () => {
       {/* editar usuarios */}
       <CModal
         open={!modifyUser.isEmpty}
-        onClose={() => setModifyUser(StudentEmpty())}
+        onClose={() => setModifyUser(TeacherEmpty())}
       >
-        <StudentAdd
-          originalStudent={modifyUser}
-          onClose={() => setModifyUser(StudentEmpty())}
-          onSave={() => setModifyUser(StudentEmpty())}
+        <TeacherAdd
+          originalTeacher={modifyUser}
+          onClose={() => setModifyUser(TeacherEmpty())}
+          onSave={() => setModifyUser(TeacherEmpty())}
         />
       </CModal>
       <Box p={4}>
@@ -139,10 +119,10 @@ const StudentsScreen: React.FC<StudentsScreenProps> = () => {
           </Button>
         </Box>
         <Divider sx={{ my: 1 }} />
-        {!currentStudent.isEmpty && (
-          <StudentSelected
-            currentStudent={currentStudent}
-            setCurrentStudent={setCurrentStudent}
+        {!currentTeacher.isEmpty && (
+          <CustomerSelected
+            currentTeacher={currentTeacher}
+            setCurrentTeacher={setCurrentTeacher}
             onEdit={(c) => setModifyUser(c)}
           />
         )}
@@ -157,9 +137,9 @@ const StudentsScreen: React.FC<StudentsScreenProps> = () => {
             onRowClick={onRowClick}
           />
         </Box>
-        <Divider sx={{ my: 1 }}>Toca un estudiante para editarlo</Divider>
+        <Divider sx={{ my: 1 }}>Toca un docente para editarlo</Divider>
       </Box>
     </div>
   );
 };
-export default StudentsScreen;
+export default TeachersScreen;

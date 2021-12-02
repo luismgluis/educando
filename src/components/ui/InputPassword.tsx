@@ -3,12 +3,10 @@ import {
   FormControl,
   IconButton,
   InputAdornment,
-  InputLabel,
   OutlinedInput,
   OutlinedInputProps,
-  TextField,
 } from "@mui/material";
-import { bgcolor } from "@mui/system";
+
 import React from "react";
 const TAG = "INPUT PASSWORD";
 

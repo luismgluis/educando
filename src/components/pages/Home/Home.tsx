@@ -40,8 +40,6 @@ const Home: React.FC<HomeProps> = ({ prop1 }) => {
           marginLeft: isDesktop ? "200px" : undefined,
         }}
       >
-        
-        
       </Box> */}
       {/* {homeGoTo.screen === "EditUser" && <EditProfile userData={userTest} />}
         {homeGoTo.screen === "InfoUser" && (

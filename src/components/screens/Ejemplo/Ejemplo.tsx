@@ -1,6 +1,5 @@
 import { Button } from "@mui/material";
 
-
 function Ejemplo(){
 
     const ejecutar = () => {
