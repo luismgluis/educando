@@ -26,15 +26,18 @@ const BusinessScreen: React.FC<BusinessScreenProps> = ({}) => {
   const [businesArr, setBusinesArr] = useState<Business[]>([]);
 
   useEffect(() => {
+    const arr = [0, 0, 0, 0].map((item) => {
+      return new Business(null);
+    });
+    setBusinesArr(arr);
     Api.database.user
       .getUserBusiness(me.id)
       .then((arr) => {
-        setBusinesArr(arr);
+        // setBusinesArr(arr);
       })
       .catch((err) => {
         setBusinesArr([]);
       });
-    return () => {};
   }, [me]);
   return (
     <div className="BusinessScreen">

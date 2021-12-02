@@ -4,7 +4,6 @@ import {
   CardHeader,
   Avatar,
   IconButton,
-  CardMedia,
   CardContent,
   Typography,
   CardActions,
@@ -57,4 +56,3 @@ const StudentRemove: React.FC<StudentRemoveProps> = ({ onSave }) => {
   );
 };
 export default StudentRemove;
-

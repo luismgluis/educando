@@ -7,9 +7,11 @@ const TAG = "FIRE DATABASE USER";
 class FireDatabaseUser {
   private app: App;
   private allUsers: any;
+  private allBusiness: any;
   constructor(app: App) {
     this.app = app;
     this.allUsers = {};
+    this.allBusiness = {};
   }
   saveUser(user: User): Promise<User> {
     const that = this;
@@ -98,8 +100,8 @@ class FireDatabaseUser {
     const db = this.app.database();
     return new Promise<User>((resolve, reject) => {
       try {
-        if (typeof that.allUsers[uid] !== "undefined") {
-          resolve(that.allUsers[uid]);
+        if (typeof that.allBusiness[uid] !== "undefined") {
+          resolve(that.allBusiness[uid]);
           return;
         }
         db.collection("users")
@@ -110,11 +112,11 @@ class FireDatabaseUser {
               const data: any = result.data();
               data.id = result.id;
               const user = new User(data);
-              that.allUsers[uid] = user;
+              that.allBusiness[uid] = user;
               resolve(user);
               return;
             }
-            reject("Not user");
+            reject("Not business");
           })
           .catch((err) => {
             console.log("catch", err);
@@ -151,7 +153,7 @@ class FireDatabaseUser {
               resolve(arr);
               return;
             }
-            reject("Not user");
+            resolve([]);
           })
           .catch((err) => {
             console.log("catch", err);

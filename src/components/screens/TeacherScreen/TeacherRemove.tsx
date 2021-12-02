@@ -4,26 +4,24 @@ import {
   CardHeader,
   Avatar,
   IconButton,
-  CardMedia,
   CardContent,
   Typography,
   CardActions,
+  Button,
 } from "@mui/material";
 import { red } from "@mui/material/colors";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
-import FavoriteIcon from "@mui/icons-material/Favorite";
-import Business from "../../../classes/Business";
+import utils from "../../../libs/utils/utils";
 
-const TAG = "BUSINESS CARD";
-type BusinessCardProps = {
-  business: Business;
-  onSelect: (b: Business) => void;
+const TAG = "TEACHER CARD";
+type TeacherRemoveProps = {
+  onSave?: any;
 };
-const BusinessCard: React.FC<BusinessCardProps> = ({ onSelect, business }) => {
+const TeacherRemove: React.FC<TeacherRemoveProps> = ({ onSave }) => {
   console.log(TAG, "render");
   return (
-    <div className="BusinessCard">
-      <Card sx={{ maxWidth: 345 }}>
+    <div className="TeacherRemove">
+      <Card>
         <CardHeader
           avatar={
             <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe">
@@ -35,8 +33,8 @@ const BusinessCard: React.FC<BusinessCardProps> = ({ onSelect, business }) => {
               <MoreVertIcon />
             </IconButton>
           }
-          title="Shrimp and Chorizo Paella"
-          subheader="September 14, 2016"
+          title="Nuevo cliente"
+          subheader={utils.dates.dateNowString()}
         />
         {/* <CardMedia
           component="img"
@@ -46,21 +44,15 @@ const BusinessCard: React.FC<BusinessCardProps> = ({ onSelect, business }) => {
         /> */}
         <CardContent>
           <Typography variant="body2" color="text.secondary">
-            This impressive paella is a perfect party dish and a fun meal to
-            cook together with your guests. Add 1 cup of frozen peas along with
-            the mussels, if you like.
+            This impressive paella is a perfect party dish and a fun meal to.
           </Typography>
         </CardContent>
         <CardActions disableSpacing>
-          <IconButton
-            aria-label="add to favorites"
-            onClick={() => onSelect(business)}
-          >
-            <FavoriteIcon />
-          </IconButton>
+          <Button>Guardar</Button>
+          <Button>Cancelar</Button>
         </CardActions>
       </Card>
     </div>
   );
 };
-export default BusinessCard;
+export default TeacherRemove;
