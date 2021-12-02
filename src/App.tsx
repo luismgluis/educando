@@ -9,6 +9,11 @@ import Login from "./components/pages/Login/Login";
 import Home from "./components/pages/Home/Home";
 import CustomersScreen from "./components/screens/CustomersScreen/CustomersScreen";
 import BusinessScreen from "./components/screens/BusinessScreen/BusinessScreen";
+import StudentsScreen from "./components/screens/StudentsScreen/StudentsScreen";
+import TeachersScreen from "./components/screens/TeacherScreen/TeachersScreen";
+import StudentProfile from "./components/screens/StudentProfile/StudentProfile";
+import InstitutionProfile from "./components/screens/InstitutionProfile/InstitutionProfile";
+import TeacherProfile from "./components/screens/TeacherProfile/TeacherProfile";
 
 type RoutesType = {
   path: string;
@@ -19,6 +24,31 @@ type RoutesType = {
 function App() {
   const routes = useMemo(() => {
     const arr: RoutesType[] = [
+      {
+        path: "/teacherProfile",
+        element: <TeacherProfile />,
+        private: false,
+      },
+      {
+        path: "/institutionProfile",
+        element: <InstitutionProfile />,
+        private: false,
+      },
+      {
+        path: "/studentProfile",
+        element: <StudentProfile />,
+        private: false,
+      },
+      {
+        path: "/students",
+        element: <StudentsScreen />,
+        private: false,
+      },
+      {
+        path: "/teachers",
+        element: <TeachersScreen />,
+        private: false,
+      },
       {
         path: "/customers",
         element: <CustomersScreen />,

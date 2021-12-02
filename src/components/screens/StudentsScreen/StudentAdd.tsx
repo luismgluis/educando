@@ -55,7 +55,7 @@ const StudentAdd: React.FC<StudentAddProps> = ({
           }
           title={
             <Typography variant="h6">
-              {!currentStudent.isEmpty ? "Editar cliente" : "Nuevo estudiante"}
+              {!currentStudent.isEmpty ? "Editar estudiante" : "Nuevo estudiante"}
             </Typography>
           }
           subheader={
