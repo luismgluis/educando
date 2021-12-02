@@ -14,14 +14,14 @@ import { red } from "@mui/material/colors";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import utils from "../../../libs/utils/utils";
 
-const TAG = "STUDENT CARD";
-type StudentRemoveProps = {
+const TAG = "CUSTOMENR CARD";
+type CustomerRemoveProps = {
   onSave?: any;
 };
-const StudentRemove: React.FC<StudentRemoveProps> = ({ onSave }) => {
+const CustomerRemove: React.FC<CustomerRemoveProps> = ({ onSave }) => {
   console.log(TAG, "render");
   return (
-    <div className="StudentRemove">
+    <div className="CustomerRemove">
       <Card>
         <CardHeader
           avatar={
@@ -34,7 +34,7 @@ const StudentRemove: React.FC<StudentRemoveProps> = ({ onSave }) => {
               <MoreVertIcon />
             </IconButton>
           }
-          title="Nuevo estudiante"
+          title="Nuevo cliente"
           subheader={utils.dates.dateNowString()}
         />
         {/* <CardMedia
@@ -45,7 +45,7 @@ const StudentRemove: React.FC<StudentRemoveProps> = ({ onSave }) => {
         /> */}
         <CardContent>
           <Typography variant="body2" color="text.secondary">
-            Este es el contenido de una tarjeta para un nuevo estudiante.
+            This impressive paella is a perfect party dish and a fun meal to.
           </Typography>
         </CardContent>
         <CardActions disableSpacing>
@@ -56,4 +56,4 @@ const StudentRemove: React.FC<StudentRemoveProps> = ({ onSave }) => {
     </div>
   );
 };
-export default StudentRemove;
+export default CustomerRemove;
