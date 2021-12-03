@@ -1,10 +1,6 @@
 import "./TeachersScreen.scss";
 import React, { useCallback, useEffect, useState } from "react";
-import {
-  Button,
-  Divider,
-  TextField,
-} from "@mui/material";
+import { Button, Divider, TextField } from "@mui/material";
 
 import Teacher from "../../../classes/Teacher";
 import {
@@ -25,7 +21,7 @@ const TeacherEmpty = () => new Teacher(null);
 const TeachersScreen: React.FC<TeachersScreenProps> = () => {
   console.log(TAG, "rendererizamos este componente");
 
-  const [rows, setRows] = useState<Business[]>([]);
+  const [rows, setRows] = useState<Teacher[]>([]);
   const [search, setSearch] = useState("");
   const [currentTeacher, setCurrentTeacher] = useState(TeacherEmpty());
   const [addUserEnable, setAddUserEnable] = useState(false);
@@ -102,6 +98,11 @@ const TeachersScreen: React.FC<TeachersScreenProps> = () => {
         />
       </CModal>
       <Box p={4}>
+        <CustomerSelected
+          currentTeacher={currentTeacher}
+          setCurrentTeacher={setCurrentTeacher}
+          onEdit={(c) => setModifyUser(c)}
+        />
         <Box display="flex" alignItems="center" justifyItems="center">
           <TextField
             size="small"

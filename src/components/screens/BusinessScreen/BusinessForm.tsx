@@ -1,37 +1,44 @@
-import React, { useCallback } from "react";
-import { Button, CardActions, TextField } from "@mui/material";
+import React, { useCallback, useState } from "react";
+import { Alert, Button, CardActions, TextField } from "@mui/material";
 import { Box } from "@mui/system";
 
-import Teacher, { TeacherInterface } from "../../../classes/Teacher";
+import Business, { BusinessInterface } from "../../../classes/Business";
 import utils from "../../../libs/utils/utils";
 
-const TAG = "TEACHER FORM";
-type TeacherFormProps = {
-  currentTeacher?: Teacher;
-  onChange: (c: Teacher) => void;
+const TAG = "Business FORM";
+type BusinessFormProps = {
+  currentBusiness?: Business;
+  onChange: (c: Business) => void;
 };
-const TeacherForm: React.FC<TeacherFormProps> = ({ onChange }) => {
+const BusinessForm: React.FC<BusinessFormProps> = ({ onChange }) => {
   console.log(TAG, "render");
+  const [alert, setAlert] = useState("");
   const handleSubmit = useCallback(
     (event: React.FormEvent<HTMLFormElement>) => {
       event.preventDefault();
+      setAlert("");
       const formData = new FormData(event.currentTarget);
-      const data: TeacherInterface = {
+      const data: BusinessInterface = {
         id: "NN",
         name: formData.get("given-name") + "",
-        lastName: formData.get("last-name") + "",
-        subject: formData.get("subject") + "",
         email: formData.get("email") + "",
-        idCard: formData.get("idCard") + "",
+        description: formData.get("description") + "",
         creationDate: utils.dates.dateNowUnix(),
       };
-      const newTeacher = new Teacher(data);
-      onChange(newTeacher);
+      const newBusiness = new Business(data);
+      if (newBusiness.validate()) {
+        onChange(newBusiness);
+        return;
+      }
+      setTimeout(() => {
+        setAlert("Datos invalidos");
+      }, 200);
     },
     [onChange]
   );
   return (
-    <div className="TeacherForm">
+    <div className="BusinessForm">
+      {alert && <Alert severity="error">{alert}</Alert>}
       <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
         <TextField
           margin="normal"
@@ -43,24 +50,6 @@ const TeacherForm: React.FC<TeacherFormProps> = ({ onChange }) => {
           autoComplete="none"
           placeholder="Nombre"
         />
-        <TextField
-          margin="normal"
-          required
-          fullWidth
-          id="lastname"
-          label="Apellido"
-          name="last-name"
-          placeholder="Apellido"
-        />
-        <TextField
-          margin="normal"
-          required
-          fullWidth
-          id="subject"
-          label="Asignatura"
-          autoComplete="subject"
-          name="subject"
-        />
 
         <TextField
           margin="normal"
@@ -71,15 +60,14 @@ const TeacherForm: React.FC<TeacherFormProps> = ({ onChange }) => {
           autoComplete="email"
           name="email"
         />
-
         <TextField
           margin="normal"
-          required
           fullWidth
-          id="idCard"
-          label="Cédula"
-          name="idCard"
-          placeholder="Cédula"
+          id="description"
+          label="Descripción"
+          name="description"
+          autoComplete="none"
+          placeholder="Descripción"
         />
 
         <CardActions disableSpacing>
@@ -96,4 +84,4 @@ const TeacherForm: React.FC<TeacherFormProps> = ({ onChange }) => {
     </div>
   );
 };
-export default TeacherForm;
+export default BusinessForm;

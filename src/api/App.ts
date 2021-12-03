@@ -100,14 +100,16 @@ class App {
               if (credential !== null) {
                 console.log(TAG, credential);
                 const userData = result.user;
-                const user = new User({
-                  id: userData?.uid + "",
-                  name: userData?.displayName + "",
-                  email: `${userData?.email}`.toLowerCase(),
-                  creationDate: utils.dates.dateNowUnix(),
-                });
-                saveInfo(user, resolve, reject);
-                return;
+                if (userData) {
+                  const user = new User({
+                    id: userData.uid + "",
+                    name: userData.displayName + "",
+                    email: `${userData.email}`.toLowerCase(),
+                    creationDate: utils.dates.dateNowUnix(),
+                  });
+                  saveInfo(user, resolve, reject);
+                  return;
+                }
               }
               resolve(false);
             })

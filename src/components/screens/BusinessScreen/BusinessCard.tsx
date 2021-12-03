@@ -8,26 +8,38 @@ import {
   CardContent,
   Typography,
   CardActions,
+  Button,
+  Box,
 } from "@mui/material";
 import { red } from "@mui/material/colors";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import Business from "../../../classes/Business";
+import { Remove } from "@mui/icons-material";
+import { useCurrentBusiness } from "../../../hooks/currentBusiness";
+import utils from "../../../libs/utils/utils";
 
 const TAG = "BUSINESS CARD";
 type BusinessCardProps = {
   business: Business;
   onSelect: (b: Business) => void;
+  onRemove: (b: Business) => void;
 };
-const BusinessCard: React.FC<BusinessCardProps> = ({ onSelect, business }) => {
+const BusinessCard: React.FC<BusinessCardProps> = ({
+  onSelect,
+  business,
+  onRemove,
+}) => {
   console.log(TAG, "render");
+  const cBusiness = useCurrentBusiness();
+
   return (
     <div className="BusinessCard">
-      <Card sx={{ maxWidth: 345 }}>
+      <Card sx={{ maxWidth: 580 }}>
         <CardHeader
           avatar={
             <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe">
-              R
+              {business.name.substr(0, 1)}
             </Avatar>
           }
           action={
@@ -35,8 +47,8 @@ const BusinessCard: React.FC<BusinessCardProps> = ({ onSelect, business }) => {
               <MoreVertIcon />
             </IconButton>
           }
-          title="Shrimp and Chorizo Paella"
-          subheader="September 14, 2016"
+          title={business.name}
+          subheader={utils.dates.unixToString(business.creationDate)}
         />
         {/* <CardMedia
           component="img"
@@ -46,18 +58,52 @@ const BusinessCard: React.FC<BusinessCardProps> = ({ onSelect, business }) => {
         /> */}
         <CardContent>
           <Typography variant="body2" color="text.secondary">
-            This impressive paella is a perfect party dish and a fun meal to
-            cook together with your guests. Add 1 cup of frozen peas along with
-            the mussels, if you like.
+            {business.description}
           </Typography>
         </CardContent>
         <CardActions disableSpacing>
-          <IconButton
+          <Box
+            sx={{
+              flexDirection: "row",
+              display: "flex",
+              width: "100%",
+            }}
+          >
+            <Box sx={{ flexGrow: 2 }}>
+              <Button
+                onClick={() => onSelect(business)}
+                variant={
+                  cBusiness.id === business.id ? "contained" : "outlined"
+                }
+                startIcon={<FavoriteIcon />}
+              >
+                Seleccionar
+              </Button>
+            </Box>
+
+            <Box
+              sx={{
+                flexGrow: 2,
+                display: "flex",
+                flexDirection: "row-reverse",
+              }}
+            >
+              <Button
+                onClick={() => onRemove(business)}
+                color="error"
+                variant={"outlined"}
+                startIcon={<Remove />}
+              >
+                Eliminar
+              </Button>
+            </Box>
+          </Box>
+          {/* <IconButton
             aria-label="add to favorites"
-            onClick={() => onSelect(business)}
+            
           >
             <FavoriteIcon />
-          </IconButton>
+          </IconButton> */}
         </CardActions>
       </Card>
     </div>

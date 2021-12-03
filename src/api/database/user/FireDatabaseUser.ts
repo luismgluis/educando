@@ -100,8 +100,8 @@ class FireDatabaseUser {
     const db = this.app.database();
     return new Promise<User>((resolve, reject) => {
       try {
-        if (typeof that.allBusiness[uid] !== "undefined") {
-          resolve(that.allBusiness[uid]);
+        if (typeof that.allUsers[uid] !== "undefined") {
+          resolve(that.allUsers[uid]);
           return;
         }
         db.collection("users")
@@ -112,7 +112,7 @@ class FireDatabaseUser {
               const data: any = result.data();
               data.id = result.id;
               const user = new User(data);
-              that.allBusiness[uid] = user;
+              that.allUsers[uid] = user;
               resolve(user);
               return;
             }
@@ -132,24 +132,23 @@ class FireDatabaseUser {
     const db = this.app.database();
     return new Promise<Business[]>((resolve, reject) => {
       try {
-        if (typeof that.allUsers[uid] !== "undefined") {
-          resolve(that.allUsers[uid]);
-          return;
-        }
         db.collection("users")
           .doc(uid)
           .collection("business")
           .get()
-          .then((result) => {
+          .then(async (result) => {
             if (!result.empty) {
               const arr: Business[] = [];
-              result.forEach((item) => {
-                const data: any = item.data();
-                data.id = item.id;
-                const business = new Business(data);
-                arr.push(business);
-              });
-
+              for (const key in result.docs) {
+                const element = result.docs[key];
+                const idBusiness: string = element.id;
+                const data = await that.app.databaseFns.business
+                  .getBusiness(idBusiness)
+                  .catch(() => null);
+                if (data) {
+                  arr.push(data);
+                }
+              }
               resolve(arr);
               return;
             }
@@ -163,6 +162,42 @@ class FireDatabaseUser {
         reject(error);
       }
     });
+  }
+  getUserBusinessListener(uid: string, callBack: (res: Business[]) => void) {
+    const that = this;
+    const db = this.app.database();
+    let allData: any = [];
+
+    const unsubs = db
+      .collection("users")
+      .doc(uid)
+      .collection("business")
+      .onSnapshot(
+        async (result) => {
+          if (!result.empty) {
+            const arr: Business[] = [];
+            for (const key in result.docs) {
+              const element = result.docs[key];
+              const idBusiness: string = element.id;
+              const data = await that.app.databaseFns.business
+                .getBusiness(idBusiness)
+                .catch(() => null);
+              if (data) {
+                arr.push(data);
+              }
+            }
+            allData = arr;
+            callBack(arr);
+            return;
+          }
+          callBack([]);
+        },
+        (err) => {
+          callBack(allData);
+        }
+      );
+
+    return unsubs;
   }
 }
 

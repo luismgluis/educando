@@ -15,7 +15,6 @@ import TeacherForm from "./TeacherForm";
 import Teacher from "../../../classes/Teacher";
 import EditIcon from "@mui/icons-material/Edit";
 
-
 type TeacherAddProps = {
   onSave?: (res: boolean) => void;
   onClose?: () => void;
