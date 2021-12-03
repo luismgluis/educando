@@ -1,5 +1,6 @@
 import { Box, Button, Stack, TextField, Typography } from "@mui/material";
 import useMobile from "../../../hooks/useMobile";
+import StudentsScreen from "../StudentsScreen/StudentsScreen";
 
 function InstitutionProfile() {
   const isDesktop = useMobile("desktop");

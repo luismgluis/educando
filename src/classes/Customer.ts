@@ -36,6 +36,13 @@ export default class Customer implements CustomerInterface {
   public get isEmpty(): boolean {
     return this.id === "";
   }
+  // la propiedad validate que me piden luego del error 3-12-21
+  validate() {
+    if (this.name.length < 2) return false;
+    if (!utils.validateEmail(this.email)) return false;
+    if (this.creationDate <= 0) return false;
+    return true;
+  }
 
   exportObject() {
     const newOb = utils.objects.cloneObject(this);

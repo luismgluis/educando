@@ -14,6 +14,7 @@ import TeachersScreen from "./components/screens/TeacherScreen/TeachersScreen";
 import StudentProfile from "./components/screens/StudentProfile/StudentProfile";
 import InstitutionProfile from "./components/screens/InstitutionProfile/InstitutionProfile";
 import TeacherProfile from "./components/screens/TeacherProfile/TeacherProfile";
+import ClassesScreen from "./components/screens/ClassesScreen/ClassesScreen";
 
 type RoutesType = {
   path: string;
@@ -24,6 +25,11 @@ type RoutesType = {
 function App() {
   const routes = useMemo(() => {
     const arr: RoutesType[] = [
+      {
+        path: "/classes",
+        element: <ClassesScreen />,
+        private: false,
+      },
       {
         path: "/teacherProfile",
         element: <TeacherProfile />,
@@ -57,12 +63,12 @@ function App() {
       {
         path: "/business",
         element: <BusinessScreen />,
-        private: true,
+        private: false,
       },
       {
         path: "/home",
         element: <Home />,
-        private: true,
+        private: false,
       },
       {
         path: "/login",

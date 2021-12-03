@@ -1,6 +1,6 @@
 import utils from "../libs/utils/utils";
 
-export interface StudentInterface {
+export interface ClassInterface {
   id: string;
   name: string;
   lastName: string;
@@ -13,7 +13,7 @@ export interface StudentInterface {
   creationDate: number;
   isNull?: boolean;
 }
-export default class Student implements StudentInterface {
+export default class Class implements ClassInterface {
   id: string;
   name: string;
   lastName: string;
@@ -25,7 +25,7 @@ export default class Student implements StudentInterface {
   activeClasses: string;
   creationDate: number;
   isNull?: boolean;
-  constructor(data: StudentInterface | null, isNull?: boolean) {
+  constructor(data: ClassInterface | null, isNull?: boolean) {
     this.name = data?.name || "";
     this.id = data?.id || "";
     this.activeClasses = data?.activeClasses || "";
@@ -42,7 +42,7 @@ export default class Student implements StudentInterface {
   public get isEmpty(): boolean {
     return this.id === "";
   }
- // la propiedad validate que me piden en student luego del error 3-12-21
+  // la propiedad validate que me piden en student luego del error 3-12-21
   validate() {
     if (this.name.length < 2) return false;
     if (!utils.validateEmail(this.email)) return false;

@@ -1,15 +1,15 @@
 import "./StudentsScreen.scss";
 import React, { useCallback, useEffect, useState } from "react";
 import {
-  Avatar,
+  //Avatar,
   Button,
-  Card,
-  CardHeader,
+  //Card,
+  //CardHeader,
   Divider,
-  IconButton,
-  Modal,
+  //IconButton,
+ // Modal,
   TextField,
-  Typography,
+  //Typography,
 } from "@mui/material";
 
 import Student from "../../../classes/Student";
@@ -122,7 +122,14 @@ const StudentsScreen: React.FC<StudentsScreenProps> = () => {
           onSave={() => setModifyUser(StudentEmpty())}
         />
       </CModal>
+      {// box como en teachers screen}
+        
       <Box p={4}>
+      <StudentSelected
+          currentStudent={currentStudent}
+          setCurrentStudent={setCurrentStudent}
+          onEdit={(c) => setModifyUser(c)}
+        />
         <Box display="flex" alignItems="center" justifyItems="center">
           <TextField
             size="small"
@@ -159,7 +166,8 @@ const StudentsScreen: React.FC<StudentsScreenProps> = () => {
           />
         </Box>
         <Divider sx={{ my: 1 }}>Toca un estudiante para editarlo</Divider>
-      </Box>
+        </Box>
+    };
     </div>
   );
 };
