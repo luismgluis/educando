@@ -8,8 +8,11 @@ import CustomersScreen from "../../screens/CustomersScreen/CustomersScreen";
 import BusinessScreen from "../../screens/BusinessScreen/BusinessScreen";
 import RoutersScreen from "../../screens/RoutersScreen/RoutersScreen";
 import TeachersScreen from "../../screens/TeacherScreen/TeachersScreen";
+<<<<<<< Updated upstream
 
 
+=======
+>>>>>>> Stashed changes
 const TAG = "HOME";
 type HomeProps = {
   prop1?: any;
@@ -37,7 +40,10 @@ const Home: React.FC<HomeProps> = ({ prop1 }) => {
         {homeGoTo.screen === "BusinessScreen" && <BusinessScreen />}
         {homeGoTo.screen === "RoutersScreen" && <RoutersScreen />}
         {homeGoTo.screen === "TeachersScreen" && <TeachersScreen />}
+<<<<<<< Updated upstream
 
+=======
+>>>>>>> Stashed changes
       </div>
       {/* <Box
         sx={{
@@ -45,7 +51,10 @@ const Home: React.FC<HomeProps> = ({ prop1 }) => {
           marginLeft: isDesktop ? "200px" : undefined,
         }}
       >
+<<<<<<< Updated upstream
 
+=======
+>>>>>>> Stashed changes
       </Box> */}
       {/* {homeGoTo.screen === "EditUser" && <EditProfile userData={userTest} />}
         {homeGoTo.screen === "InfoUser" && (

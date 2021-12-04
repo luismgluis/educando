@@ -50,10 +50,16 @@ const NavBar: React.FC<NavBarProps> = ({ onOpenMenu, menuOpened }) => {
         return "Routers soportados";
 
       case "BusinessScreen":
+<<<<<<< Updated upstream
         return "Mis Empresas";
 
         case "TeachersScreen":
           return "Docentes";
+=======
+        return "Busqueda de usuarios";
+      case "TeachersScreen":
+        return "Busqueda de docentes";
+>>>>>>> Stashed changes
       default:
         break;
     }

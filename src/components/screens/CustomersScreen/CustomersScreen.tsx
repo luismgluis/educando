@@ -1,4 +1,5 @@
 import "./CustomersScreen.scss";
+<<<<<<< Updated upstream
 import React, { useCallback, useEffect, useState } from "react";
 import {
   Avatar,
@@ -153,5 +154,20 @@ const CustomersScreen: React.FC<CustomersScreenProps> = () => {
       </Box>
     </div>
   );
+=======
+import React, { Fragment } from "react";
+import SearchBar from "../../ui/SearchBar/SearchBar";
+const TAG = "USERS SCREENS";
+type CustomersScreenProps = {
+  prop1?: any;
+};
+const CustomersScreen: React.FC<CustomersScreenProps> = ({ prop1 }) => {
+  console.log(TAG, "render");
+  return (
+    <Fragment>
+      <SearchBar />
+    </Fragment>
+    );
+>>>>>>> Stashed changes
 };
 export default CustomersScreen;
