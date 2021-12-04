@@ -9,38 +9,40 @@ import useMobile from "../../../hooks/useMobile";
 type CustomListProps = {
   isVisible: boolean;
   onClose: () => void;
+  element: HTMLElement | null;
 };
 const CustomList: React.FC<CustomListProps> = ({
   isVisible = false,
   onClose,
+  element,
 }) => {
   const me = useCurrentUser();
-  const [open, setOpen] = useState(false);
+
   const isMobile = useMobile();
 
   const handleClose = useCallback(() => {
-    console.log("err");
-    // setOpen(false);
     onClose();
   }, [onClose]);
 
-  useEffect(() => {
-    setOpen(isVisible);
-  }, [isVisible]);
-
+  console.log("isMobile", isMobile);
   return (
     <Menu
-      id="menu-appbar"
-      // anchorEl={currentElement}
-      anchorOrigin={{
-        vertical: isMobile ? "bottom" : "top",
-        horizontal: "right",
-      }}
-      keepMounted
-      transformOrigin={{
-        vertical: "top",
-        horizontal: "right",
-      }}
+      id="menu-appbarr"
+      anchorEl={element}
+      // anchorOrigin={{
+      //   vertical: "bottom",
+      //   horizontal: "right",
+      // }}
+      // keepMounted
+      // transformOrigin={{
+      //   vertical: "bottom",
+      //   horizontal: "right",
+      // }}
+      keepMounted={false}
+      anchorPosition={{ left: 1, top: 30 }}
+      anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
+      anchorReference="anchorEl"
+      transformOrigin={{ vertical: "bottom", horizontal: "center" }}
       open={isVisible}
       onClose={() => handleClose()}
     >

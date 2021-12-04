@@ -12,7 +12,7 @@ type CustomAvatarProps = {
 const CustomAvatar: React.FC<CustomAvatarProps> = ({ prop1 }) => {
   console.log(TAG, "render");
   const [menuVisible, setMenuVisible] = useState(false);
-
+  const [element, setElement] = useState<null | HTMLElement>(null);
   const me = useCurrentUser();
   const initials = useMemo(() => {
     let text = "";
@@ -24,8 +24,9 @@ const CustomAvatar: React.FC<CustomAvatarProps> = ({ prop1 }) => {
   return (
     <Stack direction="row" spacing={2}>
       <div
-        onClick={() => {
+        onClick={(e) => {
           setMenuVisible(!menuVisible);
+          setElement(e.currentTarget);
         }}
       >
         <IconButton
@@ -33,6 +34,13 @@ const CustomAvatar: React.FC<CustomAvatarProps> = ({ prop1 }) => {
           aria-label="upload picture"
           component="span"
         >
+          <CustomList
+            element={element}
+            isVisible={menuVisible}
+            onClose={() => {
+              setMenuVisible(!menuVisible);
+            }}
+          />
           <Avatar
             sx={{ bgcolor: deepOrange[500] }}
             alt="Remy Sharp"
@@ -41,13 +49,6 @@ const CustomAvatar: React.FC<CustomAvatarProps> = ({ prop1 }) => {
             {initials}
           </Avatar>
         </IconButton>
-
-        <CustomList
-          isVisible={menuVisible}
-          onClose={() => {
-            setMenuVisible(!menuVisible);
-          }}
-        />
       </div>
     </Stack>
   );

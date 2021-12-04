@@ -78,14 +78,28 @@ const NavBarList: React.FC<NavBarListProps> = ({ onSelect }) => {
         <ListItemIcon>
           <PersonSearchIcon />
         </ListItemIcon>
-        <ListItemText primary="Consultar usuario" />
+        <ListItemText primary="Usuarios" />
       </ListItemButton>
 
-      <ListItemButton onClick={() => customGoto("AddUser")}>
+      <ListItemButton onClick={() => customGoto("TeachersScreen")}>
+        <ListItemIcon>
+          <PersonSearchIcon />
+        </ListItemIcon>
+        <ListItemText primary="Docentes" />
+      </ListItemButton>
+
+      <ListItemButton onClick={() => customGoto("BusinessScreen")}>
         <ListItemIcon>
           <PersonAddIcon />
         </ListItemIcon>
-        <ListItemText primary="Agregar usuario" />
+        <ListItemText primary="Empresas" />
+      </ListItemButton>
+
+      <ListItemButton onClick={() => customGoto("RoutersScreen")}>
+        <ListItemIcon>
+          <PersonAddIcon />
+        </ListItemIcon>
+        <ListItemText primary="Routers" />
       </ListItemButton>
 
       {/* <ListItemButton onClick={handleClick}>

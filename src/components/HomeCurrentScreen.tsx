@@ -2,4 +2,5 @@ export type HomeCurrentScreen =
   | "BusinessScreen"
   | "UsersScreen"
   | "RoutersScreen"
-  | "AddUser";
+  | "AddUser"
+  | "TeachersScreen";

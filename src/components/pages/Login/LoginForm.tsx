@@ -169,7 +169,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ prop1 }) => {
               </Link>
             </Grid>
             <Grid item>
-              <Link href="#" variant="body2">
+              <Link href="/loginCreate" variant="body2">
                 {"Aun no tengo una cuenta"}
               </Link>
             </Grid>

@@ -3,10 +3,13 @@ import React, { useState } from "react";
 import NavBar from "../../ui/NavBar/NavBar";
 import NavBarDrawer from "../../ui/NavBar/NavBarDrawer";
 import { useHomeGoTo } from "../../../hooks/useHomeGoTo";
-import useMobile from "../../../hooks/useMobile";
+//import useMobile from "../../../hooks/useMobile";
 import CustomersScreen from "../../screens/CustomersScreen/CustomersScreen";
 import BusinessScreen from "../../screens/BusinessScreen/BusinessScreen";
 import RoutersScreen from "../../screens/RoutersScreen/RoutersScreen";
+import TeachersScreen from "../../screens/TeacherScreen/TeachersScreen";
+
+
 const TAG = "HOME";
 type HomeProps = {
   prop1?: any;
@@ -15,7 +18,7 @@ const Home: React.FC<HomeProps> = ({ prop1 }) => {
   console.log(TAG, "render");
   const homeGoTo = useHomeGoTo();
   const [visibleDrawer, setVisibleDrawer] = useState(false);
-  const isDesktop = useMobile("desktop");
+  //const isDesktop = useMobile("desktop");
 
   return (
     <div className="Home">
@@ -33,6 +36,8 @@ const Home: React.FC<HomeProps> = ({ prop1 }) => {
         {homeGoTo.screen === "UsersScreen" && <CustomersScreen />}
         {homeGoTo.screen === "BusinessScreen" && <BusinessScreen />}
         {homeGoTo.screen === "RoutersScreen" && <RoutersScreen />}
+        {homeGoTo.screen === "TeachersScreen" && <TeachersScreen />}
+
       </div>
       {/* <Box
         sx={{
@@ -40,14 +45,14 @@ const Home: React.FC<HomeProps> = ({ prop1 }) => {
           marginLeft: isDesktop ? "200px" : undefined,
         }}
       >
-        
-        
+
       </Box> */}
       {/* {homeGoTo.screen === "EditUser" && <EditProfile userData={userTest} />}
         {homeGoTo.screen === "InfoUser" && (
           <Profile userData={homeGoTo.parms} />
         )}
         {homeGoTo.screen === "AddUser" && <AddUser />} */}
+
     </div>
   );
 };

@@ -5,7 +5,6 @@ import {
   BottomNavigation,
   BottomNavigationAction,
   Box,
-  Button,
   IconButton,
   styled,
   Toolbar,
@@ -36,22 +35,25 @@ const NavBar: React.FC<NavBarProps> = ({ onOpenMenu, menuOpened }) => {
   const isDesktop = useMobile("desktop");
   const theme = useTheme();
 
-  const contrastColorPrimary = useMemo(() => {
-    return theme.palette.getContrastText(theme.palette.primary.main);
-  }, [theme]);
+  // const contrastColorPrimary = useMemo(() => {
+  //   return theme.palette.getContrastText(theme.palette.primary.main);
+  // }, [theme]);
 
   const homeGoTo = useHomeGoTo();
 
   const nameScreen = useMemo(() => {
     switch (homeGoTo.screen) {
       case "UsersScreen":
-        return "Editar Usuario";
+        return "Clientes";
 
       case "RoutersScreen":
-        return "Informacion del Usuario";
+        return "Routers soportados";
 
       case "BusinessScreen":
-        return "Busqueda de usuarios";
+        return "Mis Empresas";
+
+        case "TeachersScreen":
+          return "Docentes";
       default:
         break;
     }
@@ -75,18 +77,18 @@ const NavBar: React.FC<NavBarProps> = ({ onOpenMenu, menuOpened }) => {
           >
             <BottomNavigationAction
               onClick={onOpenMenu}
-              icon={
-                <MenuIcon fontSize="large" htmlColor={contrastColorPrimary} />
-              }
+              icon={<MenuIcon fontSize="large" />}
             />
-            <Button
-              fullWidth
-              variant="contained"
-              disableElevation
-              color="inherit"
+            <Box
+              justifyContent="center"
+              alignItems="center"
+              display="flex"
+              width="100%"
             >
-              {nameScreen}
-            </Button>
+              <Typography variant="subtitle1" fontWeight={600}>
+                {nameScreen}
+              </Typography>
+            </Box>
             <BottomNavigationAction icon={<CustomAvatar />} />
           </BottomNavigation>
         )}

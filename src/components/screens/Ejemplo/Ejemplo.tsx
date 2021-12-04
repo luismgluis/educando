@@ -11,6 +11,8 @@ function Ejemplo(){
                 ejecutar()
             }
         }>Primary</Button>
+
+        <Button variant="contained">Ejemplo</Button>
     </div>
 }
 export default Ejemplo;

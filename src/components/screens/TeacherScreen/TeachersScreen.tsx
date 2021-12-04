@@ -1,18 +1,12 @@
-import "./CustomersScreen.scss";
+import "./TeachersScreen.scss";
 import React, { useCallback, useEffect, useState } from "react";
 import {
-  Avatar,
   Button,
-  Card,
-  CardHeader,
   Divider,
-  IconButton,
-  Modal,
   TextField,
-  Typography,
 } from "@mui/material";
 
-import Customer from "../../../classes/Customer";
+import Teacher from "../../../classes/Teacher";
 import {
   DataGrid,
   GridColDef,
@@ -21,31 +15,27 @@ import {
 } from "@mui/x-data-grid";
 import { Box } from "@mui/system";
 import Business from "../../../classes/Business";
-import CustomerAdd from "./CustomerAdd";
+import TeacherAdd from "./TeacherAdd";
 import CModal from "../../ui/CModal/CModal";
-import CustomerSelected from "./CustomerSelected";
+import CustomerSelected from "./TeacherSelected";
 
-const TAG = "USERS SCREENS";
-type CustomersScreenProps = {};
-const customerEmpty = () => new Customer(null);
-const CustomersScreen: React.FC<CustomersScreenProps> = () => {
+const TAG = "TEACEHRS SCREENS";
+type TeachersScreenProps = {};
+const TeacherEmpty = () => new Teacher(null);
+const TeachersScreen: React.FC<TeachersScreenProps> = () => {
   console.log(TAG, "rendererizamos este componente");
 
   const [rows, setRows] = useState<Business[]>([]);
   const [search, setSearch] = useState("");
-  const [currentCustomer, setCurrentCustomer] = useState(customerEmpty());
+  const [currentTeacher, setCurrentTeacher] = useState(TeacherEmpty());
   const [addUserEnable, setAddUserEnable] = useState(false);
-  const [modifyUser, setModifyUser] = useState(customerEmpty());
+  const [modifyUser, setModifyUser] = useState(TeacherEmpty());
 
   const columns: GridColDef[] = [
-    { field: "id", headerName: "ID", width: 70 },
+    { field: "id", headerName: "ID", width: 100 },
     { field: "name", headerName: "Nombre", width: 130 },
     { field: "lastName", headerName: "Apellido", width: 130 },
-    {
-      field: "ip",
-      headerName: "IP",
-      width: 110,
-    },
+    { field: "subject", headerName: "Asignatura", width: 130 },
     {
       field: "fullName",
       headerName: "Full name",
@@ -63,14 +53,13 @@ const CustomersScreen: React.FC<CustomersScreenProps> = () => {
     const searchValue = search.toLowerCase();
     const rows = [0, 0, 0, 0].map(
       (item, index) =>
-        new Customer({
-          name: "Pepe P" + index,
-          lastName: "apapap",
+        new Teacher({
+          name: "Andrés" + index,
+          lastName: "Murillo",
+          subject: "Matemáticas",
           id: Number(index + 1) + "",
           idCard: "1234566",
-          ip: "192.168.3.3",
-          router: "asdasdaaa",
-          email: "grajales805@gmail.com",
+          email: "afmurillor@gmail.com",
           creationDate: 0,
         })
     );
@@ -80,7 +69,6 @@ const CustomersScreen: React.FC<CustomersScreenProps> = () => {
         ? rows.filter((item) => {
             const nn = (item.name + " " + item.lastName).toLowerCase();
             if (nn.includes(searchValue)) return true;
-            if (item.ip.includes(searchValue)) return true;
             return false;
           })
         : rows
@@ -89,15 +77,15 @@ const CustomersScreen: React.FC<CustomersScreenProps> = () => {
 
   const onRowClick = useCallback((e: GridRowParams) => {
     console.log(TAG, e.row);
-    const customer: any = e.row;
-    setCurrentCustomer(customer);
+    const teacher: any = e.row;
+    setCurrentTeacher(teacher);
   }, []);
 
   return (
-    <div className="CustomersScreen">
+    <div className="TeachersScreen">
       {/* agregar usuarios */}
       <CModal open={addUserEnable} onClose={() => setAddUserEnable(false)}>
-        <CustomerAdd
+        <TeacherAdd
           onClose={() => setAddUserEnable(false)}
           onSave={() => setAddUserEnable(false)}
         />
@@ -105,12 +93,12 @@ const CustomersScreen: React.FC<CustomersScreenProps> = () => {
       {/* editar usuarios */}
       <CModal
         open={!modifyUser.isEmpty}
-        onClose={() => setModifyUser(customerEmpty())}
+        onClose={() => setModifyUser(TeacherEmpty())}
       >
-        <CustomerAdd
-          originalCustomer={modifyUser}
-          onClose={() => setModifyUser(customerEmpty())}
-          onSave={() => setModifyUser(customerEmpty())}
+        <TeacherAdd
+          originalTeacher={modifyUser}
+          onClose={() => setModifyUser(TeacherEmpty())}
+          onSave={() => setModifyUser(TeacherEmpty())}
         />
       </CModal>
       <Box p={4}>
@@ -131,10 +119,10 @@ const CustomersScreen: React.FC<CustomersScreenProps> = () => {
           </Button>
         </Box>
         <Divider sx={{ my: 1 }} />
-        {!currentCustomer.isEmpty && (
+        {!currentTeacher.isEmpty && (
           <CustomerSelected
-            currentCustomer={currentCustomer}
-            setCurrentCustomer={setCurrentCustomer}
+            currentTeacher={currentTeacher}
+            setCurrentTeacher={setCurrentTeacher}
             onEdit={(c) => setModifyUser(c)}
           />
         )}
@@ -149,9 +137,9 @@ const CustomersScreen: React.FC<CustomersScreenProps> = () => {
             onRowClick={onRowClick}
           />
         </Box>
-        <Divider sx={{ my: 1 }}>Toca un cliente para editarlo</Divider>
+        <Divider sx={{ my: 1 }}>Toca un docente para editarlo</Divider>
       </Box>
     </div>
   );
 };
-export default CustomersScreen;
+export default TeachersScreen;
