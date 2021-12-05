@@ -11,49 +11,38 @@ import {
 import { blue, green } from "@mui/material/colors";
 import CloseIcon from "@mui/icons-material/Close";
 import utils from "../../../libs/utils/utils";
-import StudentForm from "./StudentForm";
-import Student from "../../../classes/Student";
+import ClassForm from "./ClassForm";
+import Class from "../../../classes/Class";
 import EditIcon from "@mui/icons-material/Edit";
-import Api from "../../../api/Api";
 
-const TAG = "STUDENT CARD";
-type StudentAddProps = {
+type ClassAddProps = {
   onSave?: (res: boolean) => void;
   onClose?: () => void;
-  originalStudent?: Student | null;
+  originalClass?: Class | null;
 };
-const StudentAdd: React.FC<StudentAddProps> = ({
+const ClassAdd: React.FC<ClassAddProps> = ({
   onSave = () => null,
   onClose = () => null,
-  originalStudent = null,
+  originalClass = null,
 }) => {
-  const [currentStudent, setCurrentStudent] = useState(new Student(null));
+  const [currentClass, setCurrentClass] = useState(new Class(null));
 
   useEffect(() => {
-    if (originalStudent) setCurrentStudent(originalStudent);
-  }, [originalStudent]);
-
-  useEffect(() => {
-    if (!currentStudent.isEmpty) {
-      //  Api.database.student.saveStudent(me, currentBusiness).then(() => {
-      //    console.log("Business saved");
-      //  });
-      //  onSave(true);
-    }
-  }, [currentStudent]);
+    if (originalClass) setCurrentClass(originalClass);
+  }, [originalClass]);
 
   return (
-    <div className="StudentAdd">
+    <div className="ClassAdd">
       <Card>
         <CardHeader
           avatar={
             <Avatar
               sx={{
-                bgcolor: !currentStudent.isEmpty ? blue[400] : green[500],
+                bgcolor: !currentClass.isEmpty ? blue[400] : green[500],
               }}
               aria-label="recipe"
             >
-              {!currentStudent.isEmpty ? <EditIcon /> : "+"}
+              {!currentClass.isEmpty ? <EditIcon /> : "+"}
             </Avatar>
           }
           action={
@@ -63,26 +52,40 @@ const StudentAdd: React.FC<StudentAddProps> = ({
           }
           title={
             <Typography variant="h6">
-              {!currentStudent.isEmpty
-                ? "Editar estudiante"
-                : "Nuevo estudiante"}
+              {!currentClass.isEmpty ? "Editar estudiante" : "Nuevo estudiante"}
             </Typography>
           }
           subheader={
-            !currentStudent.isEmpty
-              ? `(${currentStudent.id}) ${currentStudent.name}`
+            !currentClass.isEmpty
+              ? `(${currentClass.id}) ${currentClass.name}`
               : `Fecha: ${utils.dates.dateNowString()}`
           }
         />
         <CardContent>
           <Typography variant="body2" color="text.secondary">
-            Llena los datos a continuación.
+            Llena los datos acontinuación.
           </Typography>
           <Divider sx={{ mb: 2, mt: 1 }}></Divider>
-          <StudentForm onChange={(e) => setCurrentStudent(e)} />
+          <ClassForm onChange={(e) => setCurrentClass(e)} />
         </CardContent>
+        {/* <CardActions disableSpacing>
+          <Button
+            variant="contained"
+            color="primary"
+            sx={{
+              mr: 3,
+            }}
+            disabled={currentClass.isEmpty}
+            onClick={(e) => onSave(true)}
+          >
+            Guardar
+          </Button>
+          <Button color="error" onClick={(e) => onSave(false)}>
+            Cancelar
+          </Button>
+        </CardActions> */}
       </Card>
     </div>
   );
 };
-export default StudentAdd;
+export default ClassAdd;

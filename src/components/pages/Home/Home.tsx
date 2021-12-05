@@ -7,6 +7,7 @@ import useMobile from "../../../hooks/useMobile";
 import CustomersScreen from "../../screens/CustomersScreen/CustomersScreen";
 import BusinessScreen from "../../screens/BusinessScreen/BusinessScreen";
 import RoutersScreen from "../../screens/RoutersScreen/RoutersScreen";
+import { Box } from "@mui/material";
 const TAG = "HOME";
 type HomeProps = {
   prop1?: any;
@@ -26,21 +27,22 @@ const Home: React.FC<HomeProps> = ({ prop1 }) => {
         />
       </div>
       <div className="HomeRight">
-        <NavBar
-          onOpenMenu={() => setVisibleDrawer(!visibleDrawer)}
-          menuOpened={visibleDrawer}
-        />
-        {homeGoTo.screen === "UsersScreen" && <CustomersScreen />}
-        {homeGoTo.screen === "BusinessScreen" && <BusinessScreen />}
-        {homeGoTo.screen === "RoutersScreen" && <RoutersScreen />}
+        <Box
+          sx={{
+            width: `80%`,
+            marginLeft: isDesktop ? "20%" : undefined,
+          }}
+        >
+          <NavBar
+            onOpenMenu={() => setVisibleDrawer(!visibleDrawer)}
+            menuOpened={visibleDrawer}
+          />
+          {homeGoTo.screen === "StudentsScreen" && <CustomersScreen />}
+          {homeGoTo.screen === "BusinessScreen" && <BusinessScreen />}
+          {homeGoTo.screen === "TeachersScreen" && <RoutersScreen />}
+        </Box>
       </div>
-      {/* <Box
-        sx={{
-          width: `calc(100% - ${isDesktop ? 200 : 0}px)`,
-          marginLeft: isDesktop ? "200px" : undefined,
-        }}
-      >
-      </Box> */}
+
       {/* {homeGoTo.screen === "EditUser" && <EditProfile userData={userTest} />}
         {homeGoTo.screen === "InfoUser" && (
           <Profile userData={homeGoTo.parms} />

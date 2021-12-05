@@ -37,7 +37,9 @@ const BusinessAdd: React.FC<BusinessAddProps> = ({
 
   useEffect(() => {
     if (!currentBusiness.isEmpty) {
-      Api.database.business.saveBusiness(me, currentBusiness);
+      Api.database.business.saveBusiness(me, currentBusiness).then(() => {
+        console.log("Business saved");
+      });
       onSave(true);
     }
   }, [currentBusiness, onSave, me]);
@@ -48,7 +50,7 @@ const BusinessAdd: React.FC<BusinessAddProps> = ({
           avatar={
             <Avatar
               sx={{
-                bgcolor: !currentBusiness.isEmpty ? blue[400] : green[500],
+                bgcolor: (t) => t.palette.primary.light,
               }}
               aria-label="recipe"
             >

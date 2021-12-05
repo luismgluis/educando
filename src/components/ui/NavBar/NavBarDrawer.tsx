@@ -30,8 +30,9 @@ const NavBarDrawer: React.FC<NavBarDrawerProps> = ({ open, onClose }) => {
 
   useEffect(() => {
     // if is desktop always is open
+    if (isTablet) return;
     if (isDesktop) toggleDrawer(true);
-  }, [isDesktop, toggleDrawer]);
+  }, [isDesktop, isTablet, toggleDrawer]);
 
   useEffect(() => {
     // if is not desktop set invisible
@@ -46,10 +47,12 @@ const NavBarDrawer: React.FC<NavBarDrawerProps> = ({ open, onClose }) => {
       variant={isDesktop ? "persistent" : "temporary"}
       sx={{
         width: isDesktop ? drawerWidth : undefined,
+
         flexShrink: 0,
         [`& .MuiDrawer-paper`]: {
           width: isDesktop ? drawerWidth : undefined,
           boxSizing: "border-box",
+          bgcolor: (t) => t.palette.primary.dark,
         },
       }}
       open={visible}

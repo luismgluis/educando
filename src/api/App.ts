@@ -107,6 +107,7 @@ class App {
                     email: `${userData.email}`.toLowerCase(),
                     creationDate: utils.dates.dateNowUnix(),
                   });
+                  sessionStorage.setItem("uid", user.id);
                   saveInfo(user, resolve, reject);
                   return;
                 }
@@ -144,6 +145,7 @@ class App {
             // Signed in
             const user = userCredential.user;
             if (user) {
+              sessionStorage.setItem("uid", user.uid);
               resolve(user.uid);
               return;
             }

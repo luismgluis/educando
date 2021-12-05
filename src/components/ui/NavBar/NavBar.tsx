@@ -41,22 +41,7 @@ const NavBar: React.FC<NavBarProps> = ({ onOpenMenu, menuOpened }) => {
   }, [theme]);
 
   const homeGoTo = useHomeGoTo();
-
-  const nameScreen = useMemo(() => {
-    switch (homeGoTo.screen) {
-      case "UsersScreen":
-        return "Clientes";
-
-      case "RoutersScreen":
-        return "Routers soportados";
-
-      case "BusinessScreen":
-        return "Mis Empresas";
-      default:
-        break;
-    }
-  }, [homeGoTo]);
-
+  console.log("homeGoTo", homeGoTo);
   return (
     <React.Fragment>
       <Box
@@ -71,7 +56,7 @@ const NavBar: React.FC<NavBarProps> = ({ onOpenMenu, menuOpened }) => {
         {isMobile && (
           <BottomNavigation
             showLabels
-            sx={{ bgcolor: theme.palette.grey[200] }}
+            sx={{ bgcolor: theme.palette.primary.main }}
           >
             <BottomNavigationAction
               onClick={onOpenMenu}
@@ -84,7 +69,7 @@ const NavBar: React.FC<NavBarProps> = ({ onOpenMenu, menuOpened }) => {
               width="100%"
             >
               <Typography variant="subtitle1" fontWeight={600}>
-                {nameScreen}
+                {homeGoTo.name}
               </Typography>
             </Box>
             <BottomNavigationAction icon={<CustomAvatar />} />
@@ -97,10 +82,9 @@ const NavBar: React.FC<NavBarProps> = ({ onOpenMenu, menuOpened }) => {
             color="inherit"
             sx={{
               width: `calc(100% - ${menuOpened || isDesktop ? 20 : 0}%)`,
-              minWidth: menuOpened ? "200px" : undefined,
-              bgcolor: theme.palette.grey[100],
+              minWidth: menuOpened || !isDesktop ? "200px" : undefined,
+              bgcolor: theme.palette.primary.main,
             }}
-            elevation={2}
           >
             <Toolbar>
               <IconButton
@@ -116,7 +100,7 @@ const NavBar: React.FC<NavBarProps> = ({ onOpenMenu, menuOpened }) => {
                 <MenuIcon />
               </IconButton>
               <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-                {nameScreen}
+                {homeGoTo.name}
               </Typography>
 
               {/* <Avatar alt="Cindy Baker" src="/static/images/avatar/3.jpg" /> */}

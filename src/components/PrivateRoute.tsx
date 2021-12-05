@@ -29,10 +29,11 @@ const PrivateRoute: React.FC<PrivateRouteProps> = ({
       setHasSession(2); //yes
       return;
     }
-    setHasSession(1); //no
+    setHasSession(3); //no
   }, []);
 
   useEffect(() => {
+    if (hasSession !== 2) return;
     const unsubs = Api.app.getCurrentUser(async (userResult) => {
       if (userResult) {
         const userData: any = await Api.database.user.getUser(userResult?.uid!);
@@ -47,7 +48,7 @@ const PrivateRoute: React.FC<PrivateRouteProps> = ({
       setHasSession(3);
       return () => unsubs();
     });
-  }, [setMe]);
+  }, [setMe, hasSession]);
 
   const hasUser = !me.isEmpty;
 
@@ -73,14 +74,8 @@ const PrivateRoute: React.FC<PrivateRouteProps> = ({
         <Navigate to="/Login" />
       )}
 
-      {(hasUser || blockRedirect) && children}
-
-      {/* 
-      {hasSession === 3 && me.isEmpty && !blockRedirect && (
-        <Navigate to="/Login" />
-      )}
-
-      {(!me.isEmpty || blockRedirect) && children} */}
+      {hasSession === 3 && !hasUser && blockRedirect && children}
+      {hasUser && children}
     </React.Fragment>
   );
 };

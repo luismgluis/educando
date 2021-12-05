@@ -1,3 +1,4 @@
+import { AlertType } from "../../components/ui/Alert/useAlert";
 import { HomeCurrentScreen } from "./../../components/HomeCurrentScreen";
 
 const setTotalHeight = (totalHeight: number) => (dispatch: any) => {
@@ -22,16 +23,24 @@ const setLanguage = (language: string) => (dispatch: any) => {
 };
 
 const setHomeNavigation =
-  (screen: HomeCurrentScreen, parms: any) => (dispatch: any) => {
+  (screen: HomeCurrentScreen, name: string, parms: any) => (dispatch: any) => {
     dispatch({
       type: "setHomeNavigation",
-      payload: { screen: screen, parms: parms },
+      payload: { screen: screen, parms: parms, name: name },
     });
   };
+
+const setAlertData = (data: AlertType) => (dispatch: any) => {
+  dispatch({
+    type: "setAlertData",
+    payload: data,
+  });
+};
 
 export const reduxGeneralValues = {
   setTotalHeight,
   setTheme,
   setLanguage,
   setHomeNavigation,
+  setAlertData,
 };

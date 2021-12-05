@@ -1,6 +1,13 @@
 import "./BusinessScreen.scss";
 import React, { useCallback, useEffect, useState } from "react";
-import { Card, CardActionArea, Grid, Typography } from "@mui/material";
+import {
+  Card,
+  CardActionArea,
+  Container,
+  Grid,
+  Typography,
+  useTheme,
+} from "@mui/material";
 import Business from "../../../classes/Business";
 import BusinessCard from "./BusinessCard";
 import Api from "../../../api/Api";
@@ -18,16 +25,19 @@ const TAG = "BusinessScreen";
 type BusinessScreenProps = {};
 
 const AddNewBusinessButton = (props: any) => {
+  const theme = useTheme();
   return (
     <Grid item xs={12} sm={6} md={4} key={`GridBusiness00`}>
       <CardActionArea onClick={props.onClick}>
         <Card
           className="AddNewBusiness"
-          sx={(t) => ({ bgcolor: t.palette.grey["100"], width: "100%" })}
+          sx={(t) => ({ bgcolor: t.palette.secondary.light, width: "100%" })}
         >
-          <MoreIcon color="disabled" sx={{ fontSize: 80 }} />
+          <MoreIcon sx={{ fontSize: 80, color: "secondary.darkPlus" }} />
           <Box position="absolute" bottom={0} p={2}>
-            <Typography color="GrayText">Agregar Nuevo</Typography>
+            <Typography sx={{ color: "secondary.darkPlus" }}>
+              Unirse o crear
+            </Typography>
           </Box>
         </Card>
       </CardActionArea>
@@ -77,6 +87,23 @@ const BusinessScreen: React.FC<BusinessScreenProps> = ({}) => {
           onSave={() => setAddUserEnable(false)}
         />
       </CModal>
+      <Container component="main" sx={{ mt: 8, mb: 2 }} maxWidth="sm">
+        <Typography variant="h4" component="h1" gutterBottom>
+          {cBusiness.isEmpty ? "Bienvenid@" : `${cBusiness.name}`}
+        </Typography>
+
+        <Typography variant="h5" component="h2" gutterBottom>
+          {cBusiness.isEmpty
+            ? "Primero escoge una institución"
+            : `Esta es la intitucion seleccionada`}
+        </Typography>
+        <Typography variant="body1">
+          {cBusiness.description ? cBusiness.description : ""}
+          {businesArr.length === 0
+            ? "Parece que no tienes intituciones asociadas, intenta creando una nueva."
+            : ""}
+        </Typography>
+      </Container>
       <Grid container spacing={2} padding={2}>
         <AddNewBusinessButton
           onClick={() => setAddUserEnable(!addUserEnable)}

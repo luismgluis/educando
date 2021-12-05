@@ -12,10 +12,18 @@ const ThemeConfig = createTheme({
   ...tp,
   palette: {
     primary: {
-      main: "#86377b", //purple[500],
+      main: "#00bbd3", //purple[500],
+      light: "#62eeff",
+      dark: "#008ba2",
+      darkPlus: "#006070",
+      contrastText: "#000000",
     },
     secondary: {
-      main: blue[800],
+      main: "#ed407a",
+      light: "#ff77a9",
+      dark: "#b5004e",
+      darkPlus: "#760033",
+      contrastText: "#000000",
     },
   },
 });

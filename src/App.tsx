@@ -1,8 +1,8 @@
 import React, { useMemo } from "react";
 import "./App.css";
 import ThemeConfig from "./components/theme/ThemeConfig";
-import { ThemeProvider } from "@emotion/react";
-import { CssBaseline } from "@mui/material";
+
+import { CssBaseline, ThemeProvider } from "@mui/material";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import PrivateRoute from "./components/PrivateRoute";
 import Login from "./components/pages/Login/Login";
@@ -14,6 +14,8 @@ import TeachersScreen from "./components/screens/TeacherScreen/TeachersScreen";
 import StudentProfile from "./components/screens/StudentProfile/StudentProfile";
 import InstitutionProfile from "./components/screens/InstitutionProfile/InstitutionProfile";
 import TeacherProfile from "./components/screens/TeacherProfile/TeacherProfile";
+import ClassesScreen from "./components/screens/ClassesScreen/ClassesScreen";
+import CustomAlert from "./components/ui/Alert/CustomAlert";
 
 type RoutesType = {
   path: string;
@@ -24,6 +26,11 @@ type RoutesType = {
 function App() {
   const routes = useMemo(() => {
     const arr: RoutesType[] = [
+      {
+        path: "/classes",
+        element: <ClassesScreen />,
+        private: false,
+      },
       {
         path: "/teacherProfile",
         element: <TeacherProfile />,
@@ -83,6 +90,7 @@ function App() {
     return arr.map((item, index) => {
       const ele = item.private ? (
         <PrivateRoute
+          key={`RouteApp${index}`}
           path={item.path}
           blockRedirect={item.path === "/login" || item.path === "/loginCreate"}
         >
@@ -98,6 +106,7 @@ function App() {
     <ThemeProvider theme={ThemeConfig}>
       <CssBaseline />
       <BrowserRouter>
+        <CustomAlert />
         <Routes>{routes}</Routes>
       </BrowserRouter>
     </ThemeProvider>

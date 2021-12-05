@@ -21,6 +21,7 @@ import Api from "../../../api/Api";
 import { useLocation } from "react-router-dom";
 import { useGoto } from "../../../hooks/useGoTo";
 import { useCurrentUser } from "../../../hooks/currentUser";
+import { useAlert } from "../../ui/Alert/useAlert";
 
 const TAG = "LOGIN FORM";
 type LoginFormProps = {
@@ -30,6 +31,8 @@ const LoginForm: React.FC<LoginFormProps> = ({ prop1 }) => {
   console.log(TAG, "render");
   const { state } = useLocation();
   const goTo = useGoto();
+  const alert = useAlert();
+
   const [loginError, setLoginError] = useState("");
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
@@ -162,14 +165,22 @@ const LoginForm: React.FC<LoginFormProps> = ({ prop1 }) => {
           >
             Ingresar
           </Button>
-          <Grid container>
+          <Grid container spacing={2}>
             <Grid item xs>
-              <Link href="#" variant="body2">
+              <Link
+                onClick={() =>
+                  alert({
+                    enabled: true,
+                    title: "Aun no podemos ayudarte con eso",
+                  })
+                }
+                variant="body2"
+              >
                 Olvide mi contraseña
               </Link>
             </Grid>
             <Grid item>
-              <Link href="#" variant="body2">
+              <Link onClick={goTo.loginCreate} variant="body2">
                 {"Aun no tengo una cuenta"}
               </Link>
             </Grid>

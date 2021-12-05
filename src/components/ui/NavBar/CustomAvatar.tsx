@@ -42,7 +42,7 @@ const CustomAvatar: React.FC<CustomAvatarProps> = ({ prop1 }) => {
             }}
           />
           <Avatar
-            sx={{ bgcolor: deepOrange[500] }}
+            sx={{ bgcolor: (t) => t.palette.secondary.dark }}
             alt="Remy Sharp"
             src="/broken-image.jpg"
           >

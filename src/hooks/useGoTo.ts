@@ -5,7 +5,7 @@ export const useGoto = () => {
   const navigate = useNavigate();
 
   const login = useCallback(
-    (parms: any) => {
+    (parms: any = null) => {
       navigate("/login", { state: parms });
     },
     [navigate]

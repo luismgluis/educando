@@ -1,8 +1,8 @@
-import "./StudentsScreen.scss";
+import "./ClassesScreen.scss";
 import React, { useCallback, useEffect, useState } from "react";
 import { Button, Divider, TextField } from "@mui/material";
 
-import Student from "../../../classes/Student";
+import Class from "../../../classes/Class";
 import {
   DataGrid,
   GridColDef,
@@ -10,24 +10,23 @@ import {
   GridValueGetterParams,
 } from "@mui/x-data-grid";
 import { Box } from "@mui/system";
-import Business from "../../../classes/Business";
-import StudentAdd from "./StudentAdd";
+//import Business from "../../../classes/Business";
+import ClassAdd from "./ClassAdd";
 import CModal from "../../ui/CModal/CModal";
-import StudentSelected from "./StudentSelected";
-import { useAlert } from "../../ui/Alert/useAlert";
+import ClassSelected from "./ClassSelected";
+import { Add, AddCircle, PlusOne } from "@mui/icons-material";
 
-const TAG = "STUDENTS SCREENS";
-type StudentsScreenProps = {};
-const StudentEmpty = () => new Student(null);
-const StudentsScreen: React.FC<StudentsScreenProps> = () => {
+const TAG = "CLASSES SCREEN";
+type ClassesScreenProps = {};
+const ClassEmpty = () => new Class(null);
+const ClassesScreen: React.FC<ClassesScreenProps> = () => {
   console.log(TAG, "rendererizamos este componente");
 
-  const [rows, setRows] = useState<Student[]>([]);
+  const [rows, setRows] = useState<Class[]>([]);
   const [search, setSearch] = useState("");
-  const [currentStudent, setCurrentStudent] = useState(StudentEmpty());
+  const [currentClass, setCurrentClass] = useState(ClassEmpty());
   const [addUserEnable, setAddUserEnable] = useState(false);
-  const [modifyUser, setModifyUser] = useState(StudentEmpty());
-  const alert = useAlert();
+  const [modifyUser, setModifyUser] = useState(ClassEmpty());
 
   const columns: GridColDef[] = [
     { field: "id", headerName: "ID", width: 70 },
@@ -46,28 +45,22 @@ const StudentsScreen: React.FC<StudentsScreenProps> = () => {
     },
     { field: "grade", headerName: "Grado", width: 130 },
     { field: "group", headerName: "Grupo", width: 130 },
-
-    // {
-    //   field: "ip",
-    //   headerName: "IP",
-    //   width: 110,
-    // },
   ];
 
   useEffect(() => {
     const searchValue = search.toLowerCase();
     const rows = [0, 0, 0, 0].map(
       (item, index) =>
-        new Student({
-          name: "Paula", //+ index,
-          lastName: "Vergara Solis",
+        new Class({
+          name: "Claudia", //+ index,
+          lastName: "Solano Carvajal",
           id: Number(index + 1) + "",
-          idCard: "200192839",
-          email: "paula.vs@gmail.com",
-          code: "23",
+          idCard: "200091912",
+          email: "claudia.sc@gmail.com",
+          code: "13",
           grade: "4",
-          group: "C",
-          activeClasses: "Español-Inglés-Cocina",
+          group: "B",
+          activeClasses: "Matemáticas-Biología-Danza",
           //ip: "192.168.3.3",
           //router: "nohaynada",
           //email: "grajales805@gmail.com",
@@ -80,7 +73,6 @@ const StudentsScreen: React.FC<StudentsScreenProps> = () => {
         ? rows.filter((item) => {
             const nn = (item.name + " " + item.lastName).toLowerCase();
             if (nn.includes(searchValue)) return true;
-            if (item.code.includes(searchValue)) return true;
             return false;
           })
         : rows
@@ -89,15 +81,15 @@ const StudentsScreen: React.FC<StudentsScreenProps> = () => {
 
   const onRowClick = useCallback((e: GridRowParams) => {
     console.log(TAG, e.row);
-    const student: any = e.row;
-    setCurrentStudent(student);
+    const Class: any = e.row;
+    setCurrentClass(Class);
   }, []);
 
   return (
-    <div className="StudentsScreen">
+    <div className="ClassesScreen">
       {/* agregar usuarios */}
       <CModal open={addUserEnable} onClose={() => setAddUserEnable(false)}>
-        <StudentAdd
+        <ClassAdd
           onClose={() => setAddUserEnable(false)}
           onSave={() => setAddUserEnable(false)}
         />
@@ -105,15 +97,19 @@ const StudentsScreen: React.FC<StudentsScreenProps> = () => {
       {/* editar usuarios */}
       <CModal
         open={!modifyUser.isEmpty}
-        onClose={() => setModifyUser(StudentEmpty())}
+        onClose={() => setModifyUser(ClassEmpty())}
       >
-        <StudentAdd
-          originalStudent={modifyUser}
-          onClose={() => setModifyUser(StudentEmpty())}
-          onSave={() => setModifyUser(StudentEmpty())}
+        <ClassAdd
+          originalClass={modifyUser}
+          onClose={() => setModifyUser(ClassEmpty())}
+          onSave={() => setModifyUser(ClassEmpty())}
         />
       </CModal>
       <Box p={4}>
+        <div>
+          <h1>Classes info</h1>
+        </div>
+        <Divider sx={{ my: 1 }}>Listado de estudiantes en clase</Divider>
         <Box display="flex" alignItems="center" justifyItems="center">
           <TextField
             size="small"
@@ -126,32 +122,16 @@ const StudentsScreen: React.FC<StudentsScreenProps> = () => {
             color="info"
             variant="contained"
             onClick={() => setAddUserEnable(!addUserEnable)}
+            startIcon={<AddCircle />}
           >
-            Nuevo
-          </Button>
-          <Button
-            color="info"
-            variant="contained"
-            onClick={() =>
-              alert({
-                title: "Hola",
-                enabled: true,
-                okButton: "Ok",
-                noButton: "Cancelar",
-                onClose: (res) => {
-                  console.log("resres", res);
-                },
-              })
-            }
-          >
-            alert
+            Estudiante
           </Button>
         </Box>
         <Divider sx={{ my: 1 }} />
-        {!currentStudent.isEmpty && (
-          <StudentSelected
-            currentStudent={currentStudent}
-            setCurrentStudent={setCurrentStudent}
+        {!currentClass.isEmpty && (
+          <ClassSelected
+            currentClass={currentClass}
+            setCurrentClass={setCurrentClass}
             onEdit={(c) => setModifyUser(c)}
           />
         )}
@@ -171,4 +151,4 @@ const StudentsScreen: React.FC<StudentsScreenProps> = () => {
     </div>
   );
 };
-export default StudentsScreen;
+export default ClassesScreen;
