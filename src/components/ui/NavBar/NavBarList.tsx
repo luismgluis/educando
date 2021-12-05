@@ -39,8 +39,8 @@ const NavBarList: React.FC<NavBarListProps> = ({ onSelect, onlyList }) => {
   const setHomeGoTo = useSetHomeGoTo();
   const customGoto = useCallback(
     (screen: any, name: string) => {
-      setHomeGoTo(screen, name);
       if (onSelect) onSelect();
+      setHomeGoTo(screen, name);
     },
     [setHomeGoTo, onSelect]
   );

@@ -10,18 +10,18 @@ type NavBarDrawerProps = {
 const NavBarDrawer: React.FC<NavBarDrawerProps> = ({ open, onClose }) => {
   console.log(TAG, "render");
   const [visible, setVisible] = useState(false);
-
-  const toggleDrawer = useCallback(
-    (show: boolean) => {
-      setVisible(show);
-      if (onClose && !show) onClose();
-    },
-    [onClose]
-  );
-
   const isMobile = useMobile();
   const isDesktop = useMobile("desktop");
   const isTablet = useMobile("tablet");
+
+  const toggleDrawer = useCallback(
+    (show: boolean) => {
+      if (isDesktop) return;
+      setVisible(show);
+      if (onClose && !show) onClose();
+    },
+    [onClose, isDesktop]
+  );
 
   useEffect(() => {
     // open when props send (button press)
@@ -30,8 +30,9 @@ const NavBarDrawer: React.FC<NavBarDrawerProps> = ({ open, onClose }) => {
 
   useEffect(() => {
     // if is desktop always is open
-    if (isTablet) return;
-    if (isDesktop) toggleDrawer(true);
+    // if (isTablet) return;
+    if (isDesktop) return;
+    toggleDrawer(true);
   }, [isDesktop, isTablet, toggleDrawer]);
 
   useEffect(() => {
