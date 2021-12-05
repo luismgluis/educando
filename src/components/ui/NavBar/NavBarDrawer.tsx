@@ -9,7 +9,7 @@ type NavBarDrawerProps = {
 };
 const NavBarDrawer: React.FC<NavBarDrawerProps> = ({ open, onClose }) => {
   console.log(TAG, "render");
-  const [visible, setVisible] = useState(false);
+  const [visible, setVisible] = useState(true);
   const isMobile = useMobile();
   const isDesktop = useMobile("desktop");
   const isTablet = useMobile("tablet");
@@ -24,21 +24,13 @@ const NavBarDrawer: React.FC<NavBarDrawerProps> = ({ open, onClose }) => {
   );
 
   useEffect(() => {
-    // open when props send (button press)
-    if ((isMobile || isTablet) && open) setVisible(true);
-  }, [isMobile, open, isTablet]);
-
-  useEffect(() => {
-    // if is desktop always is open
-    // if (isTablet) return;
-    if (isDesktop) return;
-    toggleDrawer(true);
-  }, [isDesktop, isTablet, toggleDrawer]);
-
-  useEffect(() => {
-    // if is not desktop set invisible
-    if (!isDesktop) setVisible(false);
-  }, [isDesktop, setVisible]);
+    if (isDesktop) {
+      setVisible(true);
+      return;
+    }
+    if (isTablet) setVisible(open || false);
+    if (isMobile) setVisible(open || false);
+  }, [isDesktop, isTablet, isMobile, open, setVisible]);
 
   console.log(TAG, "isMobile", isMobile, "isdesktop", isDesktop);
   const drawerWidth = "20%";

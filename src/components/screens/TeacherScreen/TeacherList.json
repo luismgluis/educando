@@ -1,0 +1,100 @@
+[
+  {
+    "name": "Willa",
+    "lastname": "Iglesias",
+    "idCard": 1128223401,
+    "subject": "Biología",
+    "email": "dictum@gmail.com"
+  },
+  {
+    "name": "Hadley",
+    "lastname": "Cano",
+    "idCard": 1278421751,
+    "subject": "Biología",
+    "email": "gravida@gmail.com"
+  },
+  {
+    "name": "Molly",
+    "lastname": "Lopez",
+    "idCard": 1378418789,
+    "subject": "Matemáticas",
+    "email": "dignissim.tempor@gmail.com"
+  },
+  {
+    "name": "Penelope",
+    "lastname": "Cabrera",
+    "idCard": 1783555881,
+    "subject": "Español",
+    "email": "turpis@gmail.com"
+  },
+  {
+    "name": "Justin",
+    "lastname": "Torres",
+    "idCard": 1781718252,
+    "subject": "Español",
+    "email": "aliquet.diam.sed@gmail.com"
+  },
+  {
+    "name": "Candace",
+    "lastname": "Delgado",
+    "idCard": 1877551806,
+    "subject": "Matemáticas",
+    "email": "ridiculus.mus.aenean@gmail.com"
+  },
+  {
+    "name": "Isadora",
+    "lastname": "Ferrer",
+    "idCard": 1042986924,
+    "subject": "Español",
+    "email": "eget.laoreet@gmail.com"
+  },
+  {
+    "name": "Adrian",
+    "lastname": "Marin",
+    "idCard": 1126276361,
+    "subject": "Geometría",
+    "email": "sem.nulla.interdum@gmail.com"
+  },
+  {
+    "name": "Juston",
+    "lastname": "Iglesias",
+    "idCard": 1816304623,
+    "subject": "Español",
+    "email": "eu.placerat@gmail.com"
+  },
+  {
+    "name": "Steven",
+    "lastname": "Peña",
+    "idCard": 1226492283,
+    "subject": "Español",
+    "email": "nunc.sed@gmail.com"
+  },
+  {
+    "name": "Latifah",
+    "lastname": "Cortes",
+    "idCard": 1012350518,
+    "subject": "Español",
+    "email": "placerat.cras.dictum@gmail.com"
+  },
+  {
+    "name": "Lydia",
+    "lastname": "Arias",
+    "idCard": 1812522267,
+    "subject": "Geometría",
+    "email": "mollis.integer@gmail.com"
+  },
+  {
+    "name": "Tanya",
+    "lastname": "Gonzalez",
+    "idCard": 1152528118,
+    "subject": "Biología",
+    "email": "risus.in.mi@gmail.com"
+  },
+  {
+    "name": "Julian",
+    "lastname": "Marquez",
+    "idCard": 1766881552,
+    "subject": "Español",
+    "email": "lorem.lorem@gmail.com"
+  }
+]

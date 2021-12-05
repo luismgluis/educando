@@ -17,6 +17,7 @@ import MenuIcon from "@mui/icons-material/Menu";
 import useMobile from "../../../hooks/useMobile";
 import { useHomeGoTo } from "../../../hooks/useHomeGoTo";
 import CustomAvatar from "./CustomAvatar";
+import { useCurrentBusiness } from "../../../hooks/currentBusiness";
 
 const TAG = "NAV BAR";
 type NavBarProps = {
@@ -35,6 +36,7 @@ const NavBar: React.FC<NavBarProps> = ({ onOpenMenu, menuOpened }) => {
   const isMobile = useMobile();
   const isDesktop = useMobile("desktop");
   const theme = useTheme();
+  const cBusiness = useCurrentBusiness();
 
   const contrastColorPrimary = useMemo(() => {
     return theme.palette.getContrastText(theme.palette.primary.main);
@@ -70,6 +72,7 @@ const NavBar: React.FC<NavBarProps> = ({ onOpenMenu, menuOpened }) => {
             >
               <Typography variant="subtitle1" fontWeight={600}>
                 {homeGoTo.name}
+                {!cBusiness.isEmpty ? ` - ${cBusiness.name}` : ""}
               </Typography>
             </Box>
             <BottomNavigationAction icon={<CustomAvatar />} />
@@ -101,6 +104,7 @@ const NavBar: React.FC<NavBarProps> = ({ onOpenMenu, menuOpened }) => {
               </IconButton>
               <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
                 {homeGoTo.name}
+                {!cBusiness.isEmpty ? ` - ${cBusiness.name}` : ""}
               </Typography>
 
               {/* <Avatar alt="Cindy Baker" src="/static/images/avatar/3.jpg" /> */}

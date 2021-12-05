@@ -8,6 +8,7 @@ import CustomersScreen from "../../screens/CustomersScreen/CustomersScreen";
 import BusinessScreen from "../../screens/BusinessScreen/BusinessScreen";
 import RoutersScreen from "../../screens/RoutersScreen/RoutersScreen";
 import { Box } from "@mui/material";
+import StudentsScreen from "../../screens/StudentsScreen/StudentsScreen";
 const TAG = "HOME";
 type HomeProps = {
   prop1?: any;
@@ -17,7 +18,7 @@ const Home: React.FC<HomeProps> = ({ prop1 }) => {
   const homeGoTo = useHomeGoTo();
   const [visibleDrawer, setVisibleDrawer] = useState(false);
   const isDesktop = useMobile("desktop");
-
+  const isMobile = useMobile("mobile");
   return (
     <div className="Home">
       <div className="HomeLeft">
@@ -29,15 +30,16 @@ const Home: React.FC<HomeProps> = ({ prop1 }) => {
       <div className="HomeRight">
         <Box
           sx={{
-            width: `80%`,
+            width: isDesktop ? "80%" : undefined,
             marginLeft: isDesktop ? "20%" : undefined,
+            paddingBottom: isMobile ? "50px" : undefined,
           }}
         >
           <NavBar
             onOpenMenu={() => setVisibleDrawer(!visibleDrawer)}
             menuOpened={visibleDrawer}
           />
-          {homeGoTo.screen === "StudentsScreen" && <CustomersScreen />}
+          {homeGoTo.screen === "StudentsScreen" && <StudentsScreen />}
           {homeGoTo.screen === "BusinessScreen" && <BusinessScreen />}
           {homeGoTo.screen === "TeachersScreen" && <RoutersScreen />}
         </Box>

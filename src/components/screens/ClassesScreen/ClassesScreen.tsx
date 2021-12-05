@@ -1,6 +1,6 @@
 import "./ClassesScreen.scss";
 import React, { useCallback, useEffect, useState } from "react";
-import { Button, Divider, TextField } from "@mui/material";
+import { Button, Divider, TextField, Typography } from "@mui/material";
 
 import Class from "../../../classes/Class";
 import {
@@ -15,6 +15,7 @@ import ClassAdd from "./ClassAdd";
 import CModal from "../../ui/CModal/CModal";
 import ClassSelected from "./ClassSelected";
 import { Add, AddCircle, PlusOne } from "@mui/icons-material";
+import ClassesInfo from "../../ui/ClassesInfo/ClassesInfo";
 
 const TAG = "CLASSES SCREEN";
 type ClassesScreenProps = {};
@@ -106,9 +107,12 @@ const ClassesScreen: React.FC<ClassesScreenProps> = () => {
         />
       </CModal>
       <Box p={4}>
-        <div>
-          <h1>Classes info</h1>
-        </div>
+        <Box p={4}>
+          <div>
+            <h1>Información de las clases</h1>
+            <ClassesInfo />
+          </div>
+        </Box>
         <Divider sx={{ my: 1 }}>Listado de estudiantes en clase</Divider>
         <Box display="flex" alignItems="center" justifyItems="center">
           <TextField
@@ -146,7 +150,11 @@ const ClassesScreen: React.FC<ClassesScreenProps> = () => {
             onRowClick={onRowClick}
           />
         </Box>
-        <Divider sx={{ my: 1 }}>Toca un estudiante para editarlo</Divider>
+        <Divider sx={{ my: 1 }}>
+          <Typography variant="caption">
+            Toca un estudiante para ver las opciones
+          </Typography>
+        </Divider>
       </Box>
     </div>
   );

@@ -6,6 +6,9 @@ import Student, { StudentInterface } from "../../../classes/Student";
 import CSelect from "../../ui/CSelect/CSelect";
 import utils from "../../../libs/utils/utils";
 
+import SearchBar from "../../ui/SearchBar/SearchBar";
+import TeacherList from "../../screens/TeacherScreen/TeacherList.json";
+
 const TAG = "Student FORM";
 type StudentFormProps = {
   currentStudent?: Student;
@@ -29,16 +32,30 @@ const StudentForm: React.FC<StudentFormProps> = ({ onChange }) => {
         email: formData.get("email") + "",
         //Me gustaria también poner aqui "clases activas" como una cadena de palabras, se complica mucho?
         creationDate: utils.dates.dateNowUnix(),
-        activeClasses: ""
+        activeClasses: "",
       };
       const newStudent = new Student(data);
       onChange(newStudent);
     },
     [onChange]
   );
+  const newT = TeacherList.map((item) => {
+    return {
+      id: item.idCard + "",
+      name: item.name,
+      lastName: item.lastname,
+    };
+  });
   return (
     <div className="StudentForm">
       <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
+        <SearchBar
+          list={newT}
+          onChange={(res) => {
+            console.log(res);
+          }}
+        />
+
         <TextField
           margin="normal"
           required

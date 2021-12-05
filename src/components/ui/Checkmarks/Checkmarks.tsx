@@ -1,11 +1,11 @@
-import * as React from 'react';
-import OutlinedInput from '@mui/material/OutlinedInput';
-import InputLabel from '@mui/material/InputLabel';
-import MenuItem from '@mui/material/MenuItem';
-import FormControl from '@mui/material/FormControl';
-import ListItemText from '@mui/material/ListItemText';
-import Select, { SelectChangeEvent } from '@mui/material/Select';
-import Checkbox from '@mui/material/Checkbox';
+import * as React from "react";
+import OutlinedInput from "@mui/material/OutlinedInput";
+import InputLabel from "@mui/material/InputLabel";
+import MenuItem from "@mui/material/MenuItem";
+import FormControl from "@mui/material/FormControl";
+import ListItemText from "@mui/material/ListItemText";
+import Select, { SelectChangeEvent } from "@mui/material/Select";
+import Checkbox from "@mui/material/Checkbox";
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
@@ -19,10 +19,9 @@ const MenuProps = {
 };
 
 const names = [
-  'Olivia Contreras Galvez',
-  'Diego Torres Mejia',
-  'Adriana Lorena Soto Jimenez',
-  
+  "Olivia Contreras Galvez",
+  "Diego Torres Mejia",
+  "Adriana Lorena Soto Jimenez",
 ];
 
 export default function MultipleSelectCheckmarks() {
@@ -34,14 +33,14 @@ export default function MultipleSelectCheckmarks() {
     } = event;
     setPersonName(
       // On autofill we get a the stringified value.
-      typeof value === 'string' ? value.split(',') : value,
+      typeof value === "string" ? value.split(",") : value
     );
   };
 
   return (
     <div>
       <FormControl sx={{ m: 1, width: 300 }}>
-        <InputLabel id="demo-multiple-checkbox-label">Elige profesor/a</InputLabel>
+        <InputLabel id="demo-multiple-checkbox-label">Profesor/a</InputLabel>
         <Select
           labelId="demo-multiple-checkbox-label"
           id="demo-multiple-checkbox"
@@ -49,7 +48,7 @@ export default function MultipleSelectCheckmarks() {
           value={personName}
           onChange={handleChange}
           input={<OutlinedInput label="Profesor/a" />}
-          renderValue={(selected) => selected.join(', ')}
+          renderValue={(selected) => selected.join(", ")}
           MenuProps={MenuProps}
         >
           {names.map((name) => (

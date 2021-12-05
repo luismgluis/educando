@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useCallback } from "react";
 import {
   Card,
   CardHeader,
@@ -10,14 +10,16 @@ import {
   CardActions,
   Button,
   Box,
+  Grid,
+  Tooltip,
 } from "@mui/material";
 import { red } from "@mui/material/colors";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import Business from "../../../classes/Business";
-import { Remove } from "@mui/icons-material";
-import { useCurrentBusiness } from "../../../hooks/currentBusiness";
+import { Delete, Remove } from "@mui/icons-material";
 import utils from "../../../libs/utils/utils";
+import { useAlert } from "../../ui/Alert/useAlert";
 
 const TAG = "BUSINESS CARD";
 type BusinessCardProps = {
@@ -30,9 +32,23 @@ const BusinessCard: React.FC<BusinessCardProps> = ({
   business,
   onRemove,
 }) => {
-  console.log(TAG, "render");
-  const cBusiness = useCurrentBusiness();
-
+  const alert = useAlert();
+  const checkRemove = useCallback(
+    (busi: Business) => {
+      alert({
+        title: "Seguro quieres eliminar?",
+        body: "Esta accion no se puede deshacer.",
+        enabled: true,
+        type: "question",
+        okButton: "Si, eliminalo",
+        noButton: "Cancelar",
+        onClose: (res) => {
+          res && onRemove(busi);
+        },
+      });
+    },
+    [onRemove, alert]
+  );
   return (
     <div className="BusinessCard">
       <Card sx={{ maxWidth: 580 }}>
@@ -43,67 +59,41 @@ const BusinessCard: React.FC<BusinessCardProps> = ({
             </Avatar>
           }
           action={
-            <IconButton aria-label="settings">
-              <MoreVertIcon />
-            </IconButton>
+            <Tooltip title="Borrar" arrow>
+              <IconButton
+                aria-label="settings"
+                onClick={() => checkRemove(business)}
+              >
+                <Delete />
+              </IconButton>
+            </Tooltip>
           }
           title={business.name}
           subheader={utils.dates.unixToString(business.creationDate)}
         />
-        {/* <CardMedia
+        <CardMedia
           component="img"
           height="194"
-          image="/static/images/cards/paella.jpg"
+          image="https://picsum.photos/200/300"
           alt="Paella dish"
-        /> */}
+        />
         <CardContent>
           <Typography variant="body2" color="text.secondary">
             {business.description}
           </Typography>
         </CardContent>
         <CardActions disableSpacing>
-          <Box
-            sx={{
-              flexDirection: "row",
-              display: "flex",
-              width: "100%",
-            }}
-          >
-            <Box sx={{ flexGrow: 2 }}>
+          <Grid container>
+            <Grid item>
               <Button
                 onClick={() => onSelect(business)}
-                variant={
-                  cBusiness.id === business.id ? "contained" : "outlined"
-                }
+                variant={"contained"}
                 startIcon={<FavoriteIcon />}
               >
                 Seleccionar
               </Button>
-            </Box>
-
-            <Box
-              sx={{
-                flexGrow: 2,
-                display: "flex",
-                flexDirection: "row-reverse",
-              }}
-            >
-              <Button
-                onClick={() => onRemove(business)}
-                color="error"
-                variant={"outlined"}
-                startIcon={<Remove />}
-              >
-                Eliminar
-              </Button>
-            </Box>
-          </Box>
-          {/* <IconButton
-            aria-label="add to favorites"
-            
-          >
-            <FavoriteIcon />
-          </IconButton> */}
+            </Grid>
+          </Grid>
         </CardActions>
       </Card>
     </div>

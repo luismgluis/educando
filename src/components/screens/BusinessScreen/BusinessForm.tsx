@@ -4,6 +4,7 @@ import { Box } from "@mui/system";
 
 import Business, { BusinessInterface } from "../../../classes/Business";
 import utils from "../../../libs/utils/utils";
+import GalleryImages from "../../ui/GalleryImages/GalleryImages";
 
 const TAG = "Business FORM";
 type BusinessFormProps = {
@@ -69,7 +70,9 @@ const BusinessForm: React.FC<BusinessFormProps> = ({ onChange }) => {
           autoComplete="none"
           placeholder="Descripción"
         />
-
+        <Box sx={{ height: "350px", overflow: "auto" }}>
+          <GalleryImages />
+        </Box>
         <CardActions disableSpacing>
           <Button
             type="submit"

@@ -1,6 +1,6 @@
 import "./StudentsScreen.scss";
 import React, { useCallback, useEffect, useState } from "react";
-import { Button, Divider, TextField } from "@mui/material";
+import { Button, Container, Divider, TextField } from "@mui/material";
 
 import Student from "../../../classes/Student";
 import {
@@ -94,7 +94,7 @@ const StudentsScreen: React.FC<StudentsScreenProps> = () => {
   }, []);
 
   return (
-    <div className="StudentsScreen">
+    <Container className="StudentsScreen">
       {/* agregar usuarios */}
       <CModal open={addUserEnable} onClose={() => setAddUserEnable(false)}>
         <StudentAdd
@@ -168,7 +168,7 @@ const StudentsScreen: React.FC<StudentsScreenProps> = () => {
         </Box>
         <Divider sx={{ my: 1 }}>Toca un estudiante para editarlo</Divider>
       </Box>
-    </div>
+    </Container>
   );
 };
 export default StudentsScreen;

@@ -65,7 +65,7 @@ const ClassAdd: React.FC<ClassAddProps> = ({
           <Typography variant="body2" color="text.secondary">
             Llena los datos acontinuación.
           </Typography>
-          <Divider sx={{ mb: 2, mt: 1 }}></Divider>
+          <Divider sx={{ mb: 1, mt: 1 }}></Divider>
           <ClassForm onChange={(e) => setCurrentClass(e)} />
         </CardContent>
         {/* <CardActions disableSpacing>

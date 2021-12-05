@@ -7,7 +7,7 @@ const CModal: React.FC<CModalProps> = (props) => {
   console.log(TAG, "render");
   return (
     <Modal {...props} open={props.open} onClose={props.onClose}>
-      <Box margin={3} maxHeight={"95%"}>
+      <Box margin={3} maxHeight={"95%"} overflow="auto">
         {props.children}
       </Box>
     </Modal>

@@ -2,7 +2,7 @@ import React, { useMemo } from "react";
 import "./App.css";
 import ThemeConfig from "./components/theme/ThemeConfig";
 
-import { CssBaseline, ThemeProvider } from "@mui/material";
+import { Accordion, CssBaseline, ThemeProvider } from "@mui/material";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import PrivateRoute from "./components/PrivateRoute";
 import Login from "./components/pages/Login/Login";
@@ -16,6 +16,7 @@ import InstitutionProfile from "./components/screens/InstitutionProfile/Institut
 import TeacherProfile from "./components/screens/TeacherProfile/TeacherProfile";
 import ClassesScreen from "./components/screens/ClassesScreen/ClassesScreen";
 import CustomAlert from "./components/ui/Alert/CustomAlert";
+import SubjectScreen from "./components/screens/SubjectScreen/SubjectScreen";
 
 type RoutesType = {
   path: string;
@@ -26,6 +27,16 @@ type RoutesType = {
 function App() {
   const routes = useMemo(() => {
     const arr: RoutesType[] = [
+      {
+        path: "/accordion",
+        element: <Accordion children={"ac1"} />,
+        private: false,
+      },
+      {
+        path: "/subjectScreen",
+        element: <SubjectScreen />,
+        private: false,
+      },
       {
         path: "/classes",
         element: <ClassesScreen />,
