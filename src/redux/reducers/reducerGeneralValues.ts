@@ -1,14 +1,13 @@
-import { HomeCurrentScreen } from "../../components/HomeCurrentScreen";
+import { HomeGotoType } from "../../components/HomeCurrentScreen";
+import { AlertType } from "../../components/ui/Alert/useAlert";
 
 type InitialState = {
   totalHeight: number;
   theme: number;
   alertsViewRef: any | null;
   language: string;
-  homeGoTo: {
-    screen: HomeCurrentScreen;
-    parms: any;
-  };
+  homeGoTo: HomeGotoType;
+  alertData: AlertType;
 };
 const INITIAL_STATE: InitialState = {
   totalHeight: 0,
@@ -16,8 +15,12 @@ const INITIAL_STATE: InitialState = {
   alertsViewRef: null,
   language: "",
   homeGoTo: {
-    screen: "UsersScreen",
+    screen: "BusinessScreen",
+    name: "Instituciones",
     parms: null,
+  },
+  alertData: {
+    enabled: false,
   },
 };
 const reducerGeneralValues = (
@@ -35,6 +38,12 @@ const reducerGeneralValues = (
       action = {
         ...state,
         language: action.payload,
+      };
+      return action;
+    case "setAlertData":
+      action = {
+        ...state,
+        alertData: action.payload,
       };
       return action;
     case "setHomeNavigation":

@@ -17,6 +17,7 @@ import MenuIcon from "@mui/icons-material/Menu";
 import useMobile from "../../../hooks/useMobile";
 import { useHomeGoTo } from "../../../hooks/useHomeGoTo";
 import CustomAvatar from "./CustomAvatar";
+import { useCurrentBusiness } from "../../../hooks/currentBusiness";
 
 const TAG = "NAV BAR";
 type NavBarProps = {
@@ -35,27 +36,9 @@ const NavBar: React.FC<NavBarProps> = ({ onOpenMenu, menuOpened }) => {
   const isMobile = useMobile();
   const isDesktop = useMobile("desktop");
   const theme = useTheme();
-
-  const contrastColorPrimary = useMemo(() => {
-    return theme.palette.getContrastText(theme.palette.primary.main);
-  }, [theme]);
+  const cBusiness = useCurrentBusiness();
 
   const homeGoTo = useHomeGoTo();
-
-  const nameScreen = useMemo(() => {
-    switch (homeGoTo.screen) {
-      case "UsersScreen":
-        return "Clientes";
-
-      case "RoutersScreen":
-        return "Routers soportados";
-
-      case "BusinessScreen":
-        return "Mis Empresas";
-      default:
-        break;
-    }
-  }, [homeGoTo]);
 
   return (
     <React.Fragment>
@@ -71,7 +54,7 @@ const NavBar: React.FC<NavBarProps> = ({ onOpenMenu, menuOpened }) => {
         {isMobile && (
           <BottomNavigation
             showLabels
-            sx={{ bgcolor: theme.palette.grey[200] }}
+            sx={{ bgcolor: theme.palette.primary.main }}
           >
             <BottomNavigationAction
               onClick={onOpenMenu}
@@ -84,7 +67,8 @@ const NavBar: React.FC<NavBarProps> = ({ onOpenMenu, menuOpened }) => {
               width="100%"
             >
               <Typography variant="subtitle1" fontWeight={600}>
-                {nameScreen}
+                {homeGoTo.name}
+                {!cBusiness.isEmpty ? ` - ${cBusiness.name}` : ""}
               </Typography>
             </Box>
             <BottomNavigationAction icon={<CustomAvatar />} />
@@ -97,10 +81,9 @@ const NavBar: React.FC<NavBarProps> = ({ onOpenMenu, menuOpened }) => {
             color="inherit"
             sx={{
               width: `calc(100% - ${menuOpened || isDesktop ? 20 : 0}%)`,
-              minWidth: menuOpened ? "200px" : undefined,
-              bgcolor: theme.palette.grey[100],
+              minWidth: menuOpened || !isDesktop ? "200px" : undefined,
+              bgcolor: theme.palette.primary.main,
             }}
-            elevation={2}
           >
             <Toolbar>
               <IconButton
@@ -116,10 +99,9 @@ const NavBar: React.FC<NavBarProps> = ({ onOpenMenu, menuOpened }) => {
                 <MenuIcon />
               </IconButton>
               <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-                {nameScreen}
+                {homeGoTo.name}
+                {!cBusiness.isEmpty ? ` - ${cBusiness.name}` : ""}
               </Typography>
-
-              {/* <Avatar alt="Cindy Baker" src="/static/images/avatar/3.jpg" /> */}
               <CustomAvatar />
             </Toolbar>
           </AppBar>

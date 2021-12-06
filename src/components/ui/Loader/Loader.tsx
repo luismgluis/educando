@@ -23,8 +23,7 @@ const Loader: React.FC<LoaderProps> = ({
       <div
         className="loaderIcon"
         style={{
-          borderColor:
-            bgColor || theme.palette.primary.contrastText || undefined,
+          borderColor: bgColor || theme.palette.primary.light || undefined,
           borderTopColor: color || theme.palette.primary.main || undefined,
           zoom: zoom || undefined,
           // width: width || undefined,

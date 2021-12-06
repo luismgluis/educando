@@ -1,8 +1,8 @@
 import React, { useMemo } from "react";
 import "./App.css";
 import ThemeConfig from "./components/theme/ThemeConfig";
-import { ThemeProvider } from "@emotion/react";
-import { CssBaseline } from "@mui/material";
+
+import { Accordion, CssBaseline, ThemeProvider } from "@mui/material";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import PrivateRoute from "./components/PrivateRoute";
 import Login from "./components/pages/Login/Login";
@@ -15,6 +15,9 @@ import StudentProfile from "./components/screens/StudentProfile/StudentProfile";
 import InstitutionProfile from "./components/screens/InstitutionProfile/InstitutionProfile";
 import TeacherProfile from "./components/screens/TeacherProfile/TeacherProfile";
 import ClassesScreen from "./components/screens/ClassesScreen/ClassesScreen";
+import CustomAlert from "./components/ui/Alert/CustomAlert";
+import SubjectScreen from "./components/screens/SubjectScreen/SubjectScreen";
+import CustomAccordion from "./components/ui/CustomAccordion/CustomAccordion";
 
 type RoutesType = {
   path: string;
@@ -25,6 +28,16 @@ type RoutesType = {
 function App() {
   const routes = useMemo(() => {
     const arr: RoutesType[] = [
+      {
+        path: "/customAccordion",
+        element: <CustomAccordion children={""} />,
+        private: false,
+      },
+      {
+        path: "/subjectScreen",
+        element: <SubjectScreen />,
+        private: false,
+      },
       {
         path: "/classes",
         element: <ClassesScreen />,
@@ -63,12 +76,12 @@ function App() {
       {
         path: "/business",
         element: <BusinessScreen />,
-        private: false,
+        private: true,
       },
       {
         path: "/home",
         element: <Home />,
-        private: false,
+        private: true,
       },
       {
         path: "/login",
@@ -89,6 +102,7 @@ function App() {
     return arr.map((item, index) => {
       const ele = item.private ? (
         <PrivateRoute
+          key={`RouteApp${index}`}
           path={item.path}
           blockRedirect={item.path === "/login" || item.path === "/loginCreate"}
         >
@@ -104,6 +118,7 @@ function App() {
     <ThemeProvider theme={ThemeConfig}>
       <CssBaseline />
       <BrowserRouter>
+        <CustomAlert />
         <Routes>{routes}</Routes>
       </BrowserRouter>
     </ThemeProvider>

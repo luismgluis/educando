@@ -1,16 +1,6 @@
 import "./CustomersScreen.scss";
 import React, { useCallback, useEffect, useState } from "react";
-import {
-  Avatar,
-  Button,
-  Card,
-  CardHeader,
-  Divider,
-  IconButton,
-  Modal,
-  TextField,
-  Typography,
-} from "@mui/material";
+import { Button, Divider, TextField } from "@mui/material";
 
 import Customer from "../../../classes/Customer";
 import {
@@ -20,7 +10,6 @@ import {
   GridValueGetterParams,
 } from "@mui/x-data-grid";
 import { Box } from "@mui/system";
-import Business from "../../../classes/Business";
 import CustomerAdd from "./CustomerAdd";
 import CModal from "../../ui/CModal/CModal";
 import CustomerSelected from "./CustomerSelected";
@@ -31,7 +20,7 @@ const customerEmpty = () => new Customer(null);
 const CustomersScreen: React.FC<CustomersScreenProps> = () => {
   console.log(TAG, "rendererizamos este componente");
 
-  const [rows, setRows] = useState<Business[]>([]);
+  const [rows, setRows] = useState<Customer[]>([]);
   const [search, setSearch] = useState("");
   const [currentCustomer, setCurrentCustomer] = useState(customerEmpty());
   const [addUserEnable, setAddUserEnable] = useState(false);

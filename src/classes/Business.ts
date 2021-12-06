@@ -6,12 +6,14 @@ export interface BusinessInterface {
   email: string;
   description?: string;
   creationDate: number;
+  urlImg?: string;
   isNull?: boolean;
 }
 export default class Business implements BusinessInterface {
   id: string;
   name: string;
   email: string;
+  urlImg: string;
   description?: string;
   creationDate: number;
   isNull?: boolean;
@@ -20,6 +22,7 @@ export default class Business implements BusinessInterface {
     this.id = data?.id || "";
     this.email = data?.email || "";
     this.description = data?.description || "";
+    this.urlImg = data?.urlImg || "";
     this.isNull = isNull || false; // check if Business has not initialized
     this.creationDate = data?.creationDate || 0;
   }

@@ -1,9 +1,33 @@
 import React, { useCallback } from "react";
-import { Button, CardActions, TextField } from "@mui/material";
+import {
+  Button,
+  CardActions,
+  IconButton,
+  TextField,
+  Tooltip,
+} from "@mui/material";
 import { Box } from "@mui/system";
 
 import Class, { ClassInterface } from "../../../classes/Class";
 import utils from "../../../libs/utils/utils";
+import DeleteIcon from "@mui/icons-material/Delete";
+
+//estaba tratando de mover el ícono pero no supe como
+// function PositionedTooltips() {
+//   return (
+//     <Box sx={{ width: 500 }}>
+//       <Grid container justifyContent="center">
+//         <Grid item>
+//           <Tooltip title="Add" placement="bottom-start">
+//             <Button>bottom-start</Button>
+//           </Tooltip>
+//         </Grid>
+//       </Grid>
+//     </Box>
+//   );
+// }
+
+//
 
 const TAG = "Class FORM";
 type ClassFormProps = {
@@ -28,7 +52,7 @@ const ClassForm: React.FC<ClassFormProps> = ({ onChange }) => {
         email: formData.get("email") + "",
         //Me gustaria también poner aqui "clases activas" como una cadena de palabras, se complica mucho?
         creationDate: utils.dates.dateNowUnix(),
-        activeClasses: ""
+        activeClasses: "",
       };
       const newClass = new Class(data);
       onChange(newClass);
@@ -37,9 +61,10 @@ const ClassForm: React.FC<ClassFormProps> = ({ onChange }) => {
   );
   return (
     <div className="ClassForm">
-      <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
+      <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 0 }}>
         <TextField
-          margin="normal"
+          size="small"
+          margin="none"
           required
           fullWidth
           id="username"
@@ -49,7 +74,8 @@ const ClassForm: React.FC<ClassFormProps> = ({ onChange }) => {
           placeholder="Nombre"
         />
         <TextField
-          margin="normal"
+          size="small"
+          margin="none"
           required
           fullWidth
           id="lastname"
@@ -58,7 +84,8 @@ const ClassForm: React.FC<ClassFormProps> = ({ onChange }) => {
           placeholder="Apellidos"
         />
         <TextField
-          margin="normal"
+          size="small"
+          margin="none"
           required
           fullWidth
           id="code"
@@ -67,7 +94,8 @@ const ClassForm: React.FC<ClassFormProps> = ({ onChange }) => {
           name="Código"
         />
         <TextField
-          margin="normal"
+          size="small"
+          margin="none"
           required
           fullWidth
           id="grade"
@@ -76,7 +104,8 @@ const ClassForm: React.FC<ClassFormProps> = ({ onChange }) => {
           placeholder="Grado"
         />
         <TextField
-          margin="normal"
+          size="small"
+          margin="none"
           required
           fullWidth
           id="group"
@@ -86,7 +115,8 @@ const ClassForm: React.FC<ClassFormProps> = ({ onChange }) => {
         />
 
         <TextField
-          margin="normal"
+          size="small"
+          margin="none"
           required
           fullWidth
           id="idCard"
@@ -95,7 +125,8 @@ const ClassForm: React.FC<ClassFormProps> = ({ onChange }) => {
           placeholder="Tarjeta de identidad"
         />
         <TextField
-          margin="normal"
+          size="small"
+          margin="none"
           required
           fullWidth
           id="email"
@@ -121,9 +152,24 @@ const ClassForm: React.FC<ClassFormProps> = ({ onChange }) => {
           >
             Guardar
           </Button>
+          {/* <Button
+            type="submit"
+            sx={{ mt: 2 }}
+            color="primary"
+            variant="contained"
+          > */}
+
+          <Tooltip title="Borrar" arrow>
+            <IconButton>
+              <DeleteIcon />
+            </IconButton>
+          </Tooltip>
+          {/* </Button> */}
         </CardActions>
+        {/* {PositionedTooltips} */}
       </Box>
     </div>
   );
 };
+
 export default ClassForm;

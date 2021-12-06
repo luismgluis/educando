@@ -13,7 +13,6 @@ const TAG = "APP";
 class App {
   private _me: firebase.User | null;
   private _fireProject: firebase.app.App | null;
-  // private _onUserChangeCallBack: (user: firebase.User | null) => void;
   private _databaseFns: Database | null;
   static instance: any;
   constructor() {
@@ -107,6 +106,7 @@ class App {
                     email: `${userData.email}`.toLowerCase(),
                     creationDate: utils.dates.dateNowUnix(),
                   });
+                  sessionStorage.setItem("uid", user.id);
                   saveInfo(user, resolve, reject);
                   return;
                 }
@@ -144,6 +144,7 @@ class App {
             // Signed in
             const user = userCredential.user;
             if (user) {
+              sessionStorage.setItem("uid", user.uid);
               resolve(user.uid);
               return;
             }

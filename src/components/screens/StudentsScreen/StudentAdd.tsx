@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import {
   Card,
   CardHeader,
@@ -8,14 +8,16 @@ import {
   Typography,
   Divider,
 } from "@mui/material";
-import { blue, green, red } from "@mui/material/colors";
+import { blue, green } from "@mui/material/colors";
 import CloseIcon from "@mui/icons-material/Close";
 import utils from "../../../libs/utils/utils";
 import StudentForm from "./StudentForm";
 import Student from "../../../classes/Student";
 import EditIcon from "@mui/icons-material/Edit";
-import CustomerForm from "../CustomersScreen/CustomerForm";
-
+import Api from "../../../api/Api";
+import { useCurrentUser } from "../../../hooks/currentUser";
+import { useCurrentBusiness } from "../../../hooks/currentBusiness";
+import { useAlert } from "../../ui/Alert/useAlert";
 
 const TAG = "STUDENT CARD";
 type StudentAddProps = {
@@ -30,9 +32,48 @@ const StudentAdd: React.FC<StudentAddProps> = ({
 }) => {
   const [currentStudent, setCurrentStudent] = useState(new Student(null));
 
+  const me = useCurrentUser();
+  const cBusiness = useCurrentBusiness();
+  const alert = useAlert();
+
   useEffect(() => {
     if (originalStudent) setCurrentStudent(originalStudent);
   }, [originalStudent]);
+
+  const saveStudent = useCallback(
+    (student: Student) => {
+      if (
+        (!student.isEmpty && originalStudent === null) ||
+        originalStudent?.isEmpty
+      ) {
+        Api.database.student.saveStudent(me, cBusiness, student).then(() => {
+          console.log("Student saved");
+          onSave(true);
+          alert({
+            title: "Estudiante creado",
+            body: "Ya puedes asignarlo a alguna clase",
+            okButton: "Ok",
+            enabled: true,
+          });
+        });
+        return;
+      }
+      if (!student.isEmpty && !originalStudent?.isEmpty) {
+        student.id = originalStudent?.id!;
+        Api.database.student.modifyStudent(student, cBusiness).then(() => {
+          console.log("Student saved");
+          onSave(true);
+          alert({
+            title: "Estudiante Modificado",
+            body: "Los cambios fueron realizados satisfactoriamente.",
+            okButton: "Ok",
+            enabled: true,
+          });
+        });
+      }
+    },
+    [me, cBusiness, onSave, alert, originalStudent]
+  );
 
   return (
     <div className="StudentAdd">
@@ -55,38 +96,24 @@ const StudentAdd: React.FC<StudentAddProps> = ({
           }
           title={
             <Typography variant="h6">
-              {!currentStudent.isEmpty ? "Editar estudiante" : "Nuevo estudiante"}
+              {!currentStudent.isEmpty
+                ? "Editar estudiante"
+                : "Nuevo estudiante"}
             </Typography>
           }
-          subheader={
-            !currentStudent.isEmpty
-              ? `(${currentStudent.id}) ${currentStudent.name}`
-              : `Fecha: ${utils.dates.dateNowString()}`
-          }
+          subheader={`Fecha: ${utils.dates.dateNowString()}`}
         />
         <CardContent>
           <Typography variant="body2" color="text.secondary">
             Llena los datos a continuación.
           </Typography>
           <Divider sx={{ mb: 2, mt: 1 }}></Divider>
-          <StudentForm onChange={(e) => setCurrentStudent(e)} />
+          <StudentForm
+            isNewStudent={originalStudent === null}
+            student={originalStudent || new Student(null)}
+            onChange={(e) => saveStudent(e)}
+          />
         </CardContent>
-        {/* <CardActions disableSpacing>
-          <Button
-            variant="contained"
-            color="primary"
-            sx={{
-              mr: 3,
-            }}
-            disabled={currentStudent.isEmpty}
-            onClick={(e) => onSave(true)}
-          >
-            Guardar
-          </Button>
-          <Button color="error" onClick={(e) => onSave(false)}>
-            Cancelar
-          </Button>
-        </CardActions> */}
       </Card>
     </div>
   );

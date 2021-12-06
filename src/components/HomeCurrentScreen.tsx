@@ -1,5 +1,11 @@
 export type HomeCurrentScreen =
   | "BusinessScreen"
-  | "UsersScreen"
-  | "RoutersScreen"
-  | "AddUser";
+  | "StudentsScreen"
+  | "TeachersScreen"
+  | "ClassesScreen"
+  | "SubjectsScreen";
+export type HomeGotoType = {
+  screen: HomeCurrentScreen;
+  name: string;
+  parms?: any;
+};

@@ -1,15 +1,26 @@
-import { Modal, ModalProps } from "@mui/material";
+import { Grid, Modal, ModalProps } from "@mui/material";
 import { Box } from "@mui/system";
 import React from "react";
 const TAG = "CUSTOM MODAL";
 interface CModalProps extends ModalProps {}
 const CModal: React.FC<CModalProps> = (props) => {
-  console.log(TAG, "render");
+  const close = () => {
+    const customfn: any = props.onClose;
+    if (customfn) {
+      customfn();
+    }
+  };
   return (
     <Modal {...props} open={props.open} onClose={props.onClose}>
-      <Box margin={3} maxHeight={"95%"}>
-        {props.children}
-      </Box>
+      <div onClick={() => close()}>
+        <Grid container display="flex" justifyContent="center">
+          <Grid xs={12} sm={10} md={8} item>
+            <Box margin={3} maxHeight={"calc(100vh - 50px)"} overflow="auto">
+              {props.children}
+            </Box>
+          </Grid>
+        </Grid>
+      </div>
     </Modal>
   );
 };
