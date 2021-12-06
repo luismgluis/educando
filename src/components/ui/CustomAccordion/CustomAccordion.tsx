@@ -4,6 +4,7 @@ import AccordionSummary from "@mui/material/AccordionSummary";
 import AccordionDetails from "@mui/material/AccordionDetails";
 import Typography from "@mui/material/Typography";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import { Button } from "@mui/material";
 
 const TAG = "ACCORDION";
 type AccordionProps = {
@@ -20,13 +21,19 @@ const CustomAccordion: React.FC<AccordionProps> = ({ prop1 }) => {
           aria-controls="panel1a-content"
           id="ac1"
         >
-          <Typography>Accordion 1</Typography>
+          <Typography>Grado 4</Typography>
         </AccordionSummary>
         <AccordionDetails>
-          <Typography>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse
-            malesuada lacus ex, sit amet blandit leo lobortis eget.
-          </Typography>
+          <Typography>Selecciona el grupo</Typography>
+          <Button variant="contained" color="primary">
+            4A
+          </Button>
+          <Button variant="contained" color="primary">
+            4B
+          </Button>
+          <Button variant="contained" color="primary">
+            4C
+          </Button>
         </AccordionDetails>
       </Accordion>
       <Accordion>
@@ -35,24 +42,30 @@ const CustomAccordion: React.FC<AccordionProps> = ({ prop1 }) => {
           aria-controls="panel2a-content"
           id="ac2"
         >
-          <Typography>Accordion 2</Typography>
+          <Typography>Grado 5</Typography>
         </AccordionSummary>
         <AccordionDetails>
-          <Typography>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse
-            malesuada lacus ex, sit amet blandit leo lobortis eget.
-          </Typography>
+          <Typography>Selecciona el grupo</Typography>
+          <Button variant="contained" color="primary">
+            5A
+          </Button>
+          <Button variant="contained" color="primary">
+            5B
+          </Button>
+          <Button variant="contained" color="primary">
+            5C
+          </Button>
         </AccordionDetails>
       </Accordion>
-      <Accordion disabled>
+      {/* <Accordion disabled>
         <AccordionSummary
           expandIcon={<ExpandMoreIcon />}
           aria-controls="panel3a-content"
           id="panel3a-header"
         >
-          <Typography>Disabled Accordion</Typography>
+          <Typography>Grado 6</Typography>
         </AccordionSummary>
-      </Accordion>
+      </Accordion> */}
     </div>
   );
 };

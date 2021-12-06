@@ -2,7 +2,8 @@ export type HomeCurrentScreen =
   | "BusinessScreen"
   | "StudentsScreen"
   | "TeachersScreen"
-  | "ClassesScreen";
+  | "ClassesScreen"
+  | "SubjectsScreen";
 export type HomeGotoType = {
   screen: HomeCurrentScreen;
   name: string;

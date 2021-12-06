@@ -4,11 +4,12 @@ import NavBar from "../../ui/NavBar/NavBar";
 import NavBarDrawer from "../../ui/NavBar/NavBarDrawer";
 import { useHomeGoTo } from "../../../hooks/useHomeGoTo";
 import useMobile from "../../../hooks/useMobile";
-import CustomersScreen from "../../screens/CustomersScreen/CustomersScreen";
+//import CustomersScreen from "../../screens/CustomersScreen/CustomersScreen";
 import BusinessScreen from "../../screens/BusinessScreen/BusinessScreen";
 import RoutersScreen from "../../screens/RoutersScreen/RoutersScreen";
 import { Box } from "@mui/material";
 import StudentsScreen from "../../screens/StudentsScreen/StudentsScreen";
+import SubjectsScreen from "../../screens/SubjectScreen/SubjectScreen";
 const TAG = "HOME";
 type HomeProps = {
   prop1?: any;
@@ -42,6 +43,7 @@ const Home: React.FC<HomeProps> = ({ prop1 }) => {
           {homeGoTo.screen === "StudentsScreen" && <StudentsScreen />}
           {homeGoTo.screen === "BusinessScreen" && <BusinessScreen />}
           {homeGoTo.screen === "TeachersScreen" && <RoutersScreen />}
+          {homeGoTo.screen === "SubjectsScreen" && <SubjectsScreen />}
         </Box>
       </div>
 

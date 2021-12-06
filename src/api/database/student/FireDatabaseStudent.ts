@@ -1,3 +1,4 @@
+import Business from "../../../classes/Business";
 import Student from "../../../classes/Student";
 import User from "../../../classes/User";
 import utils from "../../../libs/utils/utils";
@@ -43,12 +44,17 @@ class FireDatabaseStudent {
       }
     });
   }
-  saveStudent(me: User, student: Student) {
+  saveStudent(me: User, business: Business, student: Student) {
     const that = this;
     const save = async () => {
+      student.creationDate = utils.dates.dateNowUnix();
+      student.creator = me.id;
+
       const res = await that.app
         .database()
-        .collection("student")
+        .collection("business")
+        .doc(business.id)
+        .collection("students")
         .add(student.exportObject())
         .catch(() => null);
       if (res) {
@@ -57,18 +63,7 @@ class FireDatabaseStudent {
       }
       return null;
     };
-    const saveOnMe = async () => {
-      const res = await that.app
-        .database()
-        .collection("users")
-        .doc(me.id)
-        .collection("student")
-        .doc(student.id)
-        .set({ creationDate: utils.dates.dateNowUnix() })
-        .then(() => true)
-        .catch(() => null);
-      return res;
-    };
+
     return new Promise<boolean>(async (resolve, reject) => {
       try {
         const resSave = await save();
@@ -76,12 +71,44 @@ class FireDatabaseStudent {
           reject("fail to save data on Student colletion");
           return;
         }
-        const resSaveOnMe = await saveOnMe();
-        if (resSaveOnMe) {
-          resolve(true);
+        resolve(true);
+      } catch (error) {
+        reject(null);
+      }
+    });
+  }
+  getStudents(business: Business) {
+    const that = this;
+    const getData = async () => {
+      const res = await that.app
+        .database()
+        .collection("business")
+        .doc(business.id)
+        .collection("students")
+        .get()
+        .catch(() => null);
+      const arr: Student[] = [];
+      if (res) {
+        if (!res.empty) {
+          res.forEach((doc) => {
+            const data: any = doc.data();
+            data.id = doc.id;
+            arr.push(new Student(data));
+          });
+        }
+        return arr;
+      }
+      return null;
+    };
+
+    return new Promise<Student[]>(async (resolve, reject) => {
+      try {
+        const result = await getData();
+        if (!result) {
+          reject("fail to save data on Student colletion");
           return;
         }
-        reject("Fail on add to me Student");
+        resolve(result);
       } catch (error) {
         reject(null);
       }

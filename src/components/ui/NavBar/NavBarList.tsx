@@ -56,7 +56,7 @@ const NavBarList: React.FC<NavBarListProps> = ({ onSelect, onlyList }) => {
       {
         icon: <Bookmark />,
         data: {
-          screen: "ClassesScreen",
+          screen: "SubjectsScreen",
           name: "Materias",
         },
       },

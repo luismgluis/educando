@@ -15,6 +15,9 @@ import StudentAdd from "./StudentAdd";
 import CModal from "../../ui/CModal/CModal";
 import StudentSelected from "./StudentSelected";
 import { useAlert } from "../../ui/Alert/useAlert";
+import Api from "../../../api/Api";
+import { useCurrentUser } from "../../../hooks/currentUser";
+import { useCurrentBusiness } from "../../../hooks/currentBusiness";
 
 const TAG = "STUDENTS SCREENS";
 type StudentsScreenProps = {};
@@ -22,11 +25,14 @@ const StudentEmpty = () => new Student(null);
 const StudentsScreen: React.FC<StudentsScreenProps> = () => {
   console.log(TAG, "rendererizamos este componente");
 
-  const [rows, setRows] = useState<Student[]>([]);
   const [search, setSearch] = useState("");
   const [currentStudent, setCurrentStudent] = useState(StudentEmpty());
   const [addUserEnable, setAddUserEnable] = useState(false);
   const [modifyUser, setModifyUser] = useState(StudentEmpty());
+  const me = useCurrentUser();
+  const cBusiness = useCurrentBusiness();
+  const [students, setStudents] = useState<Student[]>([]);
+
   const alert = useAlert();
 
   const columns: GridColDef[] = [
@@ -56,26 +62,26 @@ const StudentsScreen: React.FC<StudentsScreenProps> = () => {
 
   useEffect(() => {
     const searchValue = search.toLowerCase();
-    const rows = [0, 0, 0, 0].map(
-      (item, index) =>
-        new Student({
-          name: "Paula", //+ index,
-          lastName: "Vergara Solis",
-          id: Number(index + 1) + "",
-          idCard: "200192839",
-          email: "paula.vs@gmail.com",
-          code: "23",
-          grade: "4",
-          group: "C",
-          activeClasses: "Español-Inglés-Cocina",
-          //ip: "192.168.3.3",
-          //router: "nohaynada",
-          //email: "grajales805@gmail.com",
-          creationDate: 0,
-        })
-    );
-
-    setRows(
+    // const rows = [0, 0, 0, 0].map(
+    //   (item, index) =>
+    //     new Student({
+    //       name: "Paula", //+ index,
+    //       lastName: "Vergara Solis",
+    //       id: Number(index + 1) + "",
+    //       idCard: "200192839",
+    //       email: "paula.vs@gmail.com",
+    //       code: "23",
+    //       grade: "4",
+    //       group: "C",
+    //       activeClasses: "Español-Inglés-Cocina",
+    //       //ip: "192.168.3.3",
+    //       //router: "nohaynada",
+    //       //email: "grajales805@gmail.com",
+    //       creationDate: 0,
+    //     })
+    // );
+    const rows = students;
+    setStudents(
       searchValue.length > 0
         ? rows.filter((item) => {
             const nn = (item.name + " " + item.lastName).toLowerCase();
@@ -85,7 +91,18 @@ const StudentsScreen: React.FC<StudentsScreenProps> = () => {
           })
         : rows
     );
-  }, [search]);
+  }, [search, students]);
+
+  useEffect(() => {
+    Api.database.student
+      .getStudents(cBusiness)
+      .then((res) => {
+        setStudents(res);
+      })
+      .catch((err) => {
+        setStudents([]);
+      });
+  }, [cBusiness]);
 
   const onRowClick = useCallback((e: GridRowParams) => {
     console.log(TAG, e.row);
@@ -129,23 +146,6 @@ const StudentsScreen: React.FC<StudentsScreenProps> = () => {
           >
             Nuevo
           </Button>
-          <Button
-            color="info"
-            variant="contained"
-            onClick={() =>
-              alert({
-                title: "Hola",
-                enabled: true,
-                okButton: "Ok",
-                noButton: "Cancelar",
-                onClose: (res) => {
-                  console.log("resres", res);
-                },
-              })
-            }
-          >
-            alert
-          </Button>
         </Box>
         <Divider sx={{ my: 1 }} />
         {!currentStudent.isEmpty && (
@@ -158,7 +158,7 @@ const StudentsScreen: React.FC<StudentsScreenProps> = () => {
 
         <Box sx={{ height: 400, width: "100%" }}>
           <DataGrid
-            rows={rows}
+            rows={students}
             columns={columns}
             pageSize={10}
             rowsPerPageOptions={[5]}

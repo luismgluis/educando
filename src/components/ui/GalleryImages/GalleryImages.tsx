@@ -5,11 +5,13 @@ import {
   ListSubheader,
   ImageListItemBar,
   IconButton,
+  ButtonBase,
 } from "@mui/material";
 import { CheckCircle } from "@mui/icons-material";
 const TAG = "GALLERY IMAGES";
 type GalleryImagesProps = {
   onSelect?: (res: string) => void;
+  onRandomImages?: (res: GalleryImagesType[]) => void;
 };
 export type GalleryImagesType = {
   img: string;
@@ -19,7 +21,10 @@ export type GalleryImagesType = {
   cols?: number;
   featured?: number;
 };
-const GalleryImages: React.FC<GalleryImagesProps> = ({ onSelect }) => {
+const GalleryImages: React.FC<GalleryImagesProps> = ({
+  onSelect,
+  onRandomImages,
+}) => {
   console.log(TAG, "render");
   const [selected, setSelected] = useState("");
   const [images, setImages] = useState<GalleryImagesType[]>([]);
@@ -33,20 +38,19 @@ const GalleryImages: React.FC<GalleryImagesProps> = ({ onSelect }) => {
           arr.push({
             img: element.download_url,
             title: element.author,
-            author: element.author,
+            author: "link: " + element.url,
           });
         }
-        // author: "Greg Rakozy";
-        // download_url: "https://picsum.photos/id/1004/5616/3744";
-        // height: 3744;
-        // id: "1004";
-        // url: "https://unsplash.com/photos/SSxIGsySh8o";
-        // width: 5616;
         console.log(arr);
         setImages(arr);
+        if (onRandomImages) onRandomImages(arr);
       })
       .catch(() => setImages([]));
-  }, []);
+  }, [onRandomImages]);
+
+  useEffect(() => {
+    if (onSelect) onSelect(selected);
+  }, [selected, onSelect]);
   return (
     <div className="GalleryImages">
       <ImageList sx={{ width: "100%" }}>
@@ -54,32 +58,36 @@ const GalleryImages: React.FC<GalleryImagesProps> = ({ onSelect }) => {
           <ListSubheader component="div">Imagenes de muestra</ListSubheader>
         </ImageListItem>
         {images.map((item) => (
-          <ImageListItem key={item.img}>
-            <img
-              src={`${item.img}`}
-              srcSet={`${item.img}`}
-              alt={item.title}
-              loading="lazy"
-            />
-            <ImageListItemBar
-              title={item.title}
-              subtitle={item.author}
-              actionIcon={
-                <IconButton
-                  onClick={() => setSelected(item.img)}
-                  sx={{
-                    color: (t) =>
-                      selected !== item.img
-                        ? "rgba(255, 255, 255, 0.54)"
-                        : t.palette.primary.main,
-                  }}
-                  aria-label={`info about ${item.title}`}
-                >
-                  <CheckCircle />
-                </IconButton>
-              }
-            />
-          </ImageListItem>
+          <ButtonBase onClick={() => setSelected(item.img)}>
+            <ImageListItem
+              key={item.img}
+              sx={{ maxHeight: 250, overflow: "hidden" }}
+            >
+              <img
+                src={`${item.img}`}
+                srcSet={`${item.img}`}
+                alt={item.title}
+                loading="lazy"
+              />
+              <ImageListItemBar
+                title={item.title}
+                subtitle={item.author}
+                actionIcon={
+                  <IconButton
+                    sx={{
+                      color: (t) =>
+                        selected !== item.img
+                          ? "rgba(255, 255, 255, 0.54)"
+                          : t.palette.primary.main,
+                    }}
+                    aria-label={`info about ${item.title}`}
+                  >
+                    <CheckCircle />
+                  </IconButton>
+                }
+              />
+            </ImageListItem>
+          </ButtonBase>
         ))}
       </ImageList>
     </div>

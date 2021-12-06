@@ -1,14 +1,20 @@
 import "./Ejemplo.scss";
-import React from "react";
+import React, { useState, useEffect } from "react";
 const TAG = "EJEMPLO";
 type EjemploProps = {
   name: string | null;
   title: string;
 };
-const Ejemplo: React.FC<EjemploProps> = ({ name = null, title = 44 }) => {
+
+const Ejemplo: React.FC<EjemploProps> = ({ name = null, title = "" }) => {
   console.log(TAG, "render");
   //const validado = typeof name !== "undefined";
-  title = 665;
+  const [valor, setValor] = useState([]);
+
+  useEffect(() => {
+    const newArr = [12, 31, 231, 23, 123, 123, 13];
+  }, []);
+
   return (
     <div className="Ejemplo">
       <h1>{title}</h1>
@@ -18,6 +24,9 @@ const Ejemplo: React.FC<EjemploProps> = ({ name = null, title = 44 }) => {
           <h5>{name}</h5>
         </div>
       )}
+      {valor.map((item) => {
+        return <div>el item es {item}</div>;
+      })}
     </div>
   );
 };

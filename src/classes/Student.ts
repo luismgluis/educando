@@ -12,6 +12,7 @@ export interface StudentInterface {
   activeClasses: string;
   creationDate: number;
   isNull?: boolean;
+  creator?: string;
 }
 export default class Student implements StudentInterface {
   id: string;
@@ -25,17 +26,19 @@ export default class Student implements StudentInterface {
   activeClasses: string;
   creationDate: number;
   isNull?: boolean;
+  creator?: string;
   constructor(data: StudentInterface | null, isNull?: boolean) {
     this.name = data?.name || "";
     this.id = data?.id || "";
     this.activeClasses = data?.activeClasses || "";
     this.lastName = data?.lastName || "";
     this.idCard = data?.idCard || "";
-    this.email = data?.email|| "";
+    this.email = data?.email || "";
     this.code = data?.code || "";
     this.grade = data?.grade || "";
     this.group = data?.group || "";
     this.isNull = isNull || false; // check if Student has not initialized
+    this.creator = data?.creator || "";
     this.creationDate = data?.creationDate || 0;
   }
 

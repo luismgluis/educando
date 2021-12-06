@@ -20,6 +20,7 @@ import {
 } from "../../../hooks/currentBusiness";
 import CModal from "../../ui/CModal/CModal";
 import BusinessAdd from "./BusinessAdd";
+import Loader from "../../ui/Loader/Loader";
 
 const TAG = "BusinessScreen";
 type BusinessScreenProps = {};
@@ -50,6 +51,7 @@ const BusinessScreen: React.FC<BusinessScreenProps> = ({}) => {
 
   const me = useCurrentUser();
   const [businesArr, setBusinesArr] = useState<Business[]>([]);
+  const [state, setState] = useState(0);
   const cBusiness = useCurrentBusiness();
   const setCurrentBusiness = useSetCurrentBusiness();
 
@@ -74,6 +76,7 @@ const BusinessScreen: React.FC<BusinessScreenProps> = ({}) => {
   );
   useEffect(() => {
     const unsubs = Api.database.user.getUserBusinessListener(me.id, (arr) => {
+      setState(1);
       setBusinesArr(arr);
     });
     return () => unsubs();
@@ -108,6 +111,7 @@ const BusinessScreen: React.FC<BusinessScreenProps> = ({}) => {
         <AddNewBusinessButton
           onClick={() => setAddUserEnable(!addUserEnable)}
         />
+        {state < 1 && <Loader />}
         {businesArr.map((item, index) => (
           <Grid item xs={12} sm={6} md={4} key={`GridBusiness${index}`}>
             <BusinessCard

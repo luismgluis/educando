@@ -17,6 +17,7 @@ import TeacherProfile from "./components/screens/TeacherProfile/TeacherProfile";
 import ClassesScreen from "./components/screens/ClassesScreen/ClassesScreen";
 import CustomAlert from "./components/ui/Alert/CustomAlert";
 import SubjectScreen from "./components/screens/SubjectScreen/SubjectScreen";
+import CustomAccordion from "./components/ui/CustomAccordion/CustomAccordion";
 
 type RoutesType = {
   path: string;
@@ -28,8 +29,8 @@ function App() {
   const routes = useMemo(() => {
     const arr: RoutesType[] = [
       {
-        path: "/accordion",
-        element: <Accordion children={"ac1"} />,
+        path: "/customAccordion",
+        element: <CustomAccordion children={""} />,
         private: false,
       },
       {

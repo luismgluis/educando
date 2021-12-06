@@ -15,6 +15,9 @@ import StudentForm from "./StudentForm";
 import Student from "../../../classes/Student";
 import EditIcon from "@mui/icons-material/Edit";
 import Api from "../../../api/Api";
+import { useCurrentUser } from "../../../hooks/currentUser";
+import { useCurrentBusiness } from "../../../hooks/currentBusiness";
+import { useAlert } from "../../ui/Alert/useAlert";
 
 const TAG = "STUDENT CARD";
 type StudentAddProps = {
@@ -29,18 +32,30 @@ const StudentAdd: React.FC<StudentAddProps> = ({
 }) => {
   const [currentStudent, setCurrentStudent] = useState(new Student(null));
 
+  const me = useCurrentUser();
+  const cBusiness = useCurrentBusiness();
+  const alert = useAlert();
+
   useEffect(() => {
     if (originalStudent) setCurrentStudent(originalStudent);
   }, [originalStudent]);
 
   useEffect(() => {
-    if (!currentStudent.isEmpty) {
-      //  Api.database.student.saveStudent(me, currentBusiness).then(() => {
-      //    console.log("Business saved");
-      //  });
-      //  onSave(true);
+    if (!currentStudent.isEmpty && originalStudent?.isEmpty) {
+      Api.database.student
+        .saveStudent(me, cBusiness, currentStudent)
+        .then(() => {
+          console.log("Business saved");
+          onSave(true);
+          alert({
+            title: "Estudiante creado",
+            body: "Ya puedes asignarlo a alguna clase",
+            okButton: "Ok",
+            enabled: true,
+          });
+        });
     }
-  }, [currentStudent]);
+  }, [currentStudent, me, cBusiness, onSave, alert, originalStudent]);
 
   return (
     <div className="StudentAdd">
@@ -79,7 +94,7 @@ const StudentAdd: React.FC<StudentAddProps> = ({
             Llena los datos a continuación.
           </Typography>
           <Divider sx={{ mb: 2, mt: 1 }}></Divider>
-          <StudentForm onChange={(e) => setCurrentStudent(e)} />
+          <StudentForm isNewStudent onChange={(e) => setCurrentStudent(e)} />
         </CardContent>
       </Card>
     </div>

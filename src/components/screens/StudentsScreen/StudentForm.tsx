@@ -3,7 +3,7 @@ import { Button, CardActions, TextField } from "@mui/material";
 import { Box } from "@mui/system";
 
 import Student, { StudentInterface } from "../../../classes/Student";
-import CSelect from "../../ui/CSelect/CSelect";
+
 import utils from "../../../libs/utils/utils";
 
 import SearchBar from "../../ui/SearchBar/SearchBar";
@@ -12,9 +12,13 @@ import TeacherList from "../../screens/TeacherScreen/TeacherList.json";
 const TAG = "Student FORM";
 type StudentFormProps = {
   currentStudent?: Student;
+  isNewStudent?: boolean;
   onChange: (c: Student) => void;
 };
-const StudentForm: React.FC<StudentFormProps> = ({ onChange }) => {
+const StudentForm: React.FC<StudentFormProps> = ({
+  onChange,
+  isNewStudent = false,
+}) => {
   console.log(TAG, "render");
   const handleSubmit = useCallback(
     (event: React.FormEvent<HTMLFormElement>) => {
@@ -49,12 +53,14 @@ const StudentForm: React.FC<StudentFormProps> = ({ onChange }) => {
   return (
     <div className="StudentForm">
       <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
-        <SearchBar
-          list={newT}
-          onChange={(res) => {
-            console.log(res);
-          }}
-        />
+        {!isNewStudent && (
+          <SearchBar
+            list={newT}
+            onChange={(res) => {
+              console.log(res);
+            }}
+          />
+        )}
 
         <TextField
           margin="normal"
@@ -65,6 +71,7 @@ const StudentForm: React.FC<StudentFormProps> = ({ onChange }) => {
           name="given-name"
           autoComplete="none"
           placeholder="Nombre"
+          defaultValue=""
         />
         <TextField
           margin="normal"
@@ -82,7 +89,7 @@ const StudentForm: React.FC<StudentFormProps> = ({ onChange }) => {
           id="code"
           label="Código"
           autoComplete="code"
-          name="Código"
+          name="Código Ej: 200099"
         />
         <TextField
           margin="normal"
@@ -91,7 +98,7 @@ const StudentForm: React.FC<StudentFormProps> = ({ onChange }) => {
           id="grade"
           label="Grado"
           name="grade"
-          placeholder="Grado"
+          placeholder="Grado Ej: 1ro"
         />
         <TextField
           margin="normal"
@@ -100,7 +107,7 @@ const StudentForm: React.FC<StudentFormProps> = ({ onChange }) => {
           id="group"
           label="Grupo"
           name="group"
-          placeholder="Grupo"
+          placeholder="Grupo Ej: A"
         />
 
         <TextField

@@ -16,6 +16,7 @@ import Business from "../../../classes/Business";
 import EditIcon from "@mui/icons-material/Edit";
 import Api from "../../../api/Api";
 import { useCurrentUser } from "../../../hooks/currentUser";
+import { useAlert } from "../../ui/Alert/useAlert";
 
 const TAG = "CUSTOMENR CARD";
 type BusinessAddProps = {
@@ -30,6 +31,7 @@ const BusinessAdd: React.FC<BusinessAddProps> = ({
 }) => {
   const [currentBusiness, setCurrentBusiness] = useState(new Business(null));
   const me = useCurrentUser();
+  const alert = useAlert();
 
   useEffect(() => {
     if (originalBusiness) setCurrentBusiness(originalBusiness);
@@ -39,10 +41,15 @@ const BusinessAdd: React.FC<BusinessAddProps> = ({
     if (!currentBusiness.isEmpty) {
       Api.database.business.saveBusiness(me, currentBusiness).then(() => {
         console.log("Business saved");
+        alert({
+          title: "Institucion Creada",
+          enabled: true,
+          okButton: "Ok",
+        });
       });
       onSave(true);
     }
-  }, [currentBusiness, onSave, me]);
+  }, [currentBusiness, onSave, me, alert]);
   return (
     <div className="BusinessAdd">
       <Card>
