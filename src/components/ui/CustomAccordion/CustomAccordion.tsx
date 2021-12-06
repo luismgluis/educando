@@ -5,6 +5,7 @@ import AccordionDetails from "@mui/material/AccordionDetails";
 import Typography from "@mui/material/Typography";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { Button } from "@mui/material";
+import Stack from "@mui/material/Stack";
 
 const TAG = "ACCORDION";
 type AccordionProps = {
@@ -25,15 +26,17 @@ const CustomAccordion: React.FC<AccordionProps> = ({ prop1 }) => {
         </AccordionSummary>
         <AccordionDetails>
           <Typography>Selecciona el grupo</Typography>
-          <Button variant="contained" color="primary">
-            4A
-          </Button>
-          <Button variant="contained" color="primary">
-            4B
-          </Button>
-          <Button variant="contained" color="primary">
-            4C
-          </Button>
+          <Stack direction="row" spacing={2}>
+            <Button variant="contained" color="primary">
+              4A
+            </Button>
+            <Button variant="contained" color="primary">
+              4B
+            </Button>
+            <Button variant="contained" color="primary">
+              4C
+            </Button>
+          </Stack>
         </AccordionDetails>
       </Accordion>
       <Accordion>
@@ -46,17 +49,20 @@ const CustomAccordion: React.FC<AccordionProps> = ({ prop1 }) => {
         </AccordionSummary>
         <AccordionDetails>
           <Typography>Selecciona el grupo</Typography>
-          <Button variant="contained" color="primary">
-            5A
-          </Button>
-          <Button variant="contained" color="primary">
-            5B
-          </Button>
-          <Button variant="contained" color="primary">
-            5C
-          </Button>
+          <Stack direction="row" spacing={2}>
+            <Button variant="contained" color="primary">
+              5A
+            </Button>
+            <Button variant="contained" color="primary">
+              5B
+            </Button>
+            <Button variant="contained" color="primary">
+              5C
+            </Button>
+          </Stack>
         </AccordionDetails>
       </Accordion>
+
       {/* <Accordion disabled>
         <AccordionSummary
           expandIcon={<ExpandMoreIcon />}

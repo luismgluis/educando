@@ -94,14 +94,13 @@ const StudentsScreen: React.FC<StudentsScreenProps> = () => {
   }, [search, students]);
 
   useEffect(() => {
-    Api.database.student
-      .getStudents(cBusiness)
-      .then((res) => {
+    const unsubs = Api.database.student.getStudentsListener(
+      cBusiness,
+      (res) => {
         setStudents(res);
-      })
-      .catch((err) => {
-        setStudents([]);
-      });
+      }
+    );
+    return () => unsubs();
   }, [cBusiness]);
 
   const onRowClick = useCallback((e: GridRowParams) => {

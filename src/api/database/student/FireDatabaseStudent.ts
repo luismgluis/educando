@@ -12,7 +12,7 @@ class FireDatabaseStudent {
     this.app = app;
     this.allStudent = {};
   }
-  getStudent(idStudent: string) {
+  getStudent(idStudent: string, business: Business) {
     const that = this;
     const db = this.app.database();
     return new Promise<Student>((resolve, reject) => {
@@ -21,7 +21,9 @@ class FireDatabaseStudent {
           resolve(that.allStudent[idStudent]);
           return;
         }
-        db.collection("Student")
+        db.collection("business")
+          .doc(business.id)
+          .collection("students")
           .doc(idStudent)
           .get()
           .then((result) => {
@@ -114,17 +116,47 @@ class FireDatabaseStudent {
       }
     });
   }
-  modifyStudent(student: Student) {
+  getStudentsListener(business: Business, callback: (res: Student[]) => void) {
+    const that = this;
+    const unsubs = that.app
+      .database()
+      .collection("business")
+      .doc(business.id)
+      .collection("students")
+      .onSnapshot((res) => {
+        const arr: Student[] = [];
+        if (res) {
+          if (!res.empty) {
+            res.forEach((doc) => {
+              const data: any = doc.data();
+              data.id = doc.id;
+              arr.push(new Student(data));
+            });
+          }
+          callback(arr);
+          return;
+        }
+        callback([]);
+      });
+
+    return unsubs;
+  }
+  modifyStudent(student: Student, business: Business) {
     const that = this;
     const save = async () => {
       const res = await that.app
         .database()
-        .collection("student")
+        .collection("business")
+        .doc(business.id)
+        .collection("students")
         .doc(student.id)
         .set(student.exportObject())
         .then(() => true)
-        .catch(() => null);
+        .catch((err) => {
+          return err;
+        });
       if (res) {
+        console.log("modifyStudent realizado con exito");
         return true;
       }
       return null;
@@ -143,35 +175,27 @@ class FireDatabaseStudent {
       }
     });
   }
-  removeStudent(me: User, student: Student) {
+  removeStudent(student: Student, business: Business) {
     const that = this;
     const remove = async () => {
       const res = await that.app
         .database()
-        .collection("student")
+        .collection("business")
+        .doc(business.id)
+        .collection("students")
         .doc(student.id)
         .delete()
         .then(() => true)
-        .catch(() => null);
-      return res;
-    };
-    const removeOnUser = async () => {
-      const res = await that.app
-        .database()
-        .collection("users")
-        .doc(me.id)
-        .collection("student")
-        .doc(student.id)
-        .delete()
-        .then(() => true)
-        .catch(() => null);
+        .catch((err) => {
+          console.log(TAG, err);
+          return err;
+        });
       return res;
     };
 
     return new Promise<boolean>(async (resolve, reject) => {
       try {
         const resAction = await remove();
-        await removeOnUser();
         if (resAction) {
           resolve(true);
           return;

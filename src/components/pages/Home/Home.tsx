@@ -10,6 +10,7 @@ import RoutersScreen from "../../screens/RoutersScreen/RoutersScreen";
 import { Box } from "@mui/material";
 import StudentsScreen from "../../screens/StudentsScreen/StudentsScreen";
 import SubjectsScreen from "../../screens/SubjectScreen/SubjectScreen";
+import TeachersScreen from "../../screens/TeacherScreen/TeachersScreen";
 const TAG = "HOME";
 type HomeProps = {
   prop1?: any;
@@ -42,11 +43,10 @@ const Home: React.FC<HomeProps> = ({ prop1 }) => {
           />
           {homeGoTo.screen === "StudentsScreen" && <StudentsScreen />}
           {homeGoTo.screen === "BusinessScreen" && <BusinessScreen />}
-          {homeGoTo.screen === "TeachersScreen" && <RoutersScreen />}
+          {homeGoTo.screen === "TeachersScreen" && <TeachersScreen />}
           {homeGoTo.screen === "SubjectsScreen" && <SubjectsScreen />}
         </Box>
       </div>
-
       {/* {homeGoTo.screen === "EditUser" && <EditProfile userData={userTest} />}
         {homeGoTo.screen === "InfoUser" && (
           <Profile userData={homeGoTo.parms} />

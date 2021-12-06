@@ -18,7 +18,7 @@ import PersonSearchIcon from "@mui/icons-material/PersonSearch";
 import { useHomeGoTo, useSetHomeGoTo } from "../../../hooks/useHomeGoTo";
 import { HomeGotoType } from "../../HomeCurrentScreen";
 import AppIcon from "../../icons/AppIcon";
-import { AccountBalance, Bookmark } from "@mui/icons-material";
+import { AccountBalance, AssignmentInd, Bookmark } from "@mui/icons-material";
 
 const TAG = "NAVBAR LIST";
 
@@ -54,12 +54,13 @@ const NavBarList: React.FC<NavBarListProps> = ({ onSelect, onlyList }) => {
     };
     const arr: nHomeType[] = [
       {
-        icon: <Bookmark />,
+        icon: <AccountBalance />,
         data: {
-          screen: "SubjectsScreen",
-          name: "Materias",
+          screen: "BusinessScreen",
+          name: "Instituciones",
         },
       },
+
       {
         icon: <PersonSearchIcon />,
         data: {
@@ -68,10 +69,17 @@ const NavBarList: React.FC<NavBarListProps> = ({ onSelect, onlyList }) => {
         },
       },
       {
-        icon: <AccountBalance />,
+        icon: <AssignmentInd />,
         data: {
-          screen: "BusinessScreen",
-          name: "Instituciones",
+          screen: "TeachersScreen",
+          name: "Profesores",
+        },
+      },
+      {
+        icon: <Bookmark />,
+        data: {
+          screen: "SubjectsScreen",
+          name: "Materias",
         },
       },
     ];

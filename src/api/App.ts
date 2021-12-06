@@ -13,7 +13,6 @@ const TAG = "APP";
 class App {
   private _me: firebase.User | null;
   private _fireProject: firebase.app.App | null;
-  // private _onUserChangeCallBack: (user: firebase.User | null) => void;
   private _databaseFns: Database | null;
   static instance: any;
   constructor() {

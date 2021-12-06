@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import {
   Card,
   CardHeader,
@@ -40,12 +40,14 @@ const StudentAdd: React.FC<StudentAddProps> = ({
     if (originalStudent) setCurrentStudent(originalStudent);
   }, [originalStudent]);
 
-  useEffect(() => {
-    if (!currentStudent.isEmpty && originalStudent?.isEmpty) {
-      Api.database.student
-        .saveStudent(me, cBusiness, currentStudent)
-        .then(() => {
-          console.log("Business saved");
+  const saveStudent = useCallback(
+    (student: Student) => {
+      if (
+        (!student.isEmpty && originalStudent === null) ||
+        originalStudent?.isEmpty
+      ) {
+        Api.database.student.saveStudent(me, cBusiness, student).then(() => {
+          console.log("Student saved");
           onSave(true);
           alert({
             title: "Estudiante creado",
@@ -54,8 +56,24 @@ const StudentAdd: React.FC<StudentAddProps> = ({
             enabled: true,
           });
         });
-    }
-  }, [currentStudent, me, cBusiness, onSave, alert, originalStudent]);
+        return;
+      }
+      if (!student.isEmpty && !originalStudent?.isEmpty) {
+        student.id = originalStudent?.id!;
+        Api.database.student.modifyStudent(student, cBusiness).then(() => {
+          console.log("Student saved");
+          onSave(true);
+          alert({
+            title: "Estudiante Modificado",
+            body: "Los cambios fueron realizados satisfactoriamente.",
+            okButton: "Ok",
+            enabled: true,
+          });
+        });
+      }
+    },
+    [me, cBusiness, onSave, alert, originalStudent]
+  );
 
   return (
     <div className="StudentAdd">
@@ -83,18 +101,18 @@ const StudentAdd: React.FC<StudentAddProps> = ({
                 : "Nuevo estudiante"}
             </Typography>
           }
-          subheader={
-            !currentStudent.isEmpty
-              ? `(${currentStudent.id}) ${currentStudent.name}`
-              : `Fecha: ${utils.dates.dateNowString()}`
-          }
+          subheader={`Fecha: ${utils.dates.dateNowString()}`}
         />
         <CardContent>
           <Typography variant="body2" color="text.secondary">
             Llena los datos a continuación.
           </Typography>
           <Divider sx={{ mb: 2, mt: 1 }}></Divider>
-          <StudentForm isNewStudent onChange={(e) => setCurrentStudent(e)} />
+          <StudentForm
+            isNewStudent={originalStudent === null}
+            student={originalStudent || new Student(null)}
+            onChange={(e) => saveStudent(e)}
+          />
         </CardContent>
       </Card>
     </div>
