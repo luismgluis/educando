@@ -47,11 +47,6 @@ const Home: React.FC<HomeProps> = ({ prop1 }) => {
           {homeGoTo.screen === "SubjectsScreen" && <SubjectsScreen />}
         </Box>
       </div>
-      {/* {homeGoTo.screen === "EditUser" && <EditProfile userData={userTest} />}
-        {homeGoTo.screen === "InfoUser" && (
-          <Profile userData={homeGoTo.parms} />
-        )}
-        {homeGoTo.screen === "AddUser" && <AddUser />} */}
     </div>
   );
 };

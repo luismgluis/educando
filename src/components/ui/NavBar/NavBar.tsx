@@ -38,12 +38,8 @@ const NavBar: React.FC<NavBarProps> = ({ onOpenMenu, menuOpened }) => {
   const theme = useTheme();
   const cBusiness = useCurrentBusiness();
 
-  const contrastColorPrimary = useMemo(() => {
-    return theme.palette.getContrastText(theme.palette.primary.main);
-  }, [theme]);
-
   const homeGoTo = useHomeGoTo();
-  console.log("homeGoTo", homeGoTo);
+
   return (
     <React.Fragment>
       <Box
@@ -106,8 +102,6 @@ const NavBar: React.FC<NavBarProps> = ({ onOpenMenu, menuOpened }) => {
                 {homeGoTo.name}
                 {!cBusiness.isEmpty ? ` - ${cBusiness.name}` : ""}
               </Typography>
-
-              {/* <Avatar alt="Cindy Baker" src="/static/images/avatar/3.jpg" /> */}
               <CustomAvatar />
             </Toolbar>
           </AppBar>

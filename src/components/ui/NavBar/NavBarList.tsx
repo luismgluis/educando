@@ -45,8 +45,6 @@ const NavBarList: React.FC<NavBarListProps> = ({ onSelect, onlyList }) => {
     [setHomeGoTo, onSelect]
   );
 
-  const homeInfo = useHomeGoTo();
-
   const OptionsList = useMemo(() => {
     type nHomeType = {
       icon: JSX.Element;
@@ -138,24 +136,6 @@ const NavBarList: React.FC<NavBarListProps> = ({ onSelect, onlyList }) => {
           <ListItemText sx={{ color: "white" }} primary={option.data.name} />
         </ListItemButton>
       ))}
-
-      {/* <ListItemButton onClick={handleClick}>
-        <ListItemIcon>
-          <InboxIcon />
-        </ListItemIcon>
-        <ListItemText primary="Inbox" />
-        {open ? <ExpandLess /> : <ExpandMore />}
-      </ListItemButton>
-      <Collapse in={open} timeout="auto" unmountOnExit>
-        <List component="div" disablePadding>
-          <ListItemButton sx={{ pl: 4 }}>
-            <ListItemIcon>
-              <StarBorder />
-            </ListItemIcon>
-            <ListItemText primary="Starred" />
-          </ListItemButton>
-        </List>
-      </Collapse> */}
     </List>
   );
 };

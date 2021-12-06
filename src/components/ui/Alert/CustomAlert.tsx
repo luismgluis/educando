@@ -20,11 +20,6 @@ const CustomAlert: React.FC<CustomAlertProps> = ({ prop1 }) => {
   const alertInfo = useCustomAlert();
   const alert = useAlert();
 
-  const handleClickOpen = (scrollType: DialogProps["scroll"]) => () => {
-    setOpen(true);
-    setScroll(scrollType);
-  };
-
   const handleClose = useCallback(
     (res: boolean = false) => {
       setOpen(false);
