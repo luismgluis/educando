@@ -101,7 +101,8 @@ const StudentAdd: React.FC<StudentAddProps> = ({
                 : "Nuevo estudiante"}
             </Typography>
           }
-          subheader={`Fecha: ${utils.dates.dateNowString()}`}
+          subheader=
+          {`Fecha: ${utils.dates.dateNowString()}`}
         />
         <CardContent>
           <Typography variant="body2" color="text.secondary">

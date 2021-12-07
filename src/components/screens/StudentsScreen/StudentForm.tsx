@@ -50,6 +50,7 @@ const StudentForm: React.FC<StudentFormProps> = ({
     },
     [onChange]
   );
+  
   const newT = TeacherList.map((item) => {
     return {
       id: item.idCard + "",

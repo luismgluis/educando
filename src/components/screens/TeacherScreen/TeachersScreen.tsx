@@ -14,6 +14,10 @@ import Business from "../../../classes/Business";
 import TeacherAdd from "./TeacherAdd";
 import CModal from "../../ui/CModal/CModal";
 import TeacherSelected from "./TeacherSelected";
+import { useCurrentUser } from "../../../hooks/currentUser";
+import { useCurrentBusiness } from "../../../hooks/currentBusiness";
+import Api from "../../../api/Api";
+
 
 const TAG = "TEACHERS SCREENS";
 type TeachersScreenProps = {};
@@ -26,13 +30,15 @@ const TeachersScreen: React.FC<TeachersScreenProps> = () => {
   const [currentTeacher, setCurrentTeacher] = useState(TeacherEmpty());
   const [addUserEnable, setAddUserEnable] = useState(false);
   const [modifyUser, setModifyUser] = useState(TeacherEmpty());
+  const me = useCurrentUser();
+  const cBusiness = useCurrentBusiness();
+  const [teachers, setTeachers] = useState<Teacher[]>([]);
 
   const columns: GridColDef[] = [
     { field: "id", headerName: "ID", width: 100 },
     { field: "name", headerName: "Nombre", width: 130 },
     { field: "lastName", headerName: "Apellido", width: 130 },
-    {
-      field: "fullName",
+    { field: "fullName",
       headerName: "Full name",
       description: "This column has a value getter and is not sortable.",
       sortable: false,
@@ -47,29 +53,53 @@ const TeachersScreen: React.FC<TeachersScreenProps> = () => {
 
   useEffect(() => {
     const searchValue = search.toLowerCase();
-    const rows = [0, 0, 0, 0].map(
-      (item, index) =>
-        new Teacher({
-          name: "Andrés", //+ index//
-          lastName: "Murillo",
-          subject: "Matemáticas",
-          id: Number(index + 1) + "",
-          idCard: "1234566",
-          email: "afmurillor@gmail.com",
-          creationDate: 0,
-        })
-    );
-
-    setRows(
+    // const rows = [0, 0, 0, 0].map(
+    //   (item, index) =>
+    //     new Teacher({
+    //       name: "Andrés", //+ index//
+    //       lastName: "Murillo",
+    //       subject: "Matemáticas",
+    //       id: Number(index + 1) + "",
+    //       idCard: "1234566",
+    //       email: "afmurillor@gmail.com",
+    //       creationDate: 0,
+    //     })
+    // );
+    const rows = teachers;
+    setTeachers(
       searchValue.length > 0
         ? rows.filter((item) => {
             const nn = (item.name + " " + item.lastName).toLowerCase();
             if (nn.includes(searchValue)) return true;
+            if (item.subject.includes(searchValue)) return true;
             return false;
           })
         : rows
     );
-  }, [search]);
+  }, [search, teachers]);
+
+    useEffect(() => {
+      const unsubs = Api.database.teacher.getTeachersListener(
+        cBusiness,
+        (res) => {
+          setTeachers(res);
+        }
+      );
+      return () => unsubs();
+    }, [cBusiness]);
+
+
+
+  //   setRows(
+  //     searchValue.length > 0
+  //       ? rows.filter((item) => {
+  //           const nn = (item.name + " " + item.lastName).toLowerCase();
+  //           if (nn.includes(searchValue)) return true;
+  //           return false;
+  //         })
+  //       : rows
+  //   );
+  // }, [search]);
 
   const onRowClick = useCallback((e: GridRowParams) => {
     console.log(TAG, e.row);

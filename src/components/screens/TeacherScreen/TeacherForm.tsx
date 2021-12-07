@@ -1,9 +1,12 @@
 import React, { useCallback } from "react";
-import { Button, CardActions, TextField } from "@mui/material";
+import { Button, CardActions, Grid, TextField } from "@mui/material";
 import { Box } from "@mui/system";
 
 import Teacher, { TeacherInterface } from "../../../classes/Teacher";
 import utils from "../../../libs/utils/utils";
+import Api from "../../../api/Api";
+import { useCurrentBusiness } from "../../../hooks/currentBusiness";
+import { useAlert } from "../../ui/Alert/useAlert";
 
 const TAG = "TEACHER FORM";
 type TeacherFormProps = {
@@ -18,6 +21,8 @@ const TeacherForm: React.FC<TeacherFormProps> = ({
   teacher,
 }) => {
   console.log(TAG, "render");
+  const alert = useAlert();
+  const cBusiness = useCurrentBusiness();
   const handleSubmit = useCallback(
     (event: React.FormEvent<HTMLFormElement>) => {
       event.preventDefault();
@@ -36,6 +41,46 @@ const TeacherForm: React.FC<TeacherFormProps> = ({
     },
     [onChange]
   );
+  // const newT = TeacherList.map((item) => {
+  //   return {
+  //     id: item.idCard + "",
+  //     name: item.name,
+  //     lastName: item.lastname,
+  //   };
+  // });
+  const handleRemove = useCallback(() => {
+    const remove = () => {
+      if (teacher) {
+        Api.database.teacher
+          .removeTeacher(teacher, cBusiness)
+          .then((res) => {
+            alert({
+              title: "Profesor eliminado",
+              enabled: true,
+              okButton: "Ok",
+            });
+          })
+          .catch((err) =>
+            alert({
+              title: "Eliminacion fallida",
+              body: "Intentalo de nuevo",
+              enabled: true,
+              okButton: "Ok",
+            })
+          );
+      }
+    };
+    alert({
+      title: "¿Eliminar?",
+      body: `Seguro que quieres eliminar a el profesor ${teacher?.name}?`,
+      enabled: true,
+      okButton: "Si",
+      noButton: "Cancelar",
+      onClose: (res) => res && remove(),
+    });
+  }, [alert, teacher, cBusiness]);
+
+  
   return (
     <div className="TeacherForm">
       <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
@@ -88,18 +133,36 @@ const TeacherForm: React.FC<TeacherFormProps> = ({
           placeholder="Cédula"
         />
 
-        <CardActions disableSpacing>
-          <Button
-            type="submit"
-            sx={{ mt: 2 }}
-            color="primary"
-            variant="contained"
-          >
-            Guardar
-          </Button>
+<CardActions disableSpacing>
+          <Grid container>
+            <Grid xs={6} item>
+              <Button
+                type="submit"
+                sx={{ mt: 2 }}
+                color="primary"
+                variant="contained"
+              >
+                Guardar
+              </Button>
+            </Grid>
+            {!teacher?.isEmpty && (
+              <Grid xs={6} item display="flex" flexDirection="row-reverse">
+                <Button
+                  onClick={handleRemove}
+                  sx={{ mt: 2 }}
+                  color="error"
+                  variant="outlined"
+                >
+                  Eliminar profesor
+                </Button>
+              </Grid>
+            )}
+          </Grid>
         </CardActions>
       </Box>
     </div>
   );
 };
 export default TeacherForm;
+
+

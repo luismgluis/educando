@@ -17,7 +17,7 @@ import EditIcon from "@mui/icons-material/Edit";
 import { useCurrentUser } from "../../../hooks/currentUser";
 import { useCurrentBusiness } from "../../../hooks/currentBusiness";
 import { useAlert } from "../../ui/Alert/useAlert";
-import { Api } from "@mui/icons-material";
+import Api from "../../../api/Api";
 
 const TAG = "TEACHER CARD";
 type TeacherAddProps = {
@@ -64,7 +64,7 @@ const TeacherAdd: React.FC<TeacherAddProps> = ({
           console.log("Teacher saved");
           onSave(true);
           alert({
-            title: "Profesor modificado Modificado",
+            title: "Profesor modificado",
             body: "Los cambios fueron realizados satisfactoriamente.",
             okButton: "Ok",
             enabled: true,
