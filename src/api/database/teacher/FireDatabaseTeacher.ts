@@ -1,38 +1,38 @@
 import Business from "../../../classes/Business";
-import Student from "../../../classes/Student";
+import Teacher from "../../../classes/Teacher";
 import User from "../../../classes/User";
 import utils from "../../../libs/utils/utils";
 import App from "../../App";
 
-const TAG = "FIRE DATABASE STUDENT";
-class FireDatabaseStudent {
+const TAG = "FIRE DATABASE TEACHER";
+class FireDatabaseTeacher {
   private app: App;
-  private allStudent: any;
+  private allTeacher: any;
   constructor(app: App) {
     this.app = app;
-    this.allStudent = {};
+    this.allTeacher = {};
   }
-  getStudent(idStudent: string, business: Business) {
+  getTeacher(idTeacher: string, business: Business) {
     const that = this;
     const db = this.app.database();
-    return new Promise<Student>((resolve, reject) => {
+    return new Promise<Teacher>((resolve, reject) => {
       try {
-        if (typeof that.allStudent[idStudent] !== "undefined") {
-          resolve(that.allStudent[idStudent]);
+        if (typeof that.allTeacher[idTeacher] !== "undefined") {
+          resolve(that.allTeacher[idTeacher]);
           return;
         }
         db.collection("business")
           .doc(business.id)
-          .collection("students")
-          .doc(idStudent)
+          .collection("teachers")
+          .doc(idTeacher)
           .get()
           .then((result) => {
             if (result.exists) {
               const data: any = result.data();
               data.id = result.id;
-              const student = new Student(data);
-              that.allStudent[idStudent] = student;
-              resolve(student);
+              const teacher = new Teacher(data);
+              that.allTeacher[idTeacher] = teacher;
+              resolve(teacher);
               return;
             }
             reject("Not user");
@@ -46,21 +46,21 @@ class FireDatabaseStudent {
       }
     });
   }
-  saveStudent(me: User, business: Business, student: Student) {
+  saveTeacher(me: User, business: Business, teacher: Teacher) {
     const that = this;
     const save = async () => {
-      student.creationDate = utils.dates.dateNowUnix();
-      student.creator = me.id;
+      teacher.creationDate = utils.dates.dateNowUnix();
+      teacher.creator = me.id;
 
       const res = await that.app
         .database()
         .collection("business")
         .doc(business.id)
-        .collection("students")
-        .add(student.exportObject())
+        .collection("teachers")
+        .add(teacher.exportObject())
         .catch(() => null);
       if (res) {
-        student.id = res.id;
+        teacher.id = res.id;
         return true;
       }
       return null;
@@ -70,7 +70,7 @@ class FireDatabaseStudent {
       try {
         const resSave = await save();
         if (!resSave) {
-          reject("fail to save data on Student colletion");
+          reject("fail to save data on Teacher colletion");
           return;
         }
         resolve(true);
@@ -79,23 +79,23 @@ class FireDatabaseStudent {
       }
     });
   }
-  getStudents(business: Business) {
+  getTeachers(business: Business) {
     const that = this;
     const getData = async () => {
       const res = await that.app
         .database()
         .collection("business")
         .doc(business.id)
-        .collection("students")
+        .collection("teachers")
         .get()
         .catch(() => null);
-      const arr: Student[] = [];
+      const arr: Teacher[] = [];
       if (res) {
         if (!res.empty) {
           res.forEach((doc) => {
             const data: any = doc.data();
             data.id = doc.id;
-            arr.push(new Student(data));
+            arr.push(new Teacher(data));
           });
         }
         return arr;
@@ -103,11 +103,11 @@ class FireDatabaseStudent {
       return null;
     };
 
-    return new Promise<Student[]>(async (resolve, reject) => {
+    return new Promise<Teacher[]>(async (resolve, reject) => {
       try {
         const result = await getData();
         if (!result) {
-          reject("fail to save data on Student colletion");
+          reject("fail to save data on Teacher colletion");
           return;
         }
         resolve(result);
@@ -116,21 +116,21 @@ class FireDatabaseStudent {
       }
     });
   }
-  getStudentsListener(business: Business, callback: (res: Student[]) => void) {
+  getTeachersListener(business: Business, callback: (res: Teacher[]) => void) {
     const that = this;
     const unsubs = that.app
       .database()
       .collection("business")
       .doc(business.id)
-      .collection("students")
+      .collection("teachers")
       .onSnapshot((res) => {
-        const arr: Student[] = [];
+        const arr: Teacher[] = [];
         if (res) {
           if (!res.empty) {
             res.forEach((doc) => {
               const data: any = doc.data();
               data.id = doc.id;
-              arr.push(new Student(data));
+              arr.push(new Teacher(data));
             });
           }
           callback(arr);
@@ -141,22 +141,22 @@ class FireDatabaseStudent {
 
     return unsubs;
   }
-  modifyStudent(student: Student, business: Business) {
+  modifyTeacher(teacher: Teacher, business: Business) {
     const that = this;
     const save = async () => {
       const res = await that.app
         .database()
         .collection("business")
         .doc(business.id)
-        .collection("students")
-        .doc(student.id)
-        .set(student.exportObject())
+        .collection("teachers")
+        .doc(teacher.id)
+        .set(teacher.exportObject())
         .then(() => true)
         .catch((err) => {
           return err;
         });
       if (res) {
-        console.log("modifyStudent realizado con exito");
+        console.log("modifyTeacher realizado con exito");
         return true;
       }
       return null;
@@ -169,21 +169,21 @@ class FireDatabaseStudent {
           resolve(true);
           return;
         }
-        reject("Fail on add to me Student");
+        reject("Fail on add to me Teacher");
       } catch (error) {
         reject(null);
       }
     });
   }
-  removeStudent(student: Student, business: Business) {
+  removeTeacher(teacher: Teacher, business: Business) {
     const that = this;
     const remove = async () => {
       const res = await that.app
         .database()
         .collection("business")
         .doc(business.id)
-        .collection("students")
-        .doc(student.id)
+        .collection("teachers")
+        .doc(teacher.id)
         .delete()
         .then(() => true)
         .catch((err) => {
@@ -200,7 +200,7 @@ class FireDatabaseStudent {
           resolve(true);
           return;
         }
-        reject("Fail on remove this Student");
+        reject("Fail on remove this Teacher");
       } catch (error) {
         reject(null);
       }
@@ -208,4 +208,4 @@ class FireDatabaseStudent {
   }
 }
 
-export default FireDatabaseStudent;
+export default FireDatabaseTeacher;

@@ -8,9 +8,15 @@ import utils from "../../../libs/utils/utils";
 const TAG = "TEACHER FORM";
 type TeacherFormProps = {
   currentTeacher?: Teacher;
+  isNewTeacher?: boolean;
+  teacher?: Teacher;
   onChange: (c: Teacher) => void;
 };
-const TeacherForm: React.FC<TeacherFormProps> = ({ onChange }) => {
+const TeacherForm: React.FC<TeacherFormProps> = ({
+  onChange,
+  isNewTeacher = false,
+  teacher,
+}) => {
   console.log(TAG, "render");
   const handleSubmit = useCallback(
     (event: React.FormEvent<HTMLFormElement>) => {

@@ -15,9 +15,11 @@ const CModal: React.FC<CModalProps> = (props) => {
       <div onClick={() => close()}>
         <Grid container display="flex" justifyContent="center">
           <Grid xs={12} sm={10} md={8} item>
-            <Box margin={3} maxHeight={"calc(100vh - 50px)"} overflow="auto">
-              {props.children}
-            </Box>
+            <div onClick={(e) => e.stopPropagation()}>
+              <Box margin={3} maxHeight={"calc(100vh - 50px)"} overflow="auto">
+                {props.children}
+              </Box>
+            </div>
           </Grid>
         </Grid>
       </div>

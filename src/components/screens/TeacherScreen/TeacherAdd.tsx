@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import {
   Card,
   CardHeader,
@@ -14,7 +14,12 @@ import utils from "../../../libs/utils/utils";
 import TeacherForm from "./TeacherForm";
 import Teacher from "../../../classes/Teacher";
 import EditIcon from "@mui/icons-material/Edit";
+import { useCurrentUser } from "../../../hooks/currentUser";
+import { useCurrentBusiness } from "../../../hooks/currentBusiness";
+import { useAlert } from "../../ui/Alert/useAlert";
+import { Api } from "@mui/icons-material";
 
+const TAG = "TEACHER CARD";
 type TeacherAddProps = {
   onSave?: (res: boolean) => void;
   onClose?: () => void;
@@ -27,9 +32,48 @@ const TeacherAdd: React.FC<TeacherAddProps> = ({
 }) => {
   const [currentTeacher, setCurrentTeacher] = useState(new Teacher(null));
 
+  const me = useCurrentUser();
+  const cBusiness = useCurrentBusiness();
+  const alert = useAlert();
+  
   useEffect(() => {
     if (originalTeacher) setCurrentTeacher(originalTeacher);
   }, [originalTeacher]);
+
+  const saveTeacher = useCallback(
+    (teacher: Teacher) => {
+      if (
+        (!teacher.isEmpty && originalTeacher === null) ||
+        originalTeacher?.isEmpty
+      ) {
+        Api.database.teacher.saveTeacher(me, cBusiness, teacher).then(() => {
+          console.log("Teacher saved");
+          onSave(true);
+          alert({
+            title: "Profesor creado",
+            body: "Ya puedes asignarlo a alguna clase",
+            okButton: "Ok",
+            enabled: true,
+          });
+        });
+        return;
+      }
+      if (!teacher.isEmpty && !originalTeacher?.isEmpty) {
+        teacher.id = originalTeacher?.id!;
+        Api.database.teacher.modifyTeacher(teacher, cBusiness).then(() => {
+          console.log("Teacher saved");
+          onSave(true);
+          alert({
+            title: "Profesor modificado Modificado",
+            body: "Los cambios fueron realizados satisfactoriamente.",
+            okButton: "Ok",
+            enabled: true,
+          });
+        });
+      }
+    },
+    [me, cBusiness, onSave, alert, originalTeacher]
+  );
 
   return (
     <div className="TeacherAdd">
@@ -52,7 +96,9 @@ const TeacherAdd: React.FC<TeacherAddProps> = ({
           }
           title={
             <Typography variant="h6">
-              {!currentTeacher.isEmpty ? "Editar docente" : "Nuevo docente"}
+              {!currentTeacher.isEmpty 
+              ? "Editar docente" 
+              : "Nuevo docente"}
             </Typography>
           }
           subheader={
@@ -63,10 +109,14 @@ const TeacherAdd: React.FC<TeacherAddProps> = ({
         />
         <CardContent>
           <Typography variant="body2" color="text.secondary">
-            Llena los datos acontinuación.
+            Llena los datos a continuación.
           </Typography>
           <Divider sx={{ mb: 2, mt: 1 }}></Divider>
-          <TeacherForm onChange={(e) => setCurrentTeacher(e)} />
+          <TeacherForm
+            isNewTeacher={originalTeacher === null}
+            teacher={originalTeacher || new Teacher(null)}
+            onChange={(e) => saveTeacher(e)}
+          />
         </CardContent>
         {/* <CardActions disableSpacing>
           <Button

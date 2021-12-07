@@ -10,6 +10,7 @@ export interface CustomerInterface {
   email: string;
   creationDate: number;
   isNull?: boolean;
+  
 }
 export default class Customer implements CustomerInterface {
   id: string;
