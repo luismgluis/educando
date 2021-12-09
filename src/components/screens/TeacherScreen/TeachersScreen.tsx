@@ -1,6 +1,6 @@
 import "./TeachersScreen.scss";
 import React, { useCallback, useEffect, useState } from "react";
-import { Button, Divider, TextField } from "@mui/material";
+import { Button, Container, Divider, TextField } from "@mui/material";
 
 import Teacher from "../../../classes/Teacher";
 import {
@@ -108,7 +108,7 @@ const TeachersScreen: React.FC<TeachersScreenProps> = () => {
   }, []);
 
   return (
-    <div className="TeachersScreen">
+    <Container className="TeachersScreen">
       {/* agregar usuarios */}
       <CModal open={addUserEnable} onClose={() => setAddUserEnable(false)}>
         <TeacherAdd
@@ -170,7 +170,7 @@ const TeachersScreen: React.FC<TeachersScreenProps> = () => {
         </Box>
         <Divider sx={{ my: 1 }}>Toca un docente para editarlo</Divider>
       </Box>
-    </div>
+    </Container>
   );
 };
 export default TeachersScreen;
