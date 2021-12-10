@@ -10,7 +10,7 @@ import {
   GridValueGetterParams,
 } from "@mui/x-data-grid";
 import { Box } from "@mui/system";
-//import Business from "../../../classes/Business";
+
 import ClassAdd from "./ClassAdd";
 import CModal from "../../ui/CModal/CModal";
 import ClassSelected from "./ClassSelected";
