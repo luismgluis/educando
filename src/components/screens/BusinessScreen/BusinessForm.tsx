@@ -14,6 +14,7 @@ type BusinessFormProps = {
 const BusinessForm: React.FC<BusinessFormProps> = ({ onChange }) => {
   console.log(TAG, "render");
   const [alert, setAlert] = useState("");
+  const [imgSelected, setImgSelected] = useState("");
   const handleSubmit = useCallback(
     (event: React.FormEvent<HTMLFormElement>) => {
       event.preventDefault();
@@ -25,6 +26,7 @@ const BusinessForm: React.FC<BusinessFormProps> = ({ onChange }) => {
         email: formData.get("email") + "",
         description: formData.get("description") + "",
         creationDate: utils.dates.dateNowUnix(),
+        urlImg: imgSelected,
       };
       const newBusiness = new Business(data);
       if (newBusiness.validate()) {
@@ -35,8 +37,9 @@ const BusinessForm: React.FC<BusinessFormProps> = ({ onChange }) => {
         setAlert("Datos invalidos");
       }, 200);
     },
-    [onChange]
+    [onChange, imgSelected]
   );
+  console.log("imgSelected", imgSelected);
   return (
     <div className="BusinessForm">
       {alert && <Alert severity="error">{alert}</Alert>}
@@ -71,7 +74,10 @@ const BusinessForm: React.FC<BusinessFormProps> = ({ onChange }) => {
           placeholder="Descripción"
         />
         <Box sx={{ height: "350px", overflow: "auto" }}>
-          <GalleryImages />
+          <GalleryImages
+            limitDefaultImages={6}
+            onSelect={(res) => setImgSelected(res)}
+          />
         </Box>
         <CardActions disableSpacing>
           <Button

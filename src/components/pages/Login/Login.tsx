@@ -2,9 +2,10 @@ import "./Login.scss";
 import React from "react";
 import LoginForm from "./LoginForm";
 import LoginImage from "./LoginImage.png";
-import { Container, Grid } from "@mui/material";
+import { Container, Grid, Box } from "@mui/material";
 import BackgroundWaves from "../../ui/BackgroundWaves/BackgroundWaves";
 import LoginCreate from "./LoginCreate";
+
 // import { useLocation } from "react-router-dom";
 
 const TAG = "LOGIN";
@@ -34,11 +35,19 @@ const Login: React.FC<LoginProps> = ({ enableCreate }) => {
           }}
         >
           <Grid item xs={12} sm={6}>
-            <div className="loginLeft">
+            <Box
+              className="loginLeft"
+              sx={{ bgcolor: (t) => t.palette.primary.main }}
+            >
               <div className="imageContainer">
-                <img src={LoginImage} alt="login router" />
+                <img
+                  src={
+                    "https://firebasestorage.googleapis.com/v0/b/nuestra-tribu.appspot.com/o/banners%2FEducados.svg?alt=media&token=367b620b-9bd8-4172-9103-823bc4590d06"
+                  }
+                  alt="login router"
+                />
               </div>
-            </div>
+            </Box>
           </Grid>
           <Grid item xs={12} sm={6}>
             {!enableCreate && <LoginForm />}

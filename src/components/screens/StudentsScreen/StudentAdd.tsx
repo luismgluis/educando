@@ -49,7 +49,7 @@ const StudentAdd: React.FC<StudentAddProps> = ({
         Api.database.student.saveStudent(me, cBusiness, student).then(() => {
           console.log("Student saved");
           onSave(true);
-          alert({
+          alert.info({
             title: "Estudiante creado",
             body: "Ya puedes asignarlo a alguna clase",
             okButton: "Ok",
@@ -63,7 +63,7 @@ const StudentAdd: React.FC<StudentAddProps> = ({
         Api.database.student.modifyStudent(student, cBusiness).then(() => {
           console.log("Student saved");
           onSave(true);
-          alert({
+          alert.info({
             title: "Estudiante Modificado",
             body: "Los cambios fueron realizados satisfactoriamente.",
             okButton: "Ok",
@@ -101,8 +101,7 @@ const StudentAdd: React.FC<StudentAddProps> = ({
                 : "Nuevo estudiante"}
             </Typography>
           }
-          subheader=
-          {`Fecha: ${utils.dates.dateNowString()}`}
+          subheader={`Fecha: ${utils.dates.dateNowString()}`}
         />
         <CardContent>
           <Typography variant="body2" color="text.secondary">

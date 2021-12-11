@@ -169,7 +169,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ prop1 }) => {
             <Grid item xs>
               <Link
                 onClick={() =>
-                  alert({
+                  alert.info({
                     enabled: true,
                     title: "Aun no podemos ayudarte con eso",
                   })

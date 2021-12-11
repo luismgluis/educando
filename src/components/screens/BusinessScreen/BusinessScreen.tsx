@@ -21,6 +21,7 @@ import {
 import CModal from "../../ui/CModal/CModal";
 import BusinessAdd from "./BusinessAdd";
 import Loader from "../../ui/Loader/Loader";
+import { useSetHomeGoTo } from "../../../hooks/useHomeGoTo";
 
 const TAG = "BusinessScreen";
 type BusinessScreenProps = {};
@@ -54,12 +55,14 @@ const BusinessScreen: React.FC<BusinessScreenProps> = ({}) => {
   const [state, setState] = useState(0);
   const cBusiness = useCurrentBusiness();
   const setCurrentBusiness = useSetCurrentBusiness();
+  const homeGoTo = useSetHomeGoTo();
 
   const onSelect = useCallback(
     (business: Business) => {
       setCurrentBusiness(business);
+      homeGoTo("StudentsScreen", "Estudiantes");
     },
-    [setCurrentBusiness]
+    [setCurrentBusiness, homeGoTo]
   );
   const onRemove = useCallback(
     (business: Business) => {

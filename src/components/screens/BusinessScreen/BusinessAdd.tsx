@@ -41,7 +41,7 @@ const BusinessAdd: React.FC<BusinessAddProps> = ({
     if (!currentBusiness.isEmpty) {
       Api.database.business.saveBusiness(me, currentBusiness).then(() => {
         console.log("Business saved");
-        alert({
+        alert.info({
           title: "Institucion Creada",
           enabled: true,
           okButton: "Ok",

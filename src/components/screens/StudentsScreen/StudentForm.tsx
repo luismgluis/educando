@@ -50,7 +50,7 @@ const StudentForm: React.FC<StudentFormProps> = ({
     },
     [onChange]
   );
-  
+
   const newT = TeacherList.map((item) => {
     return {
       id: item.idCard + "",
@@ -64,14 +64,14 @@ const StudentForm: React.FC<StudentFormProps> = ({
         Api.database.student
           .removeStudent(student, cBusiness)
           .then((res) => {
-            alert({
+            alert.info({
               title: "Estudiante eliminado",
               enabled: true,
               okButton: "Ok",
             });
           })
           .catch((err) =>
-            alert({
+            alert.info({
               title: "Eliminacion fallida",
               body: "Intentalo de nuevo",
               enabled: true,
@@ -80,7 +80,7 @@ const StudentForm: React.FC<StudentFormProps> = ({
           );
       }
     };
-    alert({
+    alert.info({
       title: "¿Eliminar?",
       body: `Seguro que quieres eliminar a el estudiante ${student?.name}?`,
       enabled: true,

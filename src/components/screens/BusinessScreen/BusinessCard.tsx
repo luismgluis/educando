@@ -17,7 +17,7 @@ import { red } from "@mui/material/colors";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import Business from "../../../classes/Business";
-import { Delete, Remove } from "@mui/icons-material";
+import { AccountBalance, Delete, Remove } from "@mui/icons-material";
 import utils from "../../../libs/utils/utils";
 import { useAlert } from "../../ui/Alert/useAlert";
 
@@ -35,7 +35,7 @@ const BusinessCard: React.FC<BusinessCardProps> = ({
   const alert = useAlert();
   const checkRemove = useCallback(
     (busi: Business) => {
-      alert({
+      alert.info({
         title: "Seguro quieres eliminar?",
         body: "Esta accion no se puede deshacer.",
         enabled: true,
@@ -74,7 +74,7 @@ const BusinessCard: React.FC<BusinessCardProps> = ({
         <CardMedia
           component="img"
           height="194"
-          image="https://picsum.photos/200/300"
+          image={business.urlImg || "https://picsum.photos/200/300"}
           alt="Paella dish"
         />
         <CardContent>
@@ -88,7 +88,7 @@ const BusinessCard: React.FC<BusinessCardProps> = ({
               <Button
                 onClick={() => onSelect(business)}
                 variant={"contained"}
-                startIcon={<FavoriteIcon />}
+                startIcon={<AccountBalance />}
               >
                 Seleccionar
               </Button>

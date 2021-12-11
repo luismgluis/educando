@@ -54,14 +54,14 @@ const TeacherForm: React.FC<TeacherFormProps> = ({
         Api.database.teacher
           .removeTeacher(teacher, cBusiness)
           .then((res) => {
-            alert({
+            alert.info({
               title: "Profesor eliminado",
               enabled: true,
               okButton: "Ok",
             });
           })
           .catch((err) =>
-            alert({
+            alert.info({
               title: "Eliminacion fallida",
               body: "Intentalo de nuevo",
               enabled: true,
@@ -70,7 +70,7 @@ const TeacherForm: React.FC<TeacherFormProps> = ({
           );
       }
     };
-    alert({
+    alert.info({
       title: "¿Eliminar?",
       body: `Seguro que quieres eliminar a el profesor ${teacher?.name}?`,
       enabled: true,
@@ -80,7 +80,6 @@ const TeacherForm: React.FC<TeacherFormProps> = ({
     });
   }, [alert, teacher, cBusiness]);
 
-  
   return (
     <div className="TeacherForm">
       <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
@@ -133,7 +132,7 @@ const TeacherForm: React.FC<TeacherFormProps> = ({
           placeholder="Cédula"
         />
 
-<CardActions disableSpacing>
+        <CardActions disableSpacing>
           <Grid container>
             <Grid xs={6} item>
               <Button
@@ -164,5 +163,3 @@ const TeacherForm: React.FC<TeacherFormProps> = ({
   );
 };
 export default TeacherForm;
-
-

@@ -12,7 +12,7 @@ const ThemeConfig = createTheme({
   ...tp,
   palette: {
     primary: {
-      main: "#00bbd3", //purple[500],
+      main: "#00bbd3",
       light: "#62eeff",
       dark: "#008ba2",
       darkPlus: "#006070",

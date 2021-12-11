@@ -10,7 +10,7 @@ export type AlertType = {
   okButton?: string;
   noButton?: string;
   onClose?: (res: boolean) => void;
-  enabled: boolean;
+  enabled?: boolean;
 };
 export function useCustomAlert() {
   const [data, setData] = useState<AlertType>({
@@ -33,6 +33,13 @@ export function useCustomAlert() {
       const lng: AlertType = store.reducerGeneralValues.alertData;
       if (typeof lng !== "undefined") {
         if (lng !== null) {
+          if (typeof lng.enabled === "undefined") {
+            lng.enabled = true;
+          }
+          if (typeof lng.okButton === "undefined") {
+            lng.okButton = "Ok";
+          }
+
           if (
             oldData.current.enabled !== lng.enabled ||
             oldData.current.title !== lng.title
@@ -52,11 +59,33 @@ export function useCustomAlert() {
 
 export function useAlert() {
   const dispatch = useDispatch();
-
-  return useCallback(
+  const changeAlert = useCallback(
     (data: AlertType) => {
       dispatch(reduxGeneralValues.setAlertData(data));
     },
     [dispatch]
   );
+  const info = useCallback(
+    (data: AlertType) => {
+      changeAlert(data);
+    },
+    [changeAlert]
+  );
+  const toast = useCallback(
+    (data: AlertType) => {
+      changeAlert(data);
+    },
+    [changeAlert]
+  );
+  const loading = useCallback(
+    (data: AlertType) => {
+      changeAlert(data);
+    },
+    [changeAlert]
+  );
+  return {
+    info,
+    toast,
+    loading,
+  };
 }

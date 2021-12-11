@@ -49,7 +49,7 @@ export function useSetHomeGoTo() {
   return useCallback(
     (screen: HomeCurrentScreen, name: string, parms: any = null) => {
       if (currentBusiness.isEmpty && screen !== "BusinessScreen") {
-        alert({
+        alert.info({
           title: "No tan rapido..",
           body: "Debes escoger una institucion primero",
           okButton: "De acuerdo",

@@ -35,7 +35,7 @@ const TeacherAdd: React.FC<TeacherAddProps> = ({
   const me = useCurrentUser();
   const cBusiness = useCurrentBusiness();
   const alert = useAlert();
-  
+
   useEffect(() => {
     if (originalTeacher) setCurrentTeacher(originalTeacher);
   }, [originalTeacher]);
@@ -49,7 +49,7 @@ const TeacherAdd: React.FC<TeacherAddProps> = ({
         Api.database.teacher.saveTeacher(me, cBusiness, teacher).then(() => {
           console.log("Teacher saved");
           onSave(true);
-          alert({
+          alert.info({
             title: "Profesor creado",
             body: "Ya puedes asignarlo a alguna clase",
             okButton: "Ok",
@@ -63,7 +63,7 @@ const TeacherAdd: React.FC<TeacherAddProps> = ({
         Api.database.teacher.modifyTeacher(teacher, cBusiness).then(() => {
           console.log("Teacher saved");
           onSave(true);
-          alert({
+          alert.info({
             title: "Profesor modificado",
             body: "Los cambios fueron realizados satisfactoriamente.",
             okButton: "Ok",
@@ -96,9 +96,7 @@ const TeacherAdd: React.FC<TeacherAddProps> = ({
           }
           title={
             <Typography variant="h6">
-              {!currentTeacher.isEmpty 
-              ? "Editar docente" 
-              : "Nuevo docente"}
+              {!currentTeacher.isEmpty ? "Editar docente" : "Nuevo docente"}
             </Typography>
           }
           subheader={

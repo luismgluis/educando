@@ -45,15 +45,21 @@ const CustomList: React.FC<CustomListProps> = ({
     onClose();
   }, [onClose]);
   const logOut = useCallback(() => {
-    alert({
+    alert.info({
       title: "Cerrar Sesión",
       body: "Seguro quieres cerrar la sesión actual?",
       enabled: true,
       okButton: "Si",
       noButton: "Cancelar",
       onClose: (res) => {
-        res && Api.app.logOut();
-        goTo.login();
+        if (res) {
+          Api.app
+            .logOut()
+            .then(() => {
+              goTo.login();
+            })
+            .catch((err) => alert);
+        }
       },
     });
     onClose();

@@ -1,4 +1,5 @@
 import User from "../classes/User";
+import ApiStorage from "./ApiStorage";
 import App from "./App";
 import Database from "./database/Database";
 
@@ -6,6 +7,7 @@ const TAG = "API";
 class Api {
   private _app: App | null;
   private _database: Database | null;
+  private _storage: ApiStorage | null;
   private _currentUser: User | null;
   static instance: any;
 
@@ -13,7 +15,7 @@ class Api {
     this._database = null;
     this._app = null;
     this._currentUser = null;
-
+    this._storage = null;
     if (typeof Api.instance === "object") {
       return Api.instance;
     }
@@ -23,6 +25,7 @@ class Api {
   private start() {
     this._app = new App();
     this._database = new Database(this._app);
+    this._storage = new ApiStorage(this.app);
     this._app.databaseFns = this._database;
   }
 
@@ -34,6 +37,10 @@ class Api {
   public get database(): Database {
     if (!this._database) this.start();
     return this._database!;
+  }
+  public get storage(): ApiStorage {
+    if (!this._storage) this.start();
+    return this._storage!;
   }
   public get currentUser(): User {
     if (!this._currentUser) return new User(null);

@@ -3,6 +3,7 @@ import "firebase/analytics";
 import "firebase/auth";
 import "firebase/firestore";
 import "firebase/functions";
+import "firebase/storage";
 
 import firebaseConfig from "../firebaseConfig";
 import Database from "./database/Database";
@@ -44,10 +45,11 @@ class App {
     return this._fireProject?.auth()!;
   }
   storage() {
-    return this._fireProject?.storage()!;
+    console.log("storage");
+    return this._fireProject?.storage("gs://nuestra-tribu.appspot.com")!;
   }
   functions(region: any = undefined) {
-    this._fireProject?.functions().useEmulator("localhost", 5001);
+    // this._fireProject?.functions().useEmulator("localhost", 5001);
     return this._fireProject?.functions(region)!;
   }
   me() {

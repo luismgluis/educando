@@ -24,7 +24,7 @@ const CustomAlert: React.FC<CustomAlertProps> = ({ prop1 }) => {
     (res: boolean = false) => {
       setOpen(false);
       if (alertInfo.onClose) alertInfo.onClose(res);
-      alert({ enabled: false });
+      alert.info({ enabled: false });
     },
     [alert, alertInfo]
   );
@@ -48,9 +48,12 @@ const CustomAlert: React.FC<CustomAlertProps> = ({ prop1 }) => {
         <DialogTitle id="scroll-dialog-title">
           {alertInfo.title || ""}
         </DialogTitle>
-        <DialogContent dividers={scroll === "paper"}>
-          {alertInfo.body || ""}
-        </DialogContent>
+        {alertInfo.body && (
+          <DialogContent dividers={scroll === "paper"}>
+            {alertInfo.body}
+          </DialogContent>
+        )}
+
         <DialogActions>
           {alertInfo.noButton && (
             <Button color="error" onClick={() => handleClose(false)}>
