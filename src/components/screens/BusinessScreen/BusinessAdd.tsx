@@ -42,7 +42,7 @@ const BusinessAdd: React.FC<BusinessAddProps> = ({
       Api.database.business.saveBusiness(me, currentBusiness).then(() => {
         console.log("Business saved");
         alert.info({
-          title: "Institucion Creada",
+          title: "Institución Creada",
           enabled: true,
           okButton: "Ok",
         });
@@ -82,7 +82,7 @@ const BusinessAdd: React.FC<BusinessAddProps> = ({
         />
         <CardContent>
           <Typography variant="body2" color="text.secondary">
-            Llena los datos acontinuación.
+            Llena los datos a continuación.
           </Typography>
           <Divider sx={{ mb: 2, mt: 1 }}></Divider>
           <BusinessForm onChange={(e) => setCurrentBusiness(e)} />

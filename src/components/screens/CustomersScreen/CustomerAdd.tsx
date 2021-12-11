@@ -64,7 +64,7 @@ const CustomerAdd: React.FC<CustomerAddProps> = ({
         />
         <CardContent>
           <Typography variant="body2" color="text.secondary">
-            Llena los datos acontinuación.
+            Llena los datos a continuación.
           </Typography>
           <Divider sx={{ mb: 2, mt: 1 }}></Divider>
           <CustomerForm onChange={(e) => setCurrentCustomer(e)} />
