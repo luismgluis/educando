@@ -50,8 +50,8 @@ export function useSetHomeGoTo() {
     (screen: HomeCurrentScreen, name: string, parms: any = null) => {
       if (currentBusiness.isEmpty && screen !== "BusinessScreen") {
         alert.info({
-          title: "No tan rapido..",
-          body: "Debes escoger una institucion primero",
+          title: "No tan rápido..",
+          body: "Debes escoger una institución primero",
           okButton: "De acuerdo",
           enabled: true,
         });

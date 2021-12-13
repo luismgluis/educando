@@ -75,7 +75,7 @@ const GalleryImages: React.FC<GalleryImagesProps> = ({
     <div className="GalleryImages">
       <ImageList sx={{ width: "100%" }}>
         <ImageListItem key="Subheader" cols={2}>
-          <Typography variant="h5">Imagenes de muestra</Typography>
+          <Typography variant="h5">Imágenes de muestra</Typography>
           <Typography variant="caption">
             Selecciona una imagen o sube una tuya.
           </Typography>

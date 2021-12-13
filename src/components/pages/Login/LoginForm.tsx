@@ -155,7 +155,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ prop1 }) => {
           />
           <FormControlLabel
             control={<Checkbox value="remember" color="primary" />}
-            label="Recuerdame"
+            label="Recuérdame"
           />
           <Button
             type="submit"
