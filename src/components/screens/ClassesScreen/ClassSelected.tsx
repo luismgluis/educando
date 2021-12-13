@@ -12,12 +12,12 @@ import { red } from "@mui/material/colors";
 import EditIcon from "@mui/icons-material/Edit";
 import CloseIcon from "@mui/icons-material/Close";
 
-import Class from "../../../classes/Class";
+import ClassRoom from "../../../classes/ClassRoom";
 const TAG = "CLASS SELECTED";
 type ClassSelectedProps = {
-  currentClass: Class;
-  setCurrentClass: (c: Class) => void;
-  onEdit: (c: Class) => void;
+  currentClass: ClassRoom;
+  setCurrentClass: (c: ClassRoom) => void;
+  onEdit: (c: ClassRoom) => void;
 };
 const ClassSelected: React.FC<ClassSelectedProps> = ({
   currentClass,
@@ -37,14 +37,11 @@ const ClassSelected: React.FC<ClassSelectedProps> = ({
           <Box>
             <IconButton
               aria-label="close"
-              onClick={(e) => setCurrentClass(new Class(null))}
+              onClick={(e) => setCurrentClass(new ClassRoom(null))}
             >
               <CloseIcon />
             </IconButton>
-            <IconButton
-              aria-label="edit"
-              onClick={(e) => onEdit(currentClass)}
-            >
+            <IconButton aria-label="edit" onClick={(e) => onEdit(currentClass)}>
               <EditIcon />
             </IconButton>
           </Box>
@@ -56,8 +53,6 @@ const ClassSelected: React.FC<ClassSelectedProps> = ({
         }
         header="Danza"
         subheader="Danza - Daniela Vargas Palomino"
-    
-        
       />
     </Card>
   );

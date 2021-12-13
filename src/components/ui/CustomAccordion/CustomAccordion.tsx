@@ -8,11 +8,21 @@ import { Button } from "@mui/material";
 import Stack from "@mui/material/Stack";
 
 const TAG = "ACCORDION";
+type AccordionOption = {
+  name: string;
+  onClick: () => void;
+};
 type AccordionProps = {
-  prop1?: any;
+  title?: string;
+  description?: string;
+  buttons?: AccordionOption[];
 };
 
-const CustomAccordion: React.FC<AccordionProps> = ({ prop1 }) => {
+const CustomAccordion: React.FC<AccordionProps> = ({
+  title = "",
+  description = "",
+  buttons = [],
+}) => {
   console.log(TAG, "render");
   return (
     <div className="Accordion">
@@ -20,58 +30,24 @@ const CustomAccordion: React.FC<AccordionProps> = ({ prop1 }) => {
         <AccordionSummary
           expandIcon={<ExpandMoreIcon />}
           aria-controls="panel1a-content"
-          id="ac1"
         >
-          <Typography>Grado 4</Typography>
+          <Typography>{title}</Typography>
         </AccordionSummary>
         <AccordionDetails>
-          <Typography>Selecciona el grupo</Typography>
+          <Typography>{description}</Typography>
           <Stack direction="row" spacing={2}>
-            <Button variant="contained" color="primary">
-              4A
-            </Button>
-            <Button variant="contained" color="primary">
-              4B
-            </Button>
-            <Button variant="contained" color="primary">
-              4C
-            </Button>
+            {buttons.map((item) => (
+              <Button
+                onClick={() => item.onClick()}
+                variant="contained"
+                color="primary"
+              >
+                {item.name}
+              </Button>
+            ))}
           </Stack>
         </AccordionDetails>
       </Accordion>
-      <Accordion>
-        <AccordionSummary
-          expandIcon={<ExpandMoreIcon />}
-          aria-controls="panel2a-content"
-          id="ac2"
-        >
-          <Typography>Grado 5</Typography>
-        </AccordionSummary>
-        <AccordionDetails>
-          <Typography>Selecciona el grupo</Typography>
-          <Stack direction="row" spacing={2}>
-            <Button variant="contained" color="primary">
-              5A
-            </Button>
-            <Button variant="contained" color="primary">
-              5B
-            </Button>
-            <Button variant="contained" color="primary">
-              5C
-            </Button>
-          </Stack>
-        </AccordionDetails>
-      </Accordion>
-
-      {/* <Accordion disabled>
-        <AccordionSummary
-          expandIcon={<ExpandMoreIcon />}
-          aria-controls="panel3a-content"
-          id="panel3a-header"
-        >
-          <Typography>Grado 6</Typography>
-        </AccordionSummary>
-      </Accordion> */}
     </div>
   );
 };

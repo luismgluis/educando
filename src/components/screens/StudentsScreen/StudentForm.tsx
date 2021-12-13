@@ -35,7 +35,7 @@ const StudentForm: React.FC<StudentFormProps> = ({
         id: "NN",
         name: formData.get("given-name") + "",
         lastName: formData.get("last-name") + "",
-        code: formData.get("code") + "",
+        code: formData.get("usercode") + "",
         grade: formData.get("grade") + "",
         group: formData.get("group") + "",
         // router: formData.get("router") + "",
@@ -126,10 +126,11 @@ const StudentForm: React.FC<StudentFormProps> = ({
           margin="normal"
           required
           fullWidth
-          id="code"
+          id="usercode"
           label="Código"
           autoComplete="code"
-          name="Código Ej: 200099"
+          name="usercode"
+          placeholder="Código Ej: 200099"
           defaultValue={student?.code || ""}
         />
         <TextField

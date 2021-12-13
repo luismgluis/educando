@@ -35,10 +35,12 @@ function LinearProgressWithLabel(
 type UploadFileInputProps = {
   basePath: string;
   onCreate?: (res: FileInfo) => void;
+  textButton?: string;
 };
 const UploadFileInput: React.FC<UploadFileInputProps> = ({
   onCreate,
   basePath,
+  textButton = "Subir Imagen",
 }) => {
   console.log(TAG, "render");
   const [progress, setProgress] = React.useState(0);
@@ -88,7 +90,7 @@ const UploadFileInput: React.FC<UploadFileInputProps> = ({
     <div className="UploadFileInput">
       <Box sx={{ width: "100%" }}>
         <Button variant="contained" component="label">
-          Upload File
+          {textButton}
           <input
             id="uploadFile"
             type="file"

@@ -2,7 +2,7 @@ import "./ClassesScreen.scss";
 import React, { useCallback, useEffect, useState } from "react";
 import { Button, Divider, TextField, Typography } from "@mui/material";
 
-import Class from "../../../classes/Class";
+import ClassRoom from "../../../classes/ClassRoom";
 import {
   DataGrid,
   GridColDef,
@@ -14,16 +14,16 @@ import { Box } from "@mui/system";
 import ClassAdd from "./ClassAdd";
 import CModal from "../../ui/CModal/CModal";
 import ClassSelected from "./ClassSelected";
-import { Add, AddCircle, PlusOne } from "@mui/icons-material";
+import { AddCircle } from "@mui/icons-material";
 import ClassesInfo from "../../ui/ClassesInfo/ClassesInfo";
 
 const TAG = "CLASSES SCREEN";
 type ClassesScreenProps = {};
-const ClassEmpty = () => new Class(null);
+const ClassEmpty = () => new ClassRoom(null);
 const ClassesScreen: React.FC<ClassesScreenProps> = () => {
   console.log(TAG, "rendererizamos este componente");
 
-  const [rows, setRows] = useState<Class[]>([]);
+  const [rows, setRows] = useState<ClassRoom[]>([]);
   const [search, setSearch] = useState("");
   const [currentClass, setCurrentClass] = useState(ClassEmpty());
   const [addUserEnable, setAddUserEnable] = useState(false);
@@ -52,7 +52,7 @@ const ClassesScreen: React.FC<ClassesScreenProps> = () => {
     const searchValue = search.toLowerCase();
     const rows = [0, 0, 0, 0].map(
       (item, index) =>
-        new Class({
+        new ClassRoom({
           name: "Claudia", //+ index,
           lastName: "Solano Carvajal",
           id: Number(index + 1) + "",

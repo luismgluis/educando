@@ -12,20 +12,20 @@ import { blue, green } from "@mui/material/colors";
 import CloseIcon from "@mui/icons-material/Close";
 import utils from "../../../libs/utils/utils";
 import ClassForm from "./ClassForm";
-import Class from "../../../classes/Class";
+import ClassRoom from "../../../classes/ClassRoom";
 import EditIcon from "@mui/icons-material/Edit";
 
 type ClassAddProps = {
   onSave?: (res: boolean) => void;
   onClose?: () => void;
-  originalClass?: Class | null;
+  originalClass?: ClassRoom | null;
 };
 const ClassAdd: React.FC<ClassAddProps> = ({
   onSave = () => null,
   onClose = () => null,
   originalClass = null,
 }) => {
-  const [currentClass, setCurrentClass] = useState(new Class(null));
+  const [currentClass, setCurrentClass] = useState(new ClassRoom(null));
 
   useEffect(() => {
     if (originalClass) setCurrentClass(originalClass);

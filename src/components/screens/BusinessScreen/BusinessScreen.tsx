@@ -1,5 +1,5 @@
 import "./BusinessScreen.scss";
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import {
   Card,
   CardActionArea,
@@ -56,14 +56,22 @@ const BusinessScreen: React.FC<BusinessScreenProps> = ({}) => {
   const cBusiness = useCurrentBusiness();
   const setCurrentBusiness = useSetCurrentBusiness();
   const homeGoTo = useSetHomeGoTo();
+  const redirect = useRef(false);
 
   const onSelect = useCallback(
     (business: Business) => {
+      redirect.current = true;
       setCurrentBusiness(business);
-      homeGoTo("StudentsScreen", "Estudiantes");
     },
-    [setCurrentBusiness, homeGoTo]
+    [setCurrentBusiness]
   );
+  useEffect(() => {
+    if (redirect.current && !cBusiness.isEmpty) {
+      redirect.current = false;
+      homeGoTo("StudentsScreen", "Estudiantes");
+    }
+  }, [homeGoTo, cBusiness]);
+
   const onRemove = useCallback(
     (business: Business) => {
       Api.database.business

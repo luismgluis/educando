@@ -175,7 +175,7 @@ class FireDatabaseUser {
       .onSnapshot(
         async (result) => {
           if (!result.empty) {
-            const arr: Business[] = [];
+            let arr: Business[] = [];
             for (const key in result.docs) {
               const element = result.docs[key];
               const idBusiness: string = element.id;
@@ -186,6 +186,7 @@ class FireDatabaseUser {
                 arr.push(data);
               }
             }
+            arr = utils.objects.arrayOrderAsc(arr, "creationDate");
             allData = arr;
             callBack(arr);
             return;

@@ -1,6 +1,6 @@
 import utils from "../libs/utils/utils";
 
-export interface ClassInterface {
+export interface ClassRoomInterface {
   id: string;
   name: string;
   lastName: string;
@@ -13,7 +13,7 @@ export interface ClassInterface {
   creationDate: number;
   isNull?: boolean;
 }
-export default class Class implements ClassInterface {
+export default class ClassRoom implements ClassRoomInterface {
   id: string;
   name: string;
   lastName: string;
@@ -25,13 +25,13 @@ export default class Class implements ClassInterface {
   activeClasses: string;
   creationDate: number;
   isNull?: boolean;
-  constructor(data: ClassInterface | null, isNull?: boolean) {
+  constructor(data: ClassRoomInterface | null, isNull?: boolean) {
     this.name = data?.name || "";
     this.id = data?.id || "";
     this.activeClasses = data?.activeClasses || "";
     this.lastName = data?.lastName || "";
     this.idCard = data?.idCard || "";
-    this.email = data?.email|| "";
+    this.email = data?.email || "";
     this.code = data?.code || "";
     this.grade = data?.grade || "";
     this.group = data?.group || "";

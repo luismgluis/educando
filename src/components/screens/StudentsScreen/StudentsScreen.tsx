@@ -129,7 +129,15 @@ const StudentsScreen: React.FC<StudentsScreenProps> = () => {
           onSave={() => setModifyUser(StudentEmpty())}
         />
       </CModal>
+
       <Box p={4}>
+        {!currentStudent.isEmpty && (
+          <StudentSelected
+            currentStudent={currentStudent}
+            setCurrentStudent={setCurrentStudent}
+            onEdit={(c) => setModifyUser(c)}
+          />
+        )}
         <Box display="flex" alignItems="center" justifyItems="center">
           <TextField
             size="small"
@@ -147,13 +155,6 @@ const StudentsScreen: React.FC<StudentsScreenProps> = () => {
           </Button>
         </Box>
         <Divider sx={{ my: 1 }} />
-        {!currentStudent.isEmpty && (
-          <StudentSelected
-            currentStudent={currentStudent}
-            setCurrentStudent={setCurrentStudent}
-            onEdit={(c) => setModifyUser(c)}
-          />
-        )}
 
         <Box sx={{ height: 400, width: "100%" }}>
           <DataGrid

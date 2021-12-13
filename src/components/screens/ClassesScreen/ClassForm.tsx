@@ -8,7 +8,7 @@ import {
 } from "@mui/material";
 import { Box } from "@mui/system";
 
-import Class, { ClassInterface } from "../../../classes/Class";
+import ClassRoom, { ClassRoomInterface } from "../../../classes/ClassRoom";
 import utils from "../../../libs/utils/utils";
 import DeleteIcon from "@mui/icons-material/Delete";
 
@@ -31,8 +31,8 @@ import DeleteIcon from "@mui/icons-material/Delete";
 
 const TAG = "Class FORM";
 type ClassFormProps = {
-  currentClass?: Class;
-  onChange: (c: Class) => void;
+  currentClass?: ClassRoom;
+  onChange: (c: ClassRoom) => void;
 };
 const ClassForm: React.FC<ClassFormProps> = ({ onChange }) => {
   console.log(TAG, "render");
@@ -40,7 +40,7 @@ const ClassForm: React.FC<ClassFormProps> = ({ onChange }) => {
     (event: React.FormEvent<HTMLFormElement>) => {
       event.preventDefault();
       const formData = new FormData(event.currentTarget);
-      const data: ClassInterface = {
+      const data: ClassRoomInterface = {
         id: "NN",
         name: formData.get("given-name") + "",
         lastName: formData.get("last-name") + "",
@@ -54,7 +54,7 @@ const ClassForm: React.FC<ClassFormProps> = ({ onChange }) => {
         creationDate: utils.dates.dateNowUnix(),
         activeClasses: "",
       };
-      const newClass = new Class(data);
+      const newClass = new ClassRoom(data);
       onChange(newClass);
     },
     [onChange]
